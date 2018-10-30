@@ -43,7 +43,7 @@ public class GameInformation {
 	}
 	
 	//Method that finds the cells that are blocked
-	public void getBlockCells() {
+	public void scrapeBlockCells() {
 		//
 		int readPosition = 0;
 		int cellsCovered = 0;
@@ -64,7 +64,7 @@ public class GameInformation {
 	}
 	
 	//Method that find the across clues
-	public void getAcrossClues() {
+	public void scrapeAcrossClues() {
 		//Save the starting keyword for HTML Tag for Across
 		String keywordForAcrossStart = "<h3 class=\"ClueListMobile-title--3tRr-\">Across</h3>";
 		//Save the ending keyword for HTML Tag for Across
@@ -107,7 +107,7 @@ public class GameInformation {
 		
 	}
 	
-	public void getDownClues() {
+	public void scrapeDownClues() {
 		//Save the starting keyword for HTML Tag for Down
 		String keywordForDownStart = "<h3 class=\"ClueListMobile-title--3tRr-\">Down</h3>";
 		//Save Index for beginning and end of Down Clue
@@ -143,20 +143,34 @@ public class GameInformation {
 			}	
 		}
 	}
-public void printDownClues() {
-	for(int i = 0; i < downClues.size();i++)
-		System.out.println(downClues.get(i));
-}
+	public void printDownClues() {
+		for(int i = 0; i < downClues.size();i++)
+			System.out.println(downClues.get(i));
+	}
 
-public void printAcrossClues() {
-	for(int i = 0; i < acrossClues.size();i++)
-		System.out.println(acrossClues.get(i));
-}
+	public void printAcrossClues() {
+		for(int i = 0; i < acrossClues.size();i++)
+			System.out.println(acrossClues.get(i));
+	}
 
-public void printBlockCells() {
-	for(int i = 0; i < blockPosition.size();i++)
-		System.out.println(blockPosition.get(i));
-}
+	public void printBlockCells() {
+		for(int i = 0; i < blockPosition.size();i++)
+			System.out.println(blockPosition.get(i));
+	}
+	
+	public ArrayList<Integer> getBlockCells() {
+		return blockPosition;
+	}
+	
+	public ArrayList<String> getAcrossClues() {
+		return acrossClues;
+	}
+	
+	public ArrayList<String> getDownClues() {
+		return downClues;
+	}
+	
+	
 	
 
 }
