@@ -4,7 +4,7 @@ import javax.swing.*;
 public class CenterPanel extends JPanel {
 	QuestionPanel myQuestionPanel;
 	MainCrosswordPanel myCrosswordPanel;
-	public CenterPanel(int acrossQuestionNum, int downQuestionNum) {
+	public CenterPanel(int acrossQuestionNum, int downQuestionNum) throws Exception {
 		myQuestionPanel = new QuestionPanel(acrossQuestionNum, downQuestionNum);
 		myCrosswordPanel = new MainCrosswordPanel();
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
