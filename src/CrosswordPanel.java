@@ -19,6 +19,7 @@ public class CrosswordPanel extends JPanel{
 			cellText.setHorizontalAlignment(JTextField.CENTER);
 			cellText.setFont(new Font("Serif",Font.PLAIN,13));
 			cellText.setAlignmentX(Component.CENTER_ALIGNMENT);
+			cellText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 			thePattern.add(cellText);
 		}
 		setLayout(new BorderLayout());
