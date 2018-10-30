@@ -7,9 +7,9 @@ public class TopPanel extends JPanel {
 	public TopPanel(String dateText) {
 		myDatePanel = new DatePanel(dateText);
 		myInfoPanel = new InfoPanel();
-		setLayout(new BorderLayout());
-		add(myDatePanel,BorderLayout.NORTH);
-		add(myInfoPanel,BorderLayout.SOUTH);
+		setLayout(new BoxLayout(this,BoxLayout.Y_AXIS));
+		add(myDatePanel);
+		add(myInfoPanel);
 	}
 
 }

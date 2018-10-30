@@ -26,11 +26,11 @@ public class Test extends JFrame{
 		JFrame myGameFrame = new JFrame("Sasha");
 		TopPanel myTopPanel = new TopPanel("October 30, 2018");
 		ButtonsPanel myButtonsPanel = new ButtonsPanel();
-		AcrossPanel myAcrossPanel = new AcrossPanel(5);
+		CenterPanel myCenterPanel = new CenterPanel(5,5);
 		myGameFrame.setLayout(new BorderLayout());
 		myGameFrame.add(myTopPanel,BorderLayout.NORTH);
 		myGameFrame.add(myButtonsPanel,BorderLayout.SOUTH);
-		myGameFrame.add(myButtonsPanel,BorderLayout.WEST);
+		myGameFrame.add(myCenterPanel,BorderLayout.CENTER);
 		myGameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		myGameFrame.setSize(950, 650);
 		myGameFrame.setLocationRelativeTo(null);
