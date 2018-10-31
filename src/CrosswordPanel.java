@@ -30,7 +30,7 @@ public class CrosswordPanel extends JPanel{
 				cellText[i] = new JTextField();
 				cellText[i].setBackground(Color.BLACK);
 				cellText[i].setEditable(false);
-				cellText[i].setBorder(BorderFactory.createLineBorder(Color.black));
+				cellText[i].setBorder(BorderFactory.createLineBorder(Color.gray));
 				thePattern.add(cellText[i]);
 			}
 			else {		
