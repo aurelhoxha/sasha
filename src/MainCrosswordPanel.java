@@ -1,10 +1,12 @@
 import java.awt.*;
+import java.util.*;
+
 import javax.swing.*;
 
 public class MainCrosswordPanel extends JPanel {
 	CrosswordPanel myCrosswordPanel;
-	public MainCrosswordPanel() throws Exception {
-		myCrosswordPanel = new CrosswordPanel();
+	public MainCrosswordPanel(ArrayList<Integer> myBlockCells) throws Exception {
+		myCrosswordPanel = new CrosswordPanel(myBlockCells);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(Box.createRigidArea(new Dimension(0, 100)));
 		add(myCrosswordPanel);

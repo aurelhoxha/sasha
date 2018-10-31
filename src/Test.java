@@ -30,7 +30,7 @@ public class Test extends JFrame{
 		JFrame myGameFrame = new JFrame("Sasha");
 		TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
 		ButtonsPanel myButtonsPanel = new ButtonsPanel();
-		CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues);
+		CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myBlockCells);
 		myGameFrame.setLayout(new BorderLayout());
 		myGameFrame.add(myTopPanel,BorderLayout.NORTH);
 		myGameFrame.add(myButtonsPanel,BorderLayout.SOUTH);
