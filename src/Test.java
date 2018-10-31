@@ -11,6 +11,8 @@ public class Test extends JFrame{
 		ArrayList<Integer> myBlockCells = new ArrayList<Integer>();
 		ArrayList<String> myAcrossClues = new ArrayList<String>();
 		ArrayList<String> myDownClues = new ArrayList<String>();
+		String gameDay;
+		String gameDate;
 		
 		//Get Game Information
 		GameInformation myGame = new GameInformation();
@@ -22,9 +24,16 @@ public class Test extends JFrame{
 		myBlockCells = myGame.getBlockCells();
 		myAcrossClues = myGame.getAcrossClues();
 		myDownClues = myGame.getDownClues();
+		gameDay = myGame.getGameDay();
+		gameDate = myGame.getGameDate();
+		
+		myGame.printAcrossClues();
+		System.out.println();
+		myGame.printDownClues();
+		System.out.println();
 		
 		JFrame myGameFrame = new JFrame("Sasha");
-		TopPanel myTopPanel = new TopPanel("October 30, 2018");
+		TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
 		ButtonsPanel myButtonsPanel = new ButtonsPanel();
 		CenterPanel myCenterPanel = new CenterPanel(5,5);
 		myGameFrame.setLayout(new BorderLayout());

@@ -5,23 +5,24 @@ import java.io.*;
 public class GameInformation {
 	
 	//Variables
-	private String htmlCode;
+	public String htmlCode;
 	private ArrayList<Integer> blockPosition;
 	private ArrayList<String> acrossClues;
 	private ArrayList<String> downClues;
+	private String dayText;
+	private String dateText;
 	
 	//Constructor
 	public GameInformation() throws Exception {
 		
 		//Initialization of the variables
-		htmlCode = readContent();
+		htmlCode = "";
+		dayText = "";
+		dateText = "";
 		blockPosition = new ArrayList<Integer>();
 		acrossClues = new ArrayList<String>();
 		downClues = new ArrayList<String>();
-	}
-	
-	//Read the HTML Content
-	public String readContent() throws Exception {
+		
 		URL oracle = new URL("https://www.nytimes.com/crosswords/game/mini");
 		BufferedReader in = new BufferedReader(
 				new InputStreamReader(oracle.openStream()));
@@ -35,13 +36,24 @@ public class GameInformation {
 		
 		//Indexes for required HTML Code
 		int startPosition = tempText.indexOf("<body>");
-		int endPosition = tempText.indexOf("</span></li></ol></div></article>");
-		
+		String positionToEnd = "</span></li></ol></div></article>";
+		int endPosition = tempText.indexOf(positionToEnd);
+		endPosition = endPosition + positionToEnd.length();
+		String dayTextKeyword = "<div class=\"PuzzleDetails-dayOfWeek--3rr8s\">";
+		int dayTextStartPosition = tempText.indexOf(dayTextKeyword);
+		dayTextStartPosition = dayTextStartPosition + dayTextKeyword.length();
+		int dayTextEndPosition = tempText.indexOf("<",dayTextStartPosition);
+		int dateTextStartPosition = tempText.indexOf("<",dayTextEndPosition+1);
+		dateTextStartPosition = tempText.indexOf(">",dateTextStartPosition);
+		int dateTextEndPosition = tempText.indexOf("<",dateTextStartPosition);
+		dayText = tempText.substring(dayTextStartPosition,dayTextEndPosition);
+		dateText = tempText.substring(dateTextStartPosition+1,dateTextEndPosition);
 		//Return the required HTML Code
 		String returnText = tempText.substring(startPosition,endPosition);
-		return returnText;
+		htmlCode= returnText;
 	}
 	
+		
 	//Method that finds the cells that are blocked
 	public void scrapeBlockCells() {
 		//
@@ -73,36 +85,26 @@ public class GameInformation {
 		int readBeginning = this.htmlCode.indexOf(keywordForAcrossStart);
 		readBeginning = readBeginning + keywordForAcrossStart.length();
 		int readEnd = this.htmlCode.indexOf(keywordForAcrossEnd);
-		int textPosition = -1; 
 		//Read everything between Across HTML Code
 		while(readBeginning < readEnd ) {
-			//Check for the character '<' and it is found increase the index until character '>'
-			if(this.htmlCode.charAt(readBeginning)=='<') {
-				int indexToEnd = readBeginning;
-				//Skip Everything that is inside HTML Tags
-				while(this.htmlCode.charAt(indexToEnd) != '>')
-				{
-					indexToEnd++;
-				}
-				readBeginning = indexToEnd+1;
-			}
-			//If it not HTML Tag is is Text
-			else {
-				//If the text is Digit add it to the ArrayList of the AcrossClues
-				if(Character.isDigit(htmlCode.charAt(readBeginning))) {
-					textPosition++;
-					acrossClues.add(textPosition, htmlCode.charAt(readBeginning) + " ");
-				}
-				else {
-					//After Digit there is always Corresponding Clue.
-					//Add it to the same place as the number and increment the position
-					String textForClue = acrossClues.get(textPosition);
-					textForClue = textForClue + htmlCode.charAt(readBeginning);
-					acrossClues.set(textPosition, textForClue);
-				}
-				readBeginning++;
-			}
-			
+			String keywordForStartNumbersAcross = "<span class=\"Clue-label--2IdMY\">";
+			String keywordFornEndNumberAcross = "</span><span class=\"Clue-text--3lZl7\">";
+			int numberReadingStart = this.htmlCode.indexOf(keywordForStartNumbersAcross,readBeginning);
+			numberReadingStart = numberReadingStart + keywordForStartNumbersAcross.length();
+		
+			int numberReadingEnd = this.htmlCode.indexOf(keywordFornEndNumberAcross,numberReadingStart);
+			String acrossNumber = this.htmlCode.substring(numberReadingStart, numberReadingEnd);
+			int clueReadingStart = this.htmlCode.indexOf(keywordFornEndNumberAcross,numberReadingEnd);
+			clueReadingStart = clueReadingStart + keywordFornEndNumberAcross.length();
+			int clueReadingEnd = this.htmlCode.indexOf("<", clueReadingStart);
+			String acrossClue = this.htmlCode.substring(clueReadingStart, clueReadingEnd);
+			acrossClues.add(acrossNumber + " " + acrossClue);
+			String keywordForStop = "</span></li></ol></div>";
+			String processedCode = this.htmlCode.substring(readBeginning, clueReadingEnd + keywordForStop.length());
+			if(processedCode.contains(keywordForStop))
+				readBeginning = readEnd;
+			else
+				readBeginning = clueReadingEnd;
 		}
 		
 	}
@@ -113,34 +115,28 @@ public class GameInformation {
 		//Save Index for beginning and end of Down Clue
 		int readBeginning = this.htmlCode.indexOf(keywordForDownStart);
 		readBeginning = readBeginning + keywordForDownStart.length();
-		int textPosition = -1; 
 		//Read everything between Down HTML Code
 		while(readBeginning < this.htmlCode.length() ) {
-			//Check for the character '<' and it is found increase the index until character '>'
-			if(this.htmlCode.charAt(readBeginning)=='<') {
-				int indexToEnd = readBeginning;
-				//Skip Everything that is inside HTML Tags
-				while(this.htmlCode.charAt(indexToEnd) != '>') {
-					indexToEnd++;
-				}
-				readBeginning = indexToEnd+1;
-			}
-			//If it not HTML Tag is is Text
-			else {
-				//If the text is Digit add it to the ArrayList of the DownClues
-				if(Character.isDigit(htmlCode.charAt(readBeginning))) {
-					textPosition++;
-					downClues.add(textPosition, htmlCode.charAt(readBeginning) + " ");
-				}
-				else {
-					//After Digit there is always Corresponding Clue.
-					//Add it to the same place as the number and increment the position
-					String textForClue = downClues.get(textPosition);
-					textForClue = textForClue + htmlCode.charAt(readBeginning);
-					downClues.set(textPosition, textForClue);
-				}
-				readBeginning++;
-			}	
+			String keywordForStartNumbersAcross = "<span class=\"Clue-label--2IdMY\">";
+			String keywordFornEndNumberAcross = "</span><span class=\"Clue-text--3lZl7\">";
+			int numberReadingStart = this.htmlCode.indexOf(keywordForStartNumbersAcross,readBeginning);
+			numberReadingStart = numberReadingStart + keywordForStartNumbersAcross.length();
+		
+			int numberReadingEnd = this.htmlCode.indexOf(keywordFornEndNumberAcross,numberReadingStart);
+			String acrossNumber = this.htmlCode.substring(numberReadingStart, numberReadingEnd);
+			System.out.print(acrossNumber + " ");
+			int clueReadingStart = this.htmlCode.indexOf(keywordFornEndNumberAcross,numberReadingEnd);
+			clueReadingStart = clueReadingStart + keywordFornEndNumberAcross.length();
+			int clueReadingEnd = this.htmlCode.indexOf("<", clueReadingStart);
+			String acrossClue = this.htmlCode.substring(clueReadingStart, clueReadingEnd);
+			System.out.println(acrossClue);
+			downClues.add(acrossNumber + " " + acrossClue);
+			String keywordForStop = "</span></li></ol></div></article>";
+			String processedCode = this.htmlCode.substring(readBeginning, clueReadingEnd + keywordForStop.length());
+			if(processedCode.contains(keywordForStop))
+				readBeginning = this.htmlCode.length();
+			else
+				readBeginning = clueReadingEnd;	
 		}
 	}
 	public void printDownClues() {
@@ -168,6 +164,14 @@ public class GameInformation {
 	
 	public ArrayList<String> getDownClues() {
 		return downClues;
+	}
+	
+	public String getGameDay() {
+		return dayText;
+	}
+	
+	public String getGameDate() {
+		return dateText;
 	}
 	
 	
