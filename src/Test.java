@@ -8,7 +8,7 @@ public class Test extends JFrame{
 	public static void main(String[] args) throws Exception {
 		
 		//Variables to save the data of the game
-		ArrayList<Integer> myBlockCells = new ArrayList<Integer>();
+		Integer[] myClueNumber = new Integer[25];
 		ArrayList<String> myAcrossClues = new ArrayList<String>();
 		ArrayList<String> myDownClues = new ArrayList<String>();
 		String gameDay;
@@ -16,16 +16,19 @@ public class Test extends JFrame{
 		
 		//Get Game Information
 		GameInformation myGame = new GameInformation();
-		myGame.scrapeBlockCells();
+		myGame.scrapeClueNumbers();
 		myGame.scrapeAcrossClues();
 		myGame.scrapeDownClues();
 		
 		//Initialize the Variables according to the Game Information
-		myBlockCells = myGame.getBlockCells();
+		myClueNumber = myGame.getClueNumbers();
 		myAcrossClues = myGame.getAcrossClues();
 		myDownClues = myGame.getDownClues();
 		gameDay = myGame.getGameDay();
 		gameDate = myGame.getGameDate();
+		
+		//System.out.println(myGame.htmlCode);
+		myGame.printArrayCells();
 		
 		//Creation of the Game
 		JFrame myGameFrame = new JFrame("Sasha");
@@ -33,7 +36,7 @@ public class Test extends JFrame{
 		//Initialization of the Main Panels
 		TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
 		ButtonsPanel myButtonsPanel = new ButtonsPanel();
-		CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myBlockCells);
+		CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myClueNumber);
 		
 		//Setting Layout and Adding the Panels
 		myGameFrame.setLayout(new BorderLayout());

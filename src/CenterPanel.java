@@ -10,11 +10,11 @@ public class CenterPanel extends JPanel {
 	MainCrosswordPanel myCrosswordPanel;
 	
 	//Initialization of the Center Panel
-	public CenterPanel(ArrayList<String> myAcrossClues, ArrayList<String> myDownClues, ArrayList<Integer> myBlockCells ) throws Exception {
+	public CenterPanel(ArrayList<String> myAcrossClues, ArrayList<String> myDownClues, Integer[] myClueNumber ) throws Exception {
 
 		//Passing the parameters to the Inner Panels
 		myQuestionPanel = new QuestionPanel(myAcrossClues, myDownClues);
-		myCrosswordPanel = new MainCrosswordPanel(myBlockCells);
+		myCrosswordPanel = new MainCrosswordPanel(myClueNumber);
 		
 		//Adding Inner Panels to the Central Panel
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

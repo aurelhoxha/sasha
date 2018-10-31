@@ -6,9 +6,9 @@ public class GameInformation {
 	
 	//Variables
 	public String htmlCode;
-	private ArrayList<Integer> blockPosition;
 	private ArrayList<String> acrossClues;
 	private ArrayList<String> downClues;
+	private Integer[] clueNumbers;
 	private String dayText;
 	private String dateText;
 	
@@ -19,9 +19,9 @@ public class GameInformation {
 		htmlCode = "";
 		dayText = "";
 		dateText = "";
-		blockPosition = new ArrayList<Integer>();
 		acrossClues = new ArrayList<String>();
 		downClues = new ArrayList<String>();
+		clueNumbers = new Integer[25];
 		
 		//Making the Connection with the WEBSITE
 		//Taking the HTML Code
@@ -58,24 +58,39 @@ public class GameInformation {
 	
 		
 	//Method that finds the cells that are blocked
-	public void scrapeBlockCells() {
-		//
-		int readPosition = 0;
+	public void scrapeClueNumbers() {
+		
 		int cellsCovered = 0;
 		
-		while(cellsCovered <= 24) {
+		while(cellsCovered <= 23) {
 			
 			//Save the keyword to find HTML Code for Cells
-			String keywordForBlock = "id=\"cell-id-" + cellsCovered + "\"" + " class=\"Cell-";
-			int findCellStart = this.htmlCode.indexOf(keywordForBlock,readPosition);
-			int searchPosition = findCellStart + keywordForBlock.length();
+			String keywordForCellStart = "id=\"cell-id-" + cellsCovered + "\"";
+			String keywordForCellEnd = "id=\"cell-id-" + (cellsCovered + 1) + "\"" ;
+			int findCellStart = this.htmlCode.indexOf(keywordForCellStart);
+			findCellStart = findCellStart + keywordForCellStart.length();
+			int fincCellEnd = this.htmlCode.indexOf(keywordForCellEnd,findCellStart);
 			
 			//Save the Type of the Cell and if it is blocked add it to the ArrayList
-			String foundType = this.htmlCode.substring(searchPosition, searchPosition + 5);
-			if(foundType.equals("block"))
-				blockPosition.add(cellsCovered);
+			String foundText = this.htmlCode.substring(findCellStart, fincCellEnd);
+			String toFoundForClues ="text-anchor=\"start\" font-size=\"33.33\">";
+			String toFoundForBlock = "class=\"Cell-block--1oNaD\"";
+			if(foundText.contains(toFoundForClues)) {
+				int indexForClue = this.htmlCode.indexOf(toFoundForClues,findCellStart);
+				indexForClue = indexForClue + toFoundForClues.length();
+				int indexForEndClue = this.htmlCode.indexOf("<",indexForClue);
+				String clueValue = this.htmlCode.substring(indexForClue, indexForEndClue);
+				clueNumbers[cellsCovered] = Integer.parseInt(clueValue);
+			}
+			else if(foundText.contains(toFoundForBlock)) {
+				clueNumbers[cellsCovered] = -1;
+			}
+			else {
+				clueNumbers[cellsCovered] = 0;
+			}
 			cellsCovered++;
 		}
+		clueNumbers[24] = 0;
 	}
 	
 	//Method that find the across clues
@@ -182,15 +197,10 @@ public class GameInformation {
 			System.out.println(acrossClues.get(i));
 	}
 	
-	//Print the Block Cells
-	public void printBlockCells() {
-		for(int i = 0; i < blockPosition.size();i++)
-			System.out.println(blockPosition.get(i));
-	}
 	
 	//Get the ArrayList of Block Cells
-	public ArrayList<Integer> getBlockCells() {
-		return blockPosition;
+	public Integer[] getClueNumbers() {
+		return clueNumbers;
 	}
 	
 	//Get the ArrayList of Across Clues
@@ -212,6 +222,13 @@ public class GameInformation {
 	public String getGameDate() {
 		return dateText;
 	}
+	
+	//Print the Block Cells
+	public void printArrayCells() {
+		for(int i = 0; i < clueNumbers.length;i++)
+			System.out.println("At position " + i + " value : " + clueNumbers[i]);
+	}
+		
 	
 	
 	

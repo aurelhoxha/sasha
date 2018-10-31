@@ -6,7 +6,7 @@ import javax.swing.*;
 public class CrosswordPanel extends JPanel{
 	JLabel selectedQuestion;
 	JPanel thePattern;
-	public CrosswordPanel(ArrayList<Integer> blockPosition) throws Exception {
+	public CrosswordPanel(Integer[] myClueNumber) throws Exception {
 		selectedQuestion = new JLabel("Selected Question");
 		thePattern = new JPanel();
 		selectedQuestion.setFont(new Font("Serif",Font.BOLD,14));
@@ -15,8 +15,8 @@ public class CrosswordPanel extends JPanel{
 		
 		JTextField[] cellText = new JTextField[25];
 		thePattern.setLayout(new GridLayout(5,5));
-		for(int i = 0; i < blockPosition.size(); i++ ) {
-				if(blockPosition.get(i) == -1){
+		for(int i = 0; i < myClueNumber.length; i++ ) {
+				if(myClueNumber[i] == -1){
 					cellText[i] = new JTextField();
 					cellText[i].setBackground(Color.BLACK);
 					cellText[i].setEditable(false);
@@ -24,8 +24,8 @@ public class CrosswordPanel extends JPanel{
 					thePattern.add(cellText[i]);
 				}
 				else {		
-					String cellimg = "./img/" + blockPosition.get(i) + ".png";
-					cellText[i] = new JTextField("A");
+					String cellimg = "./img/" + myClueNumber[i] + ".png";
+					cellText[i] = new JTextField();
 					cellText[i].setOpaque(false);
 					cellText[i].setHorizontalAlignment(JTextField.CENTER);
 					cellText[i].setFont(new Font("Helvetica",Font.PLAIN,33));
