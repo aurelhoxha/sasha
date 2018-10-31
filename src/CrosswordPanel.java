@@ -30,7 +30,7 @@ public class CrosswordPanel extends JPanel{
 				cellText[i] = new JTextField();
 				cellText[i].setBackground(Color.BLACK);
 				cellText[i].setEditable(false);
-				cellText[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				cellText[i].setBorder(BorderFactory.createLineBorder(Color.black));
 				thePattern.add(cellText[i]);
 			}
 			else {		
@@ -39,7 +39,7 @@ public class CrosswordPanel extends JPanel{
 				cellText[i].setHorizontalAlignment(JTextField.CENTER);
 				cellText[i].setFont(new Font("Helvetica",Font.PLAIN,33));
 				cellText[i].setAlignmentX(Component.CENTER_ALIGNMENT);
-				cellText[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));				
+				cellText[i].setBorder(BorderFactory.createLineBorder(Color.gray));				
 				JLabel cell = new JLabel(new ImageIcon("./img/3.png"));
 				cell.setOpaque(true);
 				cell.setLayout(new BorderLayout());
