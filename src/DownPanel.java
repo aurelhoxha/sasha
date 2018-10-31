@@ -12,18 +12,17 @@ public class DownPanel extends JPanel{
 		downTitle.setFont(new Font("Serif",Font.BOLD,14));
 		downTitle.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
-		downQuestions.setLayout(new GridLayout(myDownClues.size(),1));
+		downQuestions.setLayout(new GridLayout(myDownClues.size()+3,1));
 		for(int i = 0; i < myDownClues.size(); i++ ) {
 			JLabel theQuestion = new JLabel(myDownClues.get(i));
 			
-			if(myDownClues.get(i).length() >= 60){
+			if(myDownClues.get(i).length() >= 80){
 				String first = "";
 				String second = "";
-				
-				for(int j = 40; j < myDownClues.get(i).length()-1; j++) {
+				for(int j = 70; j < myDownClues.get(i).length()-1; j++) {
 					if(myDownClues.get(i).charAt(j) == ' ' ){
 						first = myDownClues.get(i).substring(0, j);
-						second = myDownClues.get(i).substring(j+1, myDownClues.get(i).length());
+						second = "   " + myDownClues.get(i).substring(j+1, myDownClues.get(i).length());
 						break;
 					}
 				}

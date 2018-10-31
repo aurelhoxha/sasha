@@ -10,9 +10,9 @@ public class QuestionPanel extends JPanel {
 		myAcrossPanel = new AcrossPanel(myAcrossClues);
 		myDownPanel = new DownPanel(myDownClues);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(Box.createRigidArea(new Dimension(0, 120)));
+		add(Box.createRigidArea(new Dimension(0, 110)));
 		add(myAcrossPanel);
-		add(Box.createRigidArea(new Dimension(0, 70)));
+		add(Box.createRigidArea(new Dimension(0, 10)));
 		add(myDownPanel);
 		add(Box.createRigidArea(new Dimension(0, 120)));
 	}

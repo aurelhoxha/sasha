@@ -10,10 +10,11 @@ public class CenterPanel extends JPanel {
 		myQuestionPanel = new QuestionPanel(myAcrossClues, myDownClues);
 		myCrosswordPanel = new MainCrosswordPanel(myBlockCells);
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		add(Box.createRigidArea(new Dimension(100, 0)));
+		add(Box.createRigidArea(new Dimension(20, 0)));
 		add(myCrosswordPanel);
-		add(Box.createRigidArea(new Dimension(50, 0)));
+		add(Box.createRigidArea(new Dimension(60, 0)));
 		add(myQuestionPanel);
+		//add(Box.createRigidArea(new Dimension(80, 0)));
 	}
 
 }
