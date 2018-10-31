@@ -23,6 +23,8 @@ public class GameInformation {
 		acrossClues = new ArrayList<String>();
 		downClues = new ArrayList<String>();
 		
+		//Making the Connection with the WEBSITE
+		//Taking the HTML Code
 		URL oracle = new URL("https://www.nytimes.com/crosswords/game/mini");
 		BufferedReader in = new BufferedReader(
 				new InputStreamReader(oracle.openStream()));
@@ -48,6 +50,7 @@ public class GameInformation {
 		int dateTextEndPosition = tempText.indexOf("<",dateTextStartPosition);
 		dayText = tempText.substring(dayTextStartPosition,dayTextEndPosition);
 		dateText = tempText.substring(dateTextStartPosition+1,dateTextEndPosition);
+		
 		//Return the required HTML Code
 		String returnText = tempText.substring(startPosition,endPosition);
 		htmlCode= returnText;
@@ -77,28 +80,43 @@ public class GameInformation {
 	
 	//Method that find the across clues
 	public void scrapeAcrossClues() {
+		
 		//Save the starting keyword for HTML Tag for Across
 		String keywordForAcrossStart = "<h3 class=\"ClueListMobile-title--3tRr-\">Across</h3>";
+		
 		//Save the ending keyword for HTML Tag for Across
 		String keywordForAcrossEnd = "<h3 class=\"ClueListMobile-title--3tRr-\">Down</h3>";
+		
 		//Save Indexes for beginning and end of Across Clue
 		int readBeginning = this.htmlCode.indexOf(keywordForAcrossStart);
 		readBeginning = readBeginning + keywordForAcrossStart.length();
 		int readEnd = this.htmlCode.indexOf(keywordForAcrossEnd);
+		
 		//Read everything between Across HTML Code
 		while(readBeginning < readEnd ) {
+			
+			//Save keyword that is used to take the number of Question
 			String keywordForStartNumbersAcross = "<span class=\"Clue-label--2IdMY\">";
 			String keywordFornEndNumberAcross = "</span><span class=\"Clue-text--3lZl7\">";
 			int numberReadingStart = this.htmlCode.indexOf(keywordForStartNumbersAcross,readBeginning);
 			numberReadingStart = numberReadingStart + keywordForStartNumbersAcross.length();
-		
 			int numberReadingEnd = this.htmlCode.indexOf(keywordFornEndNumberAcross,numberReadingStart);
+			
+			//Save the number of the Question
 			String acrossNumber = this.htmlCode.substring(numberReadingStart, numberReadingEnd);
+			
+			//Start Searching for the Corresponding Question
 			int clueReadingStart = this.htmlCode.indexOf(keywordFornEndNumberAcross,numberReadingEnd);
 			clueReadingStart = clueReadingStart + keywordFornEndNumberAcross.length();
 			int clueReadingEnd = this.htmlCode.indexOf("<", clueReadingStart);
+			
+			//Save the Content of the Question
 			String acrossClue = this.htmlCode.substring(clueReadingStart, clueReadingEnd);
+			
+			//Add both number and Clue to the the AcrossClue Array
 			acrossClues.add(acrossNumber + " " + acrossClue);
+			
+			//Stop executing when the keyword that notifies the end of Question is found
 			String keywordForStop = "</span></li></ol></div>";
 			String processedCode = this.htmlCode.substring(readBeginning, clueReadingEnd + keywordForStop.length());
 			if(processedCode.contains(keywordForStop))
@@ -110,25 +128,39 @@ public class GameInformation {
 	}
 	
 	public void scrapeDownClues() {
+		
 		//Save the starting keyword for HTML Tag for Down
 		String keywordForDownStart = "<h3 class=\"ClueListMobile-title--3tRr-\">Down</h3>";
+		
 		//Save Index for beginning and end of Down Clue
 		int readBeginning = this.htmlCode.indexOf(keywordForDownStart);
 		readBeginning = readBeginning + keywordForDownStart.length();
+		
 		//Read everything between Down HTML Code
 		while(readBeginning < this.htmlCode.length() ) {
+			
+			//Save keyword that is used to take the number of Question
 			String keywordForStartNumbersAcross = "<span class=\"Clue-label--2IdMY\">";
 			String keywordFornEndNumberAcross = "</span><span class=\"Clue-text--3lZl7\">";
 			int numberReadingStart = this.htmlCode.indexOf(keywordForStartNumbersAcross,readBeginning);
 			numberReadingStart = numberReadingStart + keywordForStartNumbersAcross.length();
-		
 			int numberReadingEnd = this.htmlCode.indexOf(keywordFornEndNumberAcross,numberReadingStart);
+			
+			//Save the number of the Question
 			String acrossNumber = this.htmlCode.substring(numberReadingStart, numberReadingEnd);
+			
+			//Start Searching for the Corresponding Question
 			int clueReadingStart = this.htmlCode.indexOf(keywordFornEndNumberAcross,numberReadingEnd);
 			clueReadingStart = clueReadingStart + keywordFornEndNumberAcross.length();
 			int clueReadingEnd = this.htmlCode.indexOf("<", clueReadingStart);
+			
+			//Save the Content of the Question
 			String acrossClue = this.htmlCode.substring(clueReadingStart, clueReadingEnd);
+			
+			//Add both number and Clue to the the DownClue Array
 			downClues.add(acrossNumber + " " + acrossClue);
+			
+			//Stop executing when the keyword that notifies the end of Question is found
 			String keywordForStop = "</span></li></ol></div></article>";
 			String processedCode = this.htmlCode.substring(readBeginning, clueReadingEnd + keywordForStop.length());
 			if(processedCode.contains(keywordForStop))
@@ -137,37 +169,46 @@ public class GameInformation {
 				readBeginning = clueReadingEnd;	
 		}
 	}
+	
+	//Print the Down Clues
 	public void printDownClues() {
 		for(int i = 0; i < downClues.size();i++)
 			System.out.println(downClues.get(i));
 	}
 
+	//Print the Across Clues
 	public void printAcrossClues() {
 		for(int i = 0; i < acrossClues.size();i++)
 			System.out.println(acrossClues.get(i));
 	}
-
+	
+	//Print the Block Cells
 	public void printBlockCells() {
 		for(int i = 0; i < blockPosition.size();i++)
 			System.out.println(blockPosition.get(i));
 	}
 	
+	//Get the ArrayList of Block Cells
 	public ArrayList<Integer> getBlockCells() {
 		return blockPosition;
 	}
 	
+	//Get the ArrayList of Across Clues
 	public ArrayList<String> getAcrossClues() {
 		return acrossClues;
 	}
 	
+	//Get the ArrayList of Down Clues
 	public ArrayList<String> getDownClues() {
 		return downClues;
 	}
 	
+	//Get the Text of GameDay
 	public String getGameDay() {
 		return dayText;
 	}
 	
+	//Get the Text of GameDate
 	public String getGameDate() {
 		return dateText;
 	}

@@ -1,6 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 
+//Panel that Contains the Button of the Game
 public class ButtonsPanel extends JPanel {
 	
 	//Components
@@ -13,6 +14,7 @@ public class ButtonsPanel extends JPanel {
 	public ButtonsPanel() {
 		
 		//Set up the Components
+		//Adding Components to the Buttons Panel
 		solveButton = new JButton("Solve");
 		clearButton = new JButton("Clear");
 		revealButton = new JButton("Reveal");

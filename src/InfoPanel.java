@@ -1,15 +1,25 @@
 import java.awt.*;
 import javax.swing.*;
 
+//Panel That Contain Information for the Author of the Puzzle
 public class InfoPanel extends JPanel {
-	private JLabel dateLabel;
 	
+	//JLabel that keep the Information of the Author
+	private JLabel infoLabel;
+	
+	//Constructor
 	public InfoPanel() {
-		dateLabel = new JLabel("Mini Crossword - By JOEL FAGLIANO");
-		dateLabel.setFont(new Font("Serif",Font.PLAIN,14));
+		
+		//Giving value to the the infoLabel
+		infoLabel = new JLabel("Mini Crossword - By JOEL FAGLIANO");
+		
+		//Setting the font and alignment accordingly
+		infoLabel.setFont(new Font("Serif",Font.PLAIN,14));
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		dateLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		add(dateLabel);
+		infoLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		
+		//Adding the Label to the InfoPanel
+		add(infoLabel);
 		
 	}
 

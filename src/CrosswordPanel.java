@@ -43,7 +43,7 @@ public class CrosswordPanel extends JPanel{
 				else {		
 					String cellimg = "./img/" + counter + ".png";
 					if(i == 0){
-						cellText[i] = new JTextField("A");
+						cellText[i] = new JTextField();
 						cellText[i].setOpaque(false);
 						cellText[i].setHorizontalAlignment(JTextField.CENTER);
 						cellText[i].setFont(new Font("Helvetica",Font.PLAIN,33));
@@ -59,7 +59,7 @@ public class CrosswordPanel extends JPanel{
 					}
 					else {
 						if(numbers[i-1][j] == -1){
-							cellText[i] = new JTextField("A");
+							cellText[i] = new JTextField();
 							cellText[i].setOpaque(false);
 							cellText[i].setHorizontalAlignment(JTextField.CENTER);
 							cellText[i].setFont(new Font("Helvetica",Font.PLAIN,33));
@@ -74,7 +74,7 @@ public class CrosswordPanel extends JPanel{
 							counter++;
 						}
 						else if(j == 0 && (numbers[i-1][0] != 0)){
-							cellText[i] = new JTextField("A");
+							cellText[i] = new JTextField();
 							cellText[i].setOpaque(false);
 							cellText[i].setHorizontalAlignment(JTextField.CENTER);
 							cellText[i].setFont(new Font("Helvetica",Font.PLAIN,33));
@@ -89,7 +89,7 @@ public class CrosswordPanel extends JPanel{
 							counter++;
 						}
 						else {
-							cellText[i] = new JTextField("A");
+							cellText[i] = new JTextField();
 							cellText[i].setOpaque(false);
 							cellText[i].setHorizontalAlignment(JTextField.CENTER);
 							cellText[i].setFont(new Font("Helvetica",Font.PLAIN,33));

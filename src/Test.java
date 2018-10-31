@@ -27,10 +27,15 @@ public class Test extends JFrame{
 		gameDay = myGame.getGameDay();
 		gameDate = myGame.getGameDate();
 		
+		//Creation of the Game
 		JFrame myGameFrame = new JFrame("Sasha");
+		
+		//Initialization of the Main Panels
 		TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
 		ButtonsPanel myButtonsPanel = new ButtonsPanel();
 		CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myBlockCells);
+		
+		//Setting Layout and Adding the Panels
 		myGameFrame.setLayout(new BorderLayout());
 		myGameFrame.add(myTopPanel,BorderLayout.NORTH);
 		myGameFrame.add(myButtonsPanel,BorderLayout.SOUTH);
