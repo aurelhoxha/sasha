@@ -13,26 +13,37 @@ public class CrosswordPanel extends JPanel{
 		selectedQuestion.setAlignmentX(Component.LEFT_ALIGNMENT);
 		
 		//GameInformation game = new GameInformation();
+		Integer[][] cells = new Integer[5][5];
+		for(int k = 0; k < 5; k++){
+			for(int l = 0; l < 5; l++){
+				if(blockPosition.contains(4*k + l))
+					cells[k][l] = 1;
+				else
+					cells[k][l] = 0;
+			}
+		}
 		
+		JTextField[] cellText = new JTextField[25];
 		thePattern.setLayout(new GridLayout(5,5));
 		for(int i = 0; i < 25; i++ ) {
 			if(blockPosition.contains(i)){
-				JTextArea cell = new JTextArea();
-				cell.setBackground(Color.BLACK);
-				cell.setEditable(false);
-				thePattern.add(cell);
+				cellText[i] = new JTextField();
+				cellText[i].setBackground(Color.BLACK);
+				cellText[i].setEditable(false);
+				thePattern.add(cellText[i]);
 			}
 			else {		
-				JTextField cellText = new JTextField("A");
-				cellText.setOpaque(false);
-				cellText.setHorizontalAlignment(JTextField.CENTER);
-				cellText.setFont(new Font("Helvetica",Font.PLAIN,33));
-				cellText.setAlignmentX(Component.CENTER_ALIGNMENT);
-				cellText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				cellText[i] = new JTextField("");
+				cellText[i].setOpaque(false);
+				cellText[i].setHorizontalAlignment(JTextField.CENTER);
+				cellText[i].setFont(new Font("Helvetica",Font.PLAIN,33));
+				cellText[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+				cellText[i].setBorder(BorderFactory.createLineBorder(Color.BLACK));
+				
 				JLabel cell = new JLabel(new ImageIcon("./img/3.png"));
 				cell.setOpaque(true);
 				cell.setLayout(new BorderLayout());
-				cell.add(cellText);
+				cell.add(cellText[i]);
 				thePattern.add(cell);
 			}
 		}
