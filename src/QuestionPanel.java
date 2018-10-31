@@ -12,7 +12,7 @@ public class QuestionPanel extends JPanel {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		add(Box.createRigidArea(new Dimension(0, 120)));
 		add(myAcrossPanel);
-		add(Box.createRigidArea(new Dimension(0, 120)));
+		add(Box.createRigidArea(new Dimension(0, 70)));
 		add(myDownPanel);
 		add(Box.createRigidArea(new Dimension(0, 120)));
 	}
