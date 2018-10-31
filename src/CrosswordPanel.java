@@ -20,7 +20,7 @@ public class CrosswordPanel extends JPanel{
 			cellText.setFont(new Font("Serif",Font.PLAIN,33));
 			cellText.setAlignmentX(Component.CENTER_ALIGNMENT);
 			cellText.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-			JLabel cell = new JLabel(new ImageIcon("C:\\Users\\User\\Desktop\\BILKENT\\CS461\\Proj\\sasha\\img\\2.png"));
+			JLabel cell = new JLabel(new ImageIcon("./img/2.png"));
 			cell.setOpaque(true);
 			cell.setLayout(new BorderLayout());
 			cell.add(cellText);
