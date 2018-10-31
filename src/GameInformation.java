@@ -124,12 +124,10 @@ public class GameInformation {
 		
 			int numberReadingEnd = this.htmlCode.indexOf(keywordFornEndNumberAcross,numberReadingStart);
 			String acrossNumber = this.htmlCode.substring(numberReadingStart, numberReadingEnd);
-			System.out.print(acrossNumber + " ");
 			int clueReadingStart = this.htmlCode.indexOf(keywordFornEndNumberAcross,numberReadingEnd);
 			clueReadingStart = clueReadingStart + keywordFornEndNumberAcross.length();
 			int clueReadingEnd = this.htmlCode.indexOf("<", clueReadingStart);
 			String acrossClue = this.htmlCode.substring(clueReadingStart, clueReadingEnd);
-			System.out.println(acrossClue);
 			downClues.add(acrossNumber + " " + acrossClue);
 			String keywordForStop = "</span></li></ol></div></article>";
 			String processedCode = this.htmlCode.substring(readBeginning, clueReadingEnd + keywordForStop.length());

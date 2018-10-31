@@ -27,11 +27,6 @@ public class Test extends JFrame{
 		gameDay = myGame.getGameDay();
 		gameDate = myGame.getGameDate();
 		
-		myGame.printAcrossClues();
-		System.out.println();
-		myGame.printDownClues();
-		System.out.println();
-		
 		JFrame myGameFrame = new JFrame("Sasha");
 		TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
 		ButtonsPanel myButtonsPanel = new ButtonsPanel();
