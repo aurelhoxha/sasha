@@ -27,8 +27,6 @@ public class Test extends JFrame{
 		gameDay = myGame.getGameDay();
 		gameDate = myGame.getGameDate();
 		
-		//System.out.println(myGame.htmlCode);
-		myGame.printArrayCells();
 		
 		//Creation of the Game
 		JFrame myGameFrame = new JFrame("Sasha");
