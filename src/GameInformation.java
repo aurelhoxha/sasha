@@ -13,7 +13,7 @@ public class GameInformation {
 	private String dateText;
 	
 	//Constructor
-	public GameInformation() throws Exception {
+	public GameInformation(String thePath) throws Exception {
 		
 		//Initialization of the variables
 		htmlCode = "";
@@ -23,19 +23,36 @@ public class GameInformation {
 		downClues = new ArrayList<String>();
 		clueNumbers = new Integer[25];
 		
-		//Making the Connection with the WEBSITE
-		//Taking the HTML Code
-		URL oracle = new URL("https://www.nytimes.com/crosswords/game/mini");
-		BufferedReader in = new BufferedReader(
-				new InputStreamReader(oracle.openStream()));
-		
 		String tempText = "";
-		String lineText;
-		while ((lineText = in.readLine()) != null) {
-			tempText = tempText + lineText + "\n";
-		}
-		in.close();
 		
+		if(!thePath.substring(thePath.length()-4).equals("mini")) {
+			File file = new File("./oldPuzzles/" + thePath + "/htmlCode.txt"); 
+			Scanner sc = new Scanner(file); 
+			while (sc.hasNextLine())
+				tempText = tempText + sc.nextLine() + "\n";
+		}
+		else {
+			//Making the Connection with the WEBSITE
+			//Taking the HTML Code
+			URL oracle = new URL(thePath);
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(oracle.openStream()));
+			String lineText;
+			while ((lineText = in.readLine()) != null) {
+				tempText = tempText + lineText + "\n";
+			}
+			in.close();
+		}
+		
+//		try {
+//			File file = new File("./oldPuzzles/1november2018/htmlCode.txt");
+//			FileWriter fileWriter = new FileWriter(file);
+//			fileWriter.write(tempText);
+//			fileWriter.flush();
+//			fileWriter.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		//Indexes for required HTML Code
 		int startPosition = tempText.indexOf("<body>");
 		String positionToEnd = "</span></li></ol></div></article>";
