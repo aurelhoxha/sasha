@@ -11,14 +11,13 @@ import javax.swing.*;
 public class CrosswordPanel extends JPanel{
 	JLabel selectedQuestion;
 	JPanel thePattern;
+	static JTextField[] cellText = new JTextField[25];
 	public CrosswordPanel(Integer[] myClueNumber) throws Exception {
 		selectedQuestion = new JLabel("Selected Question");
 		thePattern = new JPanel();
 		selectedQuestion.setFont(new Font("Serif",Font.BOLD,14));
 		selectedQuestion.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-
-		JTextField[] cellText = new JTextField[25];
 		thePattern.setLayout(new GridLayout(5,5));
 		//int count = myClueNumber.length;
 		for(int i = 0; i < myClueNumber.length; i++ )

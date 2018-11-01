@@ -32,7 +32,6 @@ public class Test extends JFrame{
 		
 		while(true){
 			if(!selection.equals(oldSelection)){
-
 				myGameFrame.dispose();
 				myGameFrame = new JFrame("Sasha");
 				
@@ -55,7 +54,7 @@ public class Test extends JFrame{
 				gameDate = myGame.getGameDate();
 				//Initialization of the Main Panels
 				TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
-				ButtonsPanel myButtonsPanel = new ButtonsPanel();
+				ButtonsPanel myButtonsPanel = new ButtonsPanel(myClueNumber);
 				CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myClueNumber);
 				myButtonsPanel.others.setSelectedItem((selection == "Today") ? "Today" : gameDate);
 				//Setting Layout and Adding the Panels
@@ -67,7 +66,7 @@ public class Test extends JFrame{
 				myGameFrame.setSize(950, 650);
 				myGameFrame.setLocationRelativeTo(null);
 				myGameFrame.setVisible(true);
-				//myGameFrame.setResizable(false);
+				myGameFrame.setResizable(false);
 				
 				oldSelection = selection;
 			}
@@ -75,8 +74,6 @@ public class Test extends JFrame{
 				String path = "";
 				ImageIcon solution;
 				if(selection == "Today"){
-					//path = "./oldPuzzles/October 30, 2018/solution.png";
-					//solution = new ImageIcon(path);
 	                JOptionPane.showMessageDialog(
 	                        null,
 	                        "No Solution saved for this puzzle",

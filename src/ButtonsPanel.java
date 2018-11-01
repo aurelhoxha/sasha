@@ -18,7 +18,7 @@ public class ButtonsPanel extends JPanel {
 	JButton store;
 	JComboBox<String> others;
 	//Constuctors
-	public ButtonsPanel() {
+	public ButtonsPanel(Integer[] myClueNumber) {
 		//Set up the Components
 		//ListSubdirectories
 		File directory = new File("./oldPuzzles/");
@@ -41,6 +41,14 @@ public class ButtonsPanel extends JPanel {
 		clearButton = new JButton("Clear");
 		revealButton = new JButton("Reveal");
 		
+		clearButton.addActionListener(new ActionListener() {//Add actionlistner to listen for change in reveal button
+	        public void actionPerformed(ActionEvent e) {
+	        	for(int i = 0; i < 25; i++){
+	        		if(myClueNumber[i] != -1)
+	        			CrosswordPanel.cellText[i].setText("");
+	        	}
+	        }
+	    });
 		
 		revealButton.addActionListener(new ActionListener() {//Add actionlistner to listen for change in reveal button
 	        public void actionPerformed(ActionEvent e) {
