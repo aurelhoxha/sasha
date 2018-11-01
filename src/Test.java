@@ -15,7 +15,7 @@ public class Test extends JFrame{
 		String gameDate;
 		
 		//Get Game Information
-		GameInformation myGame = new GameInformation("31october2018");
+		GameInformation myGame = new GameInformation("30october2018");
 		myGame.scrapeClueNumbers();
 		myGame.scrapeAcrossClues();
 		myGame.scrapeDownClues();
