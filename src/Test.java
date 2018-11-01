@@ -1,5 +1,12 @@
 import java.awt.*;
+import java.io.FilenameFilter;
+import java.nio.file.Files;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.io.File;
+import java.io.FileFilter;
 
 import javax.swing.*;
 
@@ -56,22 +63,30 @@ public class Test extends JFrame{
 				oldSelection = selection;
 			}
 			if(reveal == true){
+				String path = "";
+				ImageIcon solution;
 				if(selection == "https://www.nytimes.com/crosswords/game/mini"){
-					//String address = selection +
-					ImageIcon sol = new ImageIcon("./oldPuzzles/1november2018/solution.png");
-					JOptionPane.showMessageDialog(null,"","",JOptionPane.INFORMATION_MESSAGE, sol);
+					path = "./oldPuzzles/01 November 2018/solution.png";
+					solution = new ImageIcon(path);
+	                JOptionPane.showMessageDialog(
+	                        null,
+	                        "",
+	                        "Solution for the puzzle", JOptionPane.INFORMATION_MESSAGE,
+	                        solution);
 				}
-				if(selection == "31october2018"){
-					//String address = selection +
-					ImageIcon sol = new ImageIcon("./oldPuzzles/31october2018/solution.png");
-					JOptionPane.showMessageDialog(null,"","",JOptionPane.INFORMATION_MESSAGE, sol);
+				else {
+					path = "./oldPuzzles/" + selection + "/solution.png";
+					solution = new ImageIcon(path);
+	                JOptionPane.showMessageDialog(
+	                        null,
+	                        "",
+	                        "Solution for the puzzle", JOptionPane.INFORMATION_MESSAGE,
+	                        solution);								
 				}
-				
 				reveal = false;
 			}			
 			System.out.println();
-			//System.out.println(selection + " " + oldSelection);
 		}
-		
 	}
 }
+
