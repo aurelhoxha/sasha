@@ -36,6 +36,7 @@ public class Test extends JFrame{
 				myGameFrame.dispose();
 				myGameFrame = new JFrame("Sasha");
 				
+				//If user chooses today then he is displayed the puzzle from Internet, otherwise from stored ones
 				if(selection.equals("Today"))
 					adr = "https://www.nytimes.com/crosswords/game/mini";
 				else
