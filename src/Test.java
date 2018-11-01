@@ -7,6 +7,7 @@ public class Test extends JFrame{
 
 	static String selection = "https://www.nytimes.com/crosswords/game/mini";
 	static String oldSelection = "";
+	static boolean reveal = false;
 	public static void main(String[] args) throws Exception {	
 		//Variables to save the data of the game
 		Integer[] myClueNumber = new Integer[25];
@@ -54,7 +55,21 @@ public class Test extends JFrame{
 				
 				oldSelection = selection;
 			}
-			System.out.println("");
+			if(reveal == true){
+				if(selection == "https://www.nytimes.com/crosswords/game/mini"){
+					//String address = selection +
+					ImageIcon sol = new ImageIcon("./oldPuzzles/30october2018/solution.png");
+					JOptionPane.showMessageDialog(null,"","",JOptionPane.INFORMATION_MESSAGE, sol);
+				}
+				if(selection == "31october2018"){
+					//String address = selection +
+					ImageIcon sol = new ImageIcon("./oldPuzzles/30october2018/solution.png");
+					JOptionPane.showMessageDialog(null,"","",JOptionPane.INFORMATION_MESSAGE, sol);
+				}
+				
+				reveal = false;
+			}			
+			System.out.println();
 			//System.out.println(selection + " " + oldSelection);
 		}
 		

@@ -20,6 +20,15 @@ public class ButtonsPanel extends JPanel {
 		solveButton = new JButton("Solve");
 		clearButton = new JButton("Clear");
 		revealButton = new JButton("Reveal");
+		revealButton.addActionListener(new ActionListener() {//Add actionlistner to listen for change
+	        public void actionPerformed(ActionEvent e) {
+	        	Test.reveal = true;
+	        }
+	    });
+	    
+	    
+		
+		
 		
 		String[] dates = new String[]{"Today","30 October 2018", "31 October 2018", "1 November 2018", "2 November 2018"};
 		JComboBox<String> others = new JComboBox<>(dates);
@@ -52,10 +61,6 @@ public class ButtonsPanel extends JPanel {
 	        }
 	    });
 	    
-	    
-	    
-	    
-		
 		//showOtherButton = new JButton("Old Puzzles");
 		setLayout(new BoxLayout(this,BoxLayout.LINE_AXIS));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
