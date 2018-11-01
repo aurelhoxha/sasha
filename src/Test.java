@@ -58,12 +58,12 @@ public class Test extends JFrame{
 			if(reveal == true){
 				if(selection == "https://www.nytimes.com/crosswords/game/mini"){
 					//String address = selection +
-					ImageIcon sol = new ImageIcon("./oldPuzzles/30october2018/solution.png");
+					ImageIcon sol = new ImageIcon("./oldPuzzles/1november2018/solution.png");
 					JOptionPane.showMessageDialog(null,"","",JOptionPane.INFORMATION_MESSAGE, sol);
 				}
 				if(selection == "31october2018"){
 					//String address = selection +
-					ImageIcon sol = new ImageIcon("./oldPuzzles/30october2018/solution.png");
+					ImageIcon sol = new ImageIcon("./oldPuzzles/31october2018/solution.png");
 					JOptionPane.showMessageDialog(null,"","",JOptionPane.INFORMATION_MESSAGE, sol);
 				}
 				
