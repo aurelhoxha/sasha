@@ -1,6 +1,7 @@
 import javafx.scene.control.Cell;
-
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class CrosswordPanel extends JPanel{
 
 		JTextField[] cellText = new JTextField[25];
 		thePattern.setLayout(new GridLayout(5,5));
+		//int count = myClueNumber.length;
 		for(int i = 0; i < myClueNumber.length; i++ )
 			if (myClueNumber[i] == -1) {
 				cellText[i] = new JTextField();
@@ -29,7 +31,8 @@ public class CrosswordPanel extends JPanel{
 			} else {
 				String cellimg = "./img/" + myClueNumber[i] + ".png";
 				cellText[i] = new JTextField();
-				cellText[i].setDocument(new JTextFieldLimit(1));
+                cellText[i].addFocusListener(ColorChange.myFocusListener);
+                cellText[i].setDocument(new JTextFieldLimit(1));
 				cellText[i].setOpaque(false);
 				cellText[i].setHorizontalAlignment(JTextField.CENTER);
 				cellText[i].setFont(new Font("Helvetica", Font.PLAIN, 33));
@@ -40,6 +43,7 @@ public class CrosswordPanel extends JPanel{
 				cell.setLayout(new BorderLayout());
 				cell.add(cellText[i]);
 				thePattern.add(cell);
+
 			}
 
 		setLayout(new BorderLayout());
