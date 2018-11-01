@@ -7,33 +7,41 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileWriter;
 
 import javax.swing.*;
 
 public class Test extends JFrame{
 
-	static String selection = "https://www.nytimes.com/crosswords/game/mini";
+	static String selection = "Today";
 	static String oldSelection = "";
 	static boolean reveal = false;
+	static boolean store = false;
 	public static void main(String[] args) throws Exception {	
 		//Variables to save the data of the game
 		Integer[] myClueNumber = new Integer[25];
 		ArrayList<String> myAcrossClues = new ArrayList<String>();
 		ArrayList<String> myDownClues = new ArrayList<String>();
-		String gameDay;
-		String gameDate;
-		GameInformation myGame;
+		String gameDay = "";
+		String gameDate = "";
+		GameInformation myGame = null;
+		String adr = "";
 		
 		//Creation of the Game
 		JFrame myGameFrame = new JFrame("Sasha");;
 		
 		while(true){
 			if(!selection.equals(oldSelection)){
+
 				myGameFrame.dispose();
 				myGameFrame = new JFrame("Sasha");
-				//Get Game Information
-				//myGameFrame.dispose();
-				myGame = new GameInformation(selection);
+				
+				if(selection.equals("Today"))
+					adr = "https://www.nytimes.com/crosswords/game/mini";
+				else
+					adr = selection;
+				
+				myGame = new GameInformation(adr);
 				myGame.scrapeClueNumbers();
 				myGame.scrapeAcrossClues();
 				myGame.scrapeDownClues();
@@ -48,7 +56,7 @@ public class Test extends JFrame{
 				TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
 				ButtonsPanel myButtonsPanel = new ButtonsPanel();
 				CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myClueNumber);
-		
+				myButtonsPanel.others.setSelectedItem((selection == "Today") ? "Today" : gameDate);
 				//Setting Layout and Adding the Panels
 				myGameFrame.setLayout(new BorderLayout());
 				myGameFrame.add(myTopPanel,BorderLayout.NORTH);
@@ -58,21 +66,21 @@ public class Test extends JFrame{
 				myGameFrame.setSize(950, 650);
 				myGameFrame.setLocationRelativeTo(null);
 				myGameFrame.setVisible(true);
-				myGameFrame.setResizable(false);
+				//myGameFrame.setResizable(false);
 				
 				oldSelection = selection;
 			}
 			if(reveal == true){
 				String path = "";
 				ImageIcon solution;
-				if(selection == "https://www.nytimes.com/crosswords/game/mini"){
-					path = "./oldPuzzles/01 November 2018/solution.png";
-					solution = new ImageIcon(path);
+				if(selection == "Today"){
+					//path = "./oldPuzzles/October 30, 2018/solution.png";
+					//solution = new ImageIcon(path);
 	                JOptionPane.showMessageDialog(
 	                        null,
-	                        "",
-	                        "Solution for the puzzle", JOptionPane.INFORMATION_MESSAGE,
-	                        solution);
+	                        "No Solution saved for this puzzle",
+	                        "Solution for the puzzle", JOptionPane.INFORMATION_MESSAGE
+	                        );
 				}
 				else {
 					path = "./oldPuzzles/" + selection + "/solution.png";
@@ -84,7 +92,42 @@ public class Test extends JFrame{
 	                        solution);								
 				}
 				reveal = false;
-			}			
+			}	
+			if(store == true){
+				String dir = "./oldPuzzles/" + gameDate;
+				File theDir = new File(dir);
+
+				// if the directory does not exist, create it
+				if (!theDir.exists()) {
+				    System.out.println("creating directory: " + theDir.getName());
+				    boolean result = false;
+
+				    try{
+				        theDir.mkdir();
+				        result = true;
+				    } 
+				    catch(SecurityException se){
+				        //handle it
+				    }        
+				    if(result) {    
+				        System.out.println("DIR created");  
+				    }
+				    
+					try {
+						File file = new File(dir +"/htmlCode.txt");
+						FileWriter fileWriter = new FileWriter(file);
+						fileWriter.write(myGame.tempText);
+						fileWriter.flush();
+						fileWriter.close();
+					} 	
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+
+				}
+				store = false;
+			}
+			
 			System.out.println();
 		}
 	}

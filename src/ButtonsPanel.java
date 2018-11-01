@@ -15,7 +15,8 @@ public class ButtonsPanel extends JPanel {
 	JButton clearButton;
 	JButton revealButton;
 	JButton showOtherButton;
-	
+	JButton store;
+	JComboBox<String> others;
 	//Constuctors
 	public ButtonsPanel() {
 		//Set up the Components
@@ -35,27 +36,36 @@ public class ButtonsPanel extends JPanel {
 		
 		
 		//Adding Components to the Buttons Panel
+	    store = new JButton("Store");
 		solveButton = new JButton("Solve");
 		clearButton = new JButton("Clear");
 		revealButton = new JButton("Reveal");
+		
+		
 		revealButton.addActionListener(new ActionListener() {//Add actionlistner to listen for change in reveal button
 	        public void actionPerformed(ActionEvent e) {
 	        	Test.reveal = true;
 	        }
 	    });
+		
+	    store.addActionListener(new ActionListener() {//Add actionlistner to listen for change in reveal button
+	        public void actionPerformed(ActionEvent e) {
+	        	Test.store = true;
+	        }
+	    });
 	    
 		//String[] dates = new String[]{"Today","30 October 2018", "31 October 2018", "1 November 2018", "2 November 2018"};
-		String[] dates = new String[foldersInDirectory.size()];
-		for(int i = 0; i < foldersInDirectory.size(); i++)
-			dates[i] = foldersInDirectory.get(i);
+		String[] dates = new String[foldersInDirectory.size() + 1];
+		dates[0] = "Today";
+		for(int i = 1; i < foldersInDirectory.size() + 1; i++)
+			dates[i] = foldersInDirectory.get(i-1);
 		
-		JComboBox<String> others = new JComboBox<>(dates);
+		others = new JComboBox<>(dates);
 		
 	    Dimension d = others.getPreferredSize();
 	    others.setPreferredSize(new Dimension(50, d.height));
 	    others.addActionListener(new ActionListener() {//Add actionlistner to listen for change in dropdown menu
 	        public void actionPerformed(ActionEvent e) {
-
 	            String s = (String) others.getSelectedItem();//get the selected item
 	            Test.selection = s;
 	        }
@@ -65,7 +75,9 @@ public class ButtonsPanel extends JPanel {
 		setLayout(new BoxLayout(this,BoxLayout.LINE_AXIS));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
 		add(Box.createHorizontalGlue());
-		add(Box.createRigidArea(new Dimension(100, 0)));
+		add(Box.createRigidArea(new Dimension(90, 0)));
+		add(store);
+		add(Box.createRigidArea(new Dimension(10, 0)));
 		add(solveButton);
 		add(Box.createRigidArea(new Dimension(10, 0)));
 		add(clearButton);

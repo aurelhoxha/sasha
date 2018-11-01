@@ -11,6 +11,7 @@ public class GameInformation {
 	private Integer[] clueNumbers;
 	private String dayText;
 	private String dateText;
+	public String tempText;
 	
 	//Constructor
 	public GameInformation(String thePath) throws Exception {
@@ -23,7 +24,7 @@ public class GameInformation {
 		downClues = new ArrayList<String>();
 		clueNumbers = new Integer[25];
 		
-		String tempText = "";
+		tempText = "";
 		
 		if(!thePath.substring(thePath.length()-4).equals("mini")) {
 			File file = new File("./oldPuzzles/" + thePath + "/htmlCode.txt"); 
@@ -44,15 +45,7 @@ public class GameInformation {
 			in.close();
 		}
 		
-//		try {
-//			File file = new File("./oldPuzzles/1november2018/htmlCode.txt");
-//			FileWriter fileWriter = new FileWriter(file);
-//			fileWriter.write(tempText);
-//			fileWriter.flush();
-//			fileWriter.close();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+
 		//Indexes for required HTML Code
 		int startPosition = tempText.indexOf("<body>");
 		String positionToEnd = "</span></li></ol></div></article>";
