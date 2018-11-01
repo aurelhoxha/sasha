@@ -13,10 +13,10 @@ public class CrosswordPanel extends JPanel{
 	JPanel thePattern;
 	static JTextField[] cellText = new JTextField[25];
 	public CrosswordPanel(Integer[] myClueNumber) throws Exception {
-		selectedQuestion = new JLabel("Selected Question");
+//		selectedQuestion = new JLabel("Selected Question");
 		thePattern = new JPanel();
-		selectedQuestion.setFont(new Font("Serif",Font.BOLD,14));
-		selectedQuestion.setAlignmentX(Component.LEFT_ALIGNMENT);
+//		selectedQuestion.setFont(new Font("Serif",Font.BOLD,20));
+//		selectedQuestion.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		thePattern.setLayout(new GridLayout(5,5));
 		//int count = myClueNumber.length;
@@ -46,7 +46,7 @@ public class CrosswordPanel extends JPanel{
 			}
 
 		setLayout(new BorderLayout());
-		add(selectedQuestion, BorderLayout.NORTH);
+		//add(selectedQuestion, BorderLayout.NORTH);
 		add(thePattern,BorderLayout.CENTER);
 	}
 
