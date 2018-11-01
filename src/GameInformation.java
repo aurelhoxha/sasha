@@ -62,11 +62,15 @@ public class GameInformation {
 		
 		int cellsCovered = 0;
 		
-		while(cellsCovered <= 23) {
+		while(cellsCovered <= 24) {
 			
 			//Save the keyword to find HTML Code for Cells
 			String keywordForCellStart = "id=\"cell-id-" + cellsCovered + "\"";
-			String keywordForCellEnd = "id=\"cell-id-" + (cellsCovered + 1) + "\"" ;
+			String keywordForCellEnd;
+			if(cellsCovered <24 )
+				keywordForCellEnd = "id=\"cell-id-" + (cellsCovered + 1) + "\"" ;
+			else
+				keywordForCellEnd = "</rect></g></g><g data-group=\"grid\">";
 			int findCellStart = this.htmlCode.indexOf(keywordForCellStart);
 			findCellStart = findCellStart + keywordForCellStart.length();
 			int fincCellEnd = this.htmlCode.indexOf(keywordForCellEnd,findCellStart);
@@ -90,7 +94,7 @@ public class GameInformation {
 			}
 			cellsCovered++;
 		}
-		clueNumbers[24] = 0;
+		
 	}
 	
 	//Method that find the across clues
