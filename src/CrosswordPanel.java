@@ -78,7 +78,7 @@ public class CrosswordPanel extends JPanel{
 						if (ch == 'A' || ch == 'B' || ch == 'C'|| ch == 'Q'|| ch == 'W'|| ch == 'E'|| ch == 'R'|| ch == 'T'
 								|| ch == 'Y'|| ch == 'U'|| ch == 'I'|| ch == 'O'|| ch == 'P'|| ch == 'Z'|| ch == 'S'|| ch == 'D'
 								|| ch == 'F'|| ch == 'G'|| ch == 'H'|| ch == 'J'|| ch == 'K'|| ch == 'L'|| ch == 'X'|| ch == 'V'
-								|| ch == 'İ'|| ch == 'N'|| ch == 'M') {
+								/*|| ch == 'İ'*/|| ch == 'N'|| ch == 'M') {
 							if(myClueNumber[count+1] ==-1)
 								cellText[count+2].requestFocus();
 							else
