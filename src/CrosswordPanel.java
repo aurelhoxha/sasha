@@ -34,6 +34,19 @@ public class CrosswordPanel extends JPanel{
                 cellText[i].addFocusListener(ColorChange.myFocusListener);
                 int count = i;
 				cellText[i].addKeyListener(new KeyAdapter() {
+					public void keyPressed(KeyEvent event) {
+						if (event.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+							if (myClueNumber[count -1] == -1) {
+								cellText[count - 2].setText("");
+								cellText[count - 2].requestFocus();
+							}
+							else {
+								cellText[count - 1].setText("");
+								cellText[count - 1].requestFocus();
+							}
+						}
+					}
+
 					public void keyReleased(KeyEvent event) {
 						int pos = cellText[count].getCaretPosition();
 						cellText[count].setText(cellText[count].getText().toUpperCase());
@@ -44,8 +57,10 @@ public class CrosswordPanel extends JPanel{
 								|| ch == 'Y'|| ch == 'U'|| ch == 'I'|| ch == 'O'|| ch == 'P'|| ch == 'Z'|| ch == 'S'|| ch == 'D'
 								|| ch == 'F'|| ch == 'G'|| ch == 'H'|| ch == 'J'|| ch == 'K'|| ch == 'L'|| ch == 'X'|| ch == 'V'
 								|| ch == 'İ'|| ch == 'N'|| ch == 'M') {
-							cellText[count+1].requestFocus();
-
+							if(myClueNumber[count+1] ==-1)
+								cellText[count+2].requestFocus();
+							else
+								cellText[count+1].requestFocus();
 						}
 					}
 				});
