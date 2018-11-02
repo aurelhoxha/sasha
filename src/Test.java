@@ -1,12 +1,7 @@
 import java.awt.*;
-import java.io.FilenameFilter;
-import java.nio.file.Files;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.*;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileWriter;
 
 import javax.swing.*;

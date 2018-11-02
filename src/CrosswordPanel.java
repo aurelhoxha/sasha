@@ -1,11 +1,13 @@
-import javafx.scene.control.Cell;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-
 import javax.swing.*;
+import javax.swing.text.Caret;
 
 public class CrosswordPanel extends JPanel{
+
+	private final Color SIDE_COLOUR = Color.CYAN;
+	private final Color ACTIVE_COLOUR = Color.yellow;
+
 	JLabel selectedQuestion;
 	JPanel thePattern;
 	static JTextField[] cellText = new JTextField[25];
@@ -31,8 +33,28 @@ public class CrosswordPanel extends JPanel{
 				cellText[i] = new JTextField();
 				UpperCaseDocument ucd = new UpperCaseDocument();
 				cellText[i].setDocument(ucd);
-                cellText[i].addFocusListener(ColorChange.myFocusListener);
-                int count = i;
+				int countForColor=i;
+				cellText[i].addFocusListener(new FocusListener(){
+					@Override
+					public void focusGained(java.awt.event.FocusEvent focusEvent) {
+
+						cellText[countForColor] = (JTextField)focusEvent.getSource();
+						cellText[countForColor].setOpaque(true);
+						cellText[countForColor].setBackground(ACTIVE_COLOUR);
+						Caret caret = cellText[countForColor].getCaret();
+						caret.setSelectionVisible(false);
+						caret.setVisible(false);
+					}
+
+					public void focusLost(java.awt.event.FocusEvent focusEvent) {
+						cellText[countForColor] = (JTextField)focusEvent.getSource();
+						cellText[countForColor].setOpaque(false);
+						Caret caret = cellText[countForColor].getCaret();
+						caret.setSelectionVisible(false);
+						caret.setVisible(false);
+					}
+				});
+				int count = i;
 				cellText[i].addKeyListener(new KeyAdapter() {
 					public void keyPressed(KeyEvent event) {
 						if (event.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
