@@ -80,7 +80,7 @@ public class GameInformation {
 			if(cellsCovered <24 )
 				keywordForCellEnd = "id=\"cell-id-" + (cellsCovered + 1) + "\"" ;
 			else
-				keywordForCellEnd = "</rect></g></g><g data-group=\"grid\">";
+				keywordForCellEnd = "</g><g data-group=\"grid\">";
 			int findCellStart = this.htmlCode.indexOf(keywordForCellStart);
 			findCellStart = findCellStart + keywordForCellStart.length();
 			int fincCellEnd = this.htmlCode.indexOf(keywordForCellEnd,findCellStart);
