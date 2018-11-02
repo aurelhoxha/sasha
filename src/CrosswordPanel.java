@@ -1,9 +1,6 @@
 import javafx.scene.control.Cell;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -23,6 +20,8 @@ public class CrosswordPanel extends JPanel{
 		for(int i = 0; i < myClueNumber.length; i++ )
 			if (myClueNumber[i] == -1) {
 				cellText[i] = new JTextField();
+				UpperCaseDocument ucd = new UpperCaseDocument();
+				cellText[i].setDocument(ucd);
 				cellText[i].setBackground(Color.BLACK);
 				cellText[i].setEditable(false);
 				cellText[i].setBorder(BorderFactory.createLineBorder(Color.gray));
@@ -30,8 +29,28 @@ public class CrosswordPanel extends JPanel{
 			} else {
 				String cellimg = "./img/" + myClueNumber[i] + ".png";
 				cellText[i] = new JTextField();
+				UpperCaseDocument ucd = new UpperCaseDocument();
+				cellText[i].setDocument(ucd);
                 cellText[i].addFocusListener(ColorChange.myFocusListener);
-                cellText[i].setDocument(new JTextFieldLimit(1));
+                int count = i;
+				cellText[i].addKeyListener(new KeyAdapter() {
+					public void keyReleased(KeyEvent event) {
+						int pos = cellText[count].getCaretPosition();
+						cellText[count].setText(cellText[count].getText().toUpperCase());
+						cellText[count].setCaretPosition(pos);
+						char ch = cellText[count].getText().charAt(0);
+
+						if (ch == 'A' || ch == 'B' || ch == 'C'|| ch == 'Q'|| ch == 'W'|| ch == 'E'|| ch == 'R'|| ch == 'T'
+								|| ch == 'Y'|| ch == 'U'|| ch == 'I'|| ch == 'O'|| ch == 'P'|| ch == 'Z'|| ch == 'S'|| ch == 'D'
+								|| ch == 'F'|| ch == 'G'|| ch == 'H'|| ch == 'J'|| ch == 'K'|| ch == 'L'|| ch == 'X'|| ch == 'V'
+								|| ch == 'İ'|| ch == 'N'|| ch == 'M') {
+							cellText[count+1].requestFocus();
+
+						}
+					}
+				});
+
+				cellText[i].setDocument(new JTextFieldLimit(1));
 				cellText[i].setOpaque(false);
 				cellText[i].setHorizontalAlignment(JTextField.CENTER);
 				cellText[i].setFont(new Font("Helvetica", Font.PLAIN, 33));
