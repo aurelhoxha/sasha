@@ -16,20 +16,29 @@ public class ButtonsPanel extends JPanel {
 	JButton revealButton;
 	JButton showOtherButton;
 	JButton store;
+	File directory;
+	File[] directoryListAsFile;
+	FileFilter directoryFileFilter;
+	ArrayList<String> foldersInDirectory;
+	String[] dates;
 	JComboBox<String> others;
-	//Constuctors
+	Dimension d;
+	
+	//Constructors
 	public ButtonsPanel(Integer[] myClueNumber) {
 		//Set up the Components
+		
 		//ListSubdirectories
-		File directory = new File("./oldPuzzles/");
-	    FileFilter directoryFileFilter = new FileFilter() {
+		directory = new File("./oldPuzzles/");
+	    directoryFileFilter = new FileFilter() {
 	        public boolean accept(File file) {
 	            return file.isDirectory();
 	        }
 	    };
-			
-	    File[] directoryListAsFile = directory.listFiles(directoryFileFilter);
-	    ArrayList<String> foldersInDirectory = new ArrayList<String>(directoryListAsFile.length);
+		
+	    //Save the name of the folders in the directory
+	    directoryListAsFile = directory.listFiles(directoryFileFilter);
+	    foldersInDirectory = new ArrayList<String>(directoryListAsFile.length);
 	    for (File directoryAsFile : directoryListAsFile) {
 	        foldersInDirectory.add(directoryAsFile.getName());
 	    }
@@ -41,7 +50,23 @@ public class ButtonsPanel extends JPanel {
 		clearButton = new JButton("Clear");
 		revealButton = new JButton("Reveal");
 		
-		clearButton.addActionListener(new ActionListener() {//Add actionlistner to listen for change in reveal button
+		//Takes the Dates from the Folder
+		dates = new String[foldersInDirectory.size() + 1];
+		dates[0] = "Today";
+		for(int i = 1; i < foldersInDirectory.size() + 1; i++)
+			dates[i] = foldersInDirectory.get(i-1);
+		
+		//Initialize the ComboBox
+		others = new JComboBox<>(dates);
+		
+		//Set the dimensions of d
+		d = others.getPreferredSize();
+		
+		//Set the size of the ComboBox
+		others.setPreferredSize(new Dimension(50, d.height));
+		
+		//Add Action Listener to listen for change in clear button
+		clearButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	for(int i = 0; i < 25; i++){
 	        		if(myClueNumber[i] != -1)
@@ -50,31 +75,25 @@ public class ButtonsPanel extends JPanel {
 	        }
 	    });
 		
-		revealButton.addActionListener(new ActionListener() {//Add actionlistner to listen for change in reveal button
+		//Add Action Listener to listen for change in reveal button
+		revealButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	Test.reveal = true;
 	        }
 	    });
 		
-	    store.addActionListener(new ActionListener() {//Add actionlistner to listen for change in reveal button
+		//Add Action Listener to listen for change in store button
+	    store.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	Test.store = true;
 	        }
 	    });
 	    
-		//String[] dates = new String[]{"Today","30 October 2018", "31 October 2018", "1 November 2018", "2 November 2018"};
-		String[] dates = new String[foldersInDirectory.size() + 1];
-		dates[0] = "Today";
-		for(int i = 1; i < foldersInDirectory.size() + 1; i++)
-			dates[i] = foldersInDirectory.get(i-1);
-		
-		others = new JComboBox<>(dates);
-		
-	    Dimension d = others.getPreferredSize();
-	    others.setPreferredSize(new Dimension(50, d.height));
-	    others.addActionListener(new ActionListener() {//Add actionlistner to listen for change in dropdown menu
+	    //Add Action Listener to listen for change in ComboBox menu 
+	    others.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
-	            String s = (String) others.getSelectedItem();//get the selected item
+	        	//Get the selected item
+	            String s = (String) others.getSelectedItem();
 	            Test.selection = s;
 	        }
 	    });
