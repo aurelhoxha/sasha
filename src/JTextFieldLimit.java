@@ -2,7 +2,7 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-class JTextFieldLimit extends PlainDocument {
+class JTextFieldLimit extends PlainDocument {  //this class for limiting box to have only one char per box.
     private int limit;
     JTextFieldLimit(int limit) {
         super();
