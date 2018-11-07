@@ -6,6 +6,7 @@ import javax.swing.*;
 //Panel that Save the AcrossQuestions
 public class AcrossPanel extends JPanel{
 	
+	private static final long serialVersionUID = 6014559460886907016L;
 	//Components needed for Panel
 	JLabel acrossTitle;
 	JPanel acrossQuestions;
