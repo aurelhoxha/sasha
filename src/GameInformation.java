@@ -47,10 +47,14 @@ public class GameInformation {
 		
 
 		//Indexes for required HTML Code
+
+		//Find the Beginning of the Body and end of the Body HTML Code
 		int startPosition = tempText.indexOf("<body>");
 		String positionToEnd = "</span></li></ol></div></article>";
 		int endPosition = tempText.indexOf(positionToEnd);
 		endPosition = endPosition + positionToEnd.length();
+
+		//Find the Date Information Details of the Puzzle
 		String dayTextKeyword = "<div class=\"PuzzleDetails-dayOfWeek--3rr8s\">";
 		int dayTextStartPosition = tempText.indexOf(dayTextKeyword);
 		dayTextStartPosition = dayTextStartPosition + dayTextKeyword.length();
@@ -58,6 +62,8 @@ public class GameInformation {
 		int dateTextStartPosition = tempText.indexOf("<",dayTextEndPosition+1);
 		dateTextStartPosition = tempText.indexOf(">",dateTextStartPosition);
 		int dateTextEndPosition = tempText.indexOf("<",dateTextStartPosition);
+
+		//Register the Date Information Accordingly
 		dayText = tempText.substring(dayTextStartPosition,dayTextEndPosition);
 		dateText = tempText.substring(dateTextStartPosition+1,dateTextEndPosition);
 		
