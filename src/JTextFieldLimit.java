@@ -1,8 +1,10 @@
+//THIS CLASS IS ABOUT MAKING CELLS ACCEPT ONLY ONE LETTER
+
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.PlainDocument;
 
-class JTextFieldLimit extends PlainDocument {  //this class for limiting box to have only one char per box.
+class JTextFieldLimit extends PlainDocument {  
     private int limit;
     JTextFieldLimit(int limit) {
         super();

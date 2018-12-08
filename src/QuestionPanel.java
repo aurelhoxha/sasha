@@ -1,6 +1,7 @@
+//QUESTION PANEL WILL HAVE THE ACROSS AND DOWN CLUES
+
 import java.awt.*;
 import java.util.*;
-
 import javax.swing.*;
 
 public class QuestionPanel extends JPanel {
@@ -11,8 +12,7 @@ public class QuestionPanel extends JPanel {
 	
 	//Constructor of QuestionPanel takes Across and Down Clues
 	//Send the Clues to Corresponding inner Panels
-	public QuestionPanel(ArrayList<String> myAcrossClues, ArrayList<String> myDownClues) {
-		
+	public QuestionPanel(ArrayList<String> myAcrossClues, ArrayList<String> myDownClues) {	
 		//Initialization of the Inner Panels
 		myAcrossPanel = new AcrossPanel(myAcrossClues);
 		myDownPanel = new DownPanel(myDownClues);

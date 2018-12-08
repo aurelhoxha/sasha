@@ -1,3 +1,5 @@
+//PANEL THAT WILL CONTAIN DOWN CLUES
+
 import java.awt.*;
 import java.util.*;
 

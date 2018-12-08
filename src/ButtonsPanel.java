@@ -1,3 +1,5 @@
+//PANEL THAT WILL CONTAIN THE BUTTONS OF THE APPLICATION
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -7,12 +9,11 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 
-//Panel that Contains the Button of the Game
 public class ButtonsPanel extends JPanel {
-	
 	//Components
 	JButton solveButton;
 	JButton clearButton;
+	
 	//JButton revealButton;
 	JButton showOtherButton;
 	JButton store;
@@ -27,7 +28,6 @@ public class ButtonsPanel extends JPanel {
 	//Constructors
 	public ButtonsPanel(Integer[] myClueNumber) {
 		//Set up the Components
-		
 		//ListSubdirectories
 		directory = new File("./oldPuzzles/");
 	    directoryFileFilter = new FileFilter() {
@@ -42,7 +42,6 @@ public class ButtonsPanel extends JPanel {
 	    for (File directoryAsFile : directoryListAsFile) {
 	        foldersInDirectory.add(directoryAsFile.getName());
 	    }
-		
 		
 		//Adding Components to the Buttons Panel
 	    store = new JButton("Store");
@@ -120,6 +119,4 @@ public class ButtonsPanel extends JPanel {
 		add(others);
 		add(Box.createRigidArea(new Dimension(300, 0)));		
 	}
-	
-	
 }

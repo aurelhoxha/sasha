@@ -1,15 +1,14 @@
+//SIMPLE PANEL ABOUT THE AUTHOR OF THE PUZZLE
+
 import java.awt.*;
 import javax.swing.*;
 
-//Panel That Contain Information for the Author of the Puzzle
 public class InfoPanel extends JPanel {
-	
-	//JLabel that keep the Information of the Author
+	//JLabel that keeps the Information of the Author
 	private JLabel infoLabel;
 	
 	//Constructor
 	public InfoPanel() {
-		
 		//Giving value to the the infoLabel
 		infoLabel = new JLabel("Mini Crossword - By JOEL FAGLIANO");
 		

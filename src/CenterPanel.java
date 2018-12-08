@@ -1,10 +1,10 @@
+//PANEL THAT INCLUDE OUR PUZZLE, CLUES AND OFFICIAL SOLUTION
+
 import java.awt.*;
 import java.util.*;
-
 import javax.swing.*;
 
 public class CenterPanel extends JPanel {
-	
 	//Components Needed for the Center Panel
 	QuestionPanel myQuestionPanel;
 	MainCrosswordPanel myCrosswordPanel;

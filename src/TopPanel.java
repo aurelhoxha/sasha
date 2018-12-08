@@ -1,10 +1,12 @@
+//TOP PANEL WILL HAVE ONLY DATE AND GENERAL INFO ABOUT PUZZLE
+
 import java.awt.*;
 import javax.swing.*;
 
 //The Panel that Contains Both the Date and Info of the Puzzle
 public class TopPanel extends JPanel {
 	
-	//Panels for the inner Panels
+	//Panels for the date and info
 	DatePanel myDatePanel;
 	InfoPanel myInfoPanel;
 	

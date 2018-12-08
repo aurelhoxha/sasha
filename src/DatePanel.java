@@ -1,7 +1,8 @@
+//PANEL THAT WILL CONTATIN THE DAY AND DATE OF PUZZLE
+
 import java.awt.*;
 import javax.swing.*;
 
-//Panel That Contain Information for Date
 public class DatePanel extends JPanel {
 	
 	//JLabel to keep the day and the date of the Puzzle

@@ -1,6 +1,7 @@
+//THIS CLASS WILL HAVE THE CROSSWORD PANEL
+
 import java.awt.*;
 import java.util.*;
-
 import javax.swing.*;
 
 public class MainCrosswordPanel extends JPanel {
@@ -12,6 +13,4 @@ public class MainCrosswordPanel extends JPanel {
 		add(myCrosswordPanel);
 		add(Box.createRigidArea(new Dimension(0, 100)));
 	}
-	
-
 }

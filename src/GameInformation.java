@@ -1,9 +1,10 @@
+// CLASS THAT WILL GET THE URL, OR DATE AND SCRAPE CLUES and BLOCK CELLS 
+
 import java.net.*;
 import java.util.*;
 import java.io.*;
 
 public class GameInformation {
-	
 	//Variables
 	public String htmlCode;
 	private ArrayList<String> acrossClues;
@@ -23,9 +24,9 @@ public class GameInformation {
 		acrossClues = new ArrayList<String>();
 		downClues = new ArrayList<String>();
 		clueNumbers = new Integer[25];
-		
 		tempText = "";
 		
+		//If the path is not today's date...
 		if(!thePath.substring(thePath.length()-4).equals("mini")) {
 			File file = new File("./oldPuzzles/" + thePath + "/htmlCode.txt"); 
 			Scanner sc = new Scanner(file); 
@@ -45,9 +46,7 @@ public class GameInformation {
 			in.close();
 		}
 		
-
 		//Indexes for required HTML Code
-
 		//Find the Beginning of the Body and end of the Body HTML Code
 		int startPosition = tempText.indexOf("<body>");
 		String positionToEnd = "</span></li></ol></div></article>";
@@ -72,14 +71,12 @@ public class GameInformation {
 		htmlCode= returnText;
 	}
 	
-		
 	//Method that finds the cells that are blocked
 	public void scrapeClueNumbers() {
 		
 		int cellsCovered = 0;
 		
 		while(cellsCovered <= 24) {
-			
 			//Save the keyword to find HTML Code for Cells
 			String keywordForCellStart = "id=\"cell-id-" + cellsCovered + "\"";
 			String keywordForCellEnd;
@@ -110,12 +107,10 @@ public class GameInformation {
 			}
 			cellsCovered++;
 		}
-		
 	}
 	
 	//Method that find the across clues
 	public void scrapeAcrossClues() {
-		
 		//Save the starting keyword for HTML Tag for Across
 		String keywordForAcrossStart = "<h3 class=\"ClueListMobile-title--3tRr-\">Across</h3>";
 		
@@ -128,8 +123,7 @@ public class GameInformation {
 		int readEnd = this.htmlCode.indexOf(keywordForAcrossEnd);
 		
 		//Read everything between Across HTML Code
-		while(readBeginning < readEnd ) {
-			
+		while(readBeginning < readEnd ) {	
 			//Save keyword that is used to take the number of Question
 			String keywordForStartNumbersAcross = "<span class=\"Clue-label--2IdMY\">";
 			String keywordFornEndNumberAcross = "</span><span class=\"Clue-text--3lZl7\">";
@@ -158,12 +152,10 @@ public class GameInformation {
 				readBeginning = readEnd;
 			else
 				readBeginning = clueReadingEnd;
-		}
-		
+		}	
 	}
 	
 	public void scrapeDownClues() {
-		
 		//Save the starting keyword for HTML Tag for Down
 		String keywordForDownStart = "<h3 class=\"ClueListMobile-title--3tRr-\">Down</h3>";
 		
@@ -173,7 +165,6 @@ public class GameInformation {
 		
 		//Read everything between Down HTML Code
 		while(readBeginning < this.htmlCode.length() ) {
-			
 			//Save keyword that is used to take the number of Question
 			String keywordForStartNumbersAcross = "<span class=\"Clue-label--2IdMY\">";
 			String keywordFornEndNumberAcross = "</span><span class=\"Clue-text--3lZl7\">";
@@ -217,7 +208,6 @@ public class GameInformation {
 			System.out.println(acrossClues.get(i));
 	}
 	
-	
 	//Get the ArrayList of Block Cells
 	public Integer[] getClueNumbers() {
 		return clueNumbers;
@@ -248,9 +238,4 @@ public class GameInformation {
 		for(int i = 0; i < clueNumbers.length;i++)
 			System.out.println("At position " + i + " value : " + clueNumbers[i]);
 	}
-		
-	
-	
-	
-
 }

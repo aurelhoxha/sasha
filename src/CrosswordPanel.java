@@ -1,3 +1,5 @@
+//PANEL THAT WILL CONTAIN THE PUZZLE CELLS AND WILL BE PLACED ON THE LEFT PART OF CENTER PANEL
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -8,16 +10,12 @@ public class CrosswordPanel extends JPanel{
 	private final Color SIDE_COLOUR = Color.CYAN;
 	private final Color ACTIVE_COLOUR = Color.yellow;
 
-	JLabel selectedQuestion;
 	JPanel thePattern;
 	static JTextField[] cellText = new JTextField[25];
 	public CrosswordPanel(Integer[] myClueNumber) throws Exception {
-//		selectedQuestion = new JLabel("Selected Question");
 		thePattern = new JPanel();
-//		selectedQuestion.setFont(new Font("Serif",Font.BOLD,20));
-//		selectedQuestion.setAlignmentX(Component.LEFT_ALIGNMENT);
-
 		thePattern.setLayout(new GridLayout(5,5));
+		
 		int fin = myClueNumber.length;
 		for(int i = 0; i < fin; i++ )
 			if (myClueNumber[i] == -1) {
@@ -108,12 +106,10 @@ public class CrosswordPanel extends JPanel{
 					cell.add(cellText[i]);
 					thePattern.add(cell);
 				}
-
 			}
 
 		setLayout(new BorderLayout());
 		//add(selectedQuestion, BorderLayout.NORTH);
 		add(thePattern,BorderLayout.CENTER);
 	}
-
 }
