@@ -16,13 +16,21 @@ public class CenterPanel extends JPanel {
 		myQuestionPanel = new QuestionPanel(myAcrossClues, myDownClues);
 		myCrosswordPanel = new MainCrosswordPanel(myClueNumber);
 		
+		JPanel solutionPanel = new JPanel(new BorderLayout());
+		String meh = "./oldPuzzles/" + Test.selection + "/solution.png";
+		ImageIcon img = new ImageIcon(meh);
+		JLabel lab = new JLabel(img);
+		solutionPanel.add(lab, BorderLayout.CENTER);
+		
 		//Adding Inner Panels to the Central Panel
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		add(Box.createRigidArea(new Dimension(20, 0)));
 		add(myCrosswordPanel);
-		add(Box.createRigidArea(new Dimension(60, 0)));
+		add(Box.createRigidArea(new Dimension(40, 0)));
 		add(myQuestionPanel);
-		//add(Box.createRigidArea(new Dimension(80, 0)));
+		add(Box.createRigidArea(new Dimension(20, 0)));
+		add(solutionPanel);
+		add(Box.createRigidArea(new Dimension(10, 0)));
 	}
 
 }

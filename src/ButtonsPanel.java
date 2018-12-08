@@ -13,7 +13,7 @@ public class ButtonsPanel extends JPanel {
 	//Components
 	JButton solveButton;
 	JButton clearButton;
-	JButton revealButton;
+	//JButton revealButton;
 	JButton showOtherButton;
 	JButton store;
 	File directory;
@@ -48,7 +48,7 @@ public class ButtonsPanel extends JPanel {
 	    store = new JButton("Store");
 		solveButton = new JButton("Solve");
 		clearButton = new JButton("Clear");
-		revealButton = new JButton("Reveal");
+		//revealButton = new JButton("Reveal");
 		
 		//Takes the Dates from the Folder
 		dates = new String[foldersInDirectory.size() + 1];
@@ -76,11 +76,11 @@ public class ButtonsPanel extends JPanel {
 	    });
 		
 		//Add Action Listener to listen for change in reveal button
-		revealButton.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	        	Test.reveal = true;
-	        }
-	    });
+//		revealButton.addActionListener(new ActionListener() {
+//	        public void actionPerformed(ActionEvent e) {
+//	        	Test.reveal = true;
+//	        }
+//	    });
 		
 		//Add Action Listener to listen for change in store button
 	    store.addActionListener(new ActionListener() {
@@ -93,16 +93,16 @@ public class ButtonsPanel extends JPanel {
 	    others.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
 	        	//Get the selected item
-	            String s = (String) others.getSelectedItem();
+	            String s = (String)others.getSelectedItem();
 	            Test.selection = s;
 	        }
 	    });
 	    
-	    solveButton.addActionListener(new ActionListener() {
-	        public void actionPerformed(ActionEvent e) {
-	        	Test.solve = true;
-	        }
-	    });
+//	    solveButton.addActionListener(new ActionListener() {
+//	        public void actionPerformed(ActionEvent e) {
+//	        	Test.solve = true;
+//	        }
+//	    });
 	    
 		//showOtherButton = new JButton("Old Puzzles");
 		setLayout(new BoxLayout(this,BoxLayout.LINE_AXIS));
@@ -115,10 +115,10 @@ public class ButtonsPanel extends JPanel {
 		add(Box.createRigidArea(new Dimension(10, 0)));
 		add(clearButton);
 		add(Box.createRigidArea(new Dimension(10, 0)));
-		add(revealButton);
-		add(Box.createRigidArea(new Dimension(10, 0)));
+		//add(revealButton);
+		//add(Box.createRigidArea(new Dimension(10, 0)));
 		add(others);
-		add(Box.createRigidArea(new Dimension(100, 0)));		
+		add(Box.createRigidArea(new Dimension(300, 0)));		
 	}
 	
 	

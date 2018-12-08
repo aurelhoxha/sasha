@@ -10,7 +10,7 @@ public class Test extends JFrame{
 
 	static String selection = "Today";
 	static String oldSelection = "";
-	static boolean reveal = false;
+	//static boolean reveal = false;
 	static boolean store = false;
 	static boolean solve = false;
 	public static void main(String[] args) throws Exception {	
@@ -59,34 +59,34 @@ public class Test extends JFrame{
 				myGameFrame.add(myButtonsPanel,BorderLayout.SOUTH);
 				myGameFrame.add(myCenterPanel,BorderLayout.CENTER);
 				myGameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-				myGameFrame.setSize(950, 650);
+				myGameFrame.setSize(1250, 720);
 				myGameFrame.setLocationRelativeTo(null);
 				myGameFrame.setVisible(true);
 				myGameFrame.setResizable(false);
 				
 				oldSelection = selection;
 			}
-			if(reveal == true){
-				String path = "";
-				ImageIcon solution;
-				if(selection == "Today"){
-	                JOptionPane.showMessageDialog(
-	                        null,
-	                        "No Solution saved for this puzzle",
-	                        "Solution for the puzzle", JOptionPane.INFORMATION_MESSAGE
-	                        );
-				}
-				else {
-					path = "./oldPuzzles/" + selection + "/solution.png";
-					solution = new ImageIcon(path);
-	                JOptionPane.showMessageDialog(
-	                        null,
-	                        "",
-	                        "Solution for the puzzle", JOptionPane.INFORMATION_MESSAGE,
-	                        solution);								
-				}
-				reveal = false;
-			}	
+//			if(reveal == true){
+//				String path = "";
+//				ImageIcon solution;
+//				if(selection == "Today"){
+//	                JOptionPane.showMessageDialog(
+//	                        null,
+//	                        "No Solution saved for this puzzle",
+//	                        "Solution for the puzzle", JOptionPane.INFORMATION_MESSAGE
+//	                        );
+//				}
+//				else {
+//					path = "./oldPuzzles/" + selection + "/solution.png";
+//					solution = new ImageIcon(path);
+//	                JOptionPane.showMessageDialog(
+//	                        null,
+//	                        "",
+//	                        "Solution for the puzzle", JOptionPane.INFORMATION_MESSAGE,
+//	                        solution);								
+//				}
+//				reveal = false;
+//			}	
 			if(store == true){
 				String dir = "./oldPuzzles/" + gameDate;
 				File theDir = new File(dir);
