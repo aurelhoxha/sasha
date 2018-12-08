@@ -24,5 +24,4 @@ public class QuestionPanel extends JPanel {
 		add(myDownPanel);
 		add(Box.createRigidArea(new Dimension(0, 100)));
 	}
-
 }
