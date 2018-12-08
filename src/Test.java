@@ -120,7 +120,7 @@ public class Test extends JFrame{
 				}
 				store = false;
 			}	
-			System.out.println();
+			System.out.print("");
 		}
 	}
 }
