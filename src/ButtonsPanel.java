@@ -45,6 +45,11 @@ public class ButtonsPanel extends JPanel {
 		
 		//Adding Components to the Buttons Panel
 	    store = new JButton("Store");
+	    
+	    if(Test.selection != "Today"){
+	    	store.setEnabled(false);
+	    }
+	    
 		solveButton = new JButton("Solve");
 		clearButton = new JButton("Clear");
 		//revealButton = new JButton("Reveal");

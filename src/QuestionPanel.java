@@ -5,7 +5,6 @@ import java.util.*;
 import javax.swing.*;
 
 public class QuestionPanel extends JPanel {
-	
 	//Inner Panels needed for the Game
 	AcrossPanel myAcrossPanel;
 	DownPanel myDownPanel;
@@ -19,11 +18,11 @@ public class QuestionPanel extends JPanel {
 		
 		//Adding the Inner Panels to the Question Panel
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-		add(Box.createRigidArea(new Dimension(0, 110)));
+		add(Box.createRigidArea(new Dimension(0, 100)));
 		add(myAcrossPanel);
 		add(Box.createRigidArea(new Dimension(0, 10)));
 		add(myDownPanel);
-		add(Box.createRigidArea(new Dimension(0, 120)));
+		add(Box.createRigidArea(new Dimension(0, 100)));
 	}
 
 }

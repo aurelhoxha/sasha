@@ -124,8 +124,14 @@ public class Test extends JFrame{
 				store = false;
 			}	
 			if(solve == true) {
-				System.out.println("Solve is true");
+				System.out.println("Started Solving");
 				solve = false;
+				System.out.println("Determining Cells that should match with each other");
+				
+				
+				
+				
+				
 			}
 			System.out.print("");
 		}
