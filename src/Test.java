@@ -7,12 +7,12 @@ import java.io.FileWriter;
 import javax.swing.*;
 
 public class Test extends JFrame{
-
 	static String selection = "Today";
 	static String oldSelection = "";
 	//static boolean reveal = false;
 	static boolean store = false;
 	static boolean solve = false;
+	
 	public static void main(String[] args) throws Exception {	
 		//Variables to save the data of the game
 		Integer[] myClueNumber = new Integer[25];
@@ -26,8 +26,8 @@ public class Test extends JFrame{
 		//Creation of the Game
 		JFrame myGameFrame = new JFrame("Sasha");;
 		
-		while(true){
-			if(!selection.equals(oldSelection)){
+		while(true) {
+			if(!selection.equals(oldSelection)) {
 				myGameFrame.dispose();
 				myGameFrame = new JFrame("Sasha");
 				
@@ -48,11 +48,13 @@ public class Test extends JFrame{
 				myDownClues = myGame.getDownClues();
 				gameDay = myGame.getGameDay();
 				gameDate = myGame.getGameDate();
+				
 				//Initialization of the Main Panels
 				TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
 				ButtonsPanel myButtonsPanel = new ButtonsPanel(myClueNumber);
 				CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myClueNumber);
 				myButtonsPanel.others.setSelectedItem((selection == "Today") ? "Today" : gameDate);
+				
 				//Setting Layout and Adding the Panels
 				myGameFrame.setLayout(new BorderLayout());
 				myGameFrame.add(myTopPanel,BorderLayout.NORTH);
@@ -66,7 +68,7 @@ public class Test extends JFrame{
 				
 				oldSelection = selection;
 			}
-//			if(reveal == true){
+//			if(reveal == true) {
 //				String path = "";
 //				ImageIcon solution;
 //				if(selection == "Today"){
@@ -87,7 +89,7 @@ public class Test extends JFrame{
 //				}
 //				reveal = false;
 //			}	
-			if(store == true){
+			if(store == true) {
 				String dir = "./oldPuzzles/" + gameDate;
 				File theDir = new File(dir);
 
@@ -121,7 +123,7 @@ public class Test extends JFrame{
 				}
 				store = false;
 			}	
-			if(solve == true){
+			if(solve == true) {
 				System.out.println("Solve is true");
 				solve = false;
 			}
