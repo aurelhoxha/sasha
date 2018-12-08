@@ -82,7 +82,7 @@ public class CrosswordPanel extends JPanel{
 								|| ch == 'Y'|| ch == 'U'|| ch == 'I'|| ch == 'O'|| ch == 'P'|| ch == 'Z'|| ch == 'S'|| ch == 'D'
 								|| ch == 'F'|| ch == 'G'|| ch == 'H'|| ch == 'J'|| ch == 'K'|| ch == 'L'|| ch == 'X'|| ch == 'V'
 								/*|| ch == 'İ'*/|| ch == 'N'|| ch == 'M') {  //shitty solution for detecting alphabet.
-							if(myClueNumber[count+1] ==-1)
+							if(myClueNumber[count+1] == -1)
 								cellText[count+2].requestFocus();
 							else
 								cellText[count+1].requestFocus();

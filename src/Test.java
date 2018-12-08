@@ -12,6 +12,7 @@ public class Test extends JFrame{
 	static String oldSelection = "";
 	static boolean reveal = false;
 	static boolean store = false;
+	static boolean solve = false;
 	public static void main(String[] args) throws Exception {	
 		//Variables to save the data of the game
 		Integer[] myClueNumber = new Integer[25];
@@ -120,6 +121,10 @@ public class Test extends JFrame{
 				}
 				store = false;
 			}	
+			if(solve == true){
+				System.out.println("Solve is true");
+				solve = false;
+			}
 			System.out.print("");
 		}
 	}

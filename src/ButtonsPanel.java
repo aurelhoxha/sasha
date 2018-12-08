@@ -98,6 +98,12 @@ public class ButtonsPanel extends JPanel {
 	        }
 	    });
 	    
+	    solveButton.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent e) {
+	        	Test.solve = true;
+	        }
+	    });
+	    
 		//showOtherButton = new JButton("Old Puzzles");
 		setLayout(new BoxLayout(this,BoxLayout.LINE_AXIS));
 		setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
