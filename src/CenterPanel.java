@@ -11,16 +11,24 @@ public class CenterPanel extends JPanel {
 	
 	//Initialization of the Center Panel
 	public CenterPanel(ArrayList<String> myAcrossClues, ArrayList<String> myDownClues, Integer[] myClueNumber ) throws Exception {
-
 		//Passing the parameters to the Inner Panels
 		myQuestionPanel = new QuestionPanel(myAcrossClues, myDownClues);
 		myCrosswordPanel = new MainCrosswordPanel(myClueNumber);
 		
 		JPanel solutionPanel = new JPanel(new BorderLayout());
-		String meh = "./oldPuzzles/" + Test.selection + "/solution.png";
-		ImageIcon img = new ImageIcon(meh);
-		JLabel lab = new JLabel(img);
-		solutionPanel.add(lab, BorderLayout.CENTER);
+		//System.out.println("Finding official solution for the current selection");
+		if(Test.selection.equals("Today")){
+			String meh = "./oldPuzzles/" + Test.gameDate + "/solution.png";
+			ImageIcon img = new ImageIcon(meh);
+			JLabel lab = new JLabel(img);
+			solutionPanel.add(lab, BorderLayout.CENTER);
+		}
+		else {
+			String meh = "./oldPuzzles/" + Test.selection + "/solution.png";
+			ImageIcon img = new ImageIcon(meh);
+			JLabel lab = new JLabel(img);
+			solutionPanel.add(lab, BorderLayout.CENTER); 
+		}
 		
 		//Adding Inner Panels to the Central Panel
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

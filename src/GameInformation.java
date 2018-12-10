@@ -16,7 +16,6 @@ public class GameInformation {
 	
 	//Constructor
 	public GameInformation(String thePath) throws Exception {
-		
 		//Initialization of the variables
 		htmlCode = "";
 		dayText = "";
@@ -30,12 +29,14 @@ public class GameInformation {
 		if(!thePath.substring(thePath.length()-4).equals("mini")) {
 			File file = new File("./oldPuzzles/" + thePath + "/htmlCode.txt"); 
 			Scanner sc = new Scanner(file); 
+			//System.out.println("Looking for the selected date in old puzzles");
 			while (sc.hasNextLine())
 				tempText = tempText + sc.nextLine() + "\n";
 		}
 		else {
 			//Making the Connection with the WEBSITE
 			//Taking the HTML Code
+			//System.out.println("Connecting to the NY MiniPuzzle");
 			URL oracle = new URL(thePath);
 			BufferedReader in = new BufferedReader(
 					new InputStreamReader(oracle.openStream()));
@@ -75,7 +76,7 @@ public class GameInformation {
 	public void scrapeClueNumbers() {
 		
 		int cellsCovered = 0;
-		
+		System.out.println("Finding block cells");
 		while(cellsCovered <= 24) {
 			//Save the keyword to find HTML Code for Cells
 			String keywordForCellStart = "id=\"cell-id-" + cellsCovered + "\"";
@@ -111,6 +112,7 @@ public class GameInformation {
 	
 	//Method that find the across clues
 	public void scrapeAcrossClues() {
+		//System.out.println("Generating Across Clues from HTML");
 		//Save the starting keyword for HTML Tag for Across
 		String keywordForAcrossStart = "<h3 class=\"ClueListMobile-title--3tRr-\">Across</h3>";
 		
@@ -156,6 +158,7 @@ public class GameInformation {
 	}
 	
 	public void scrapeDownClues() {
+		//System.out.println("Generating Down Clues from HTML");
 		//Save the starting keyword for HTML Tag for Down
 		String keywordForDownStart = "<h3 class=\"ClueListMobile-title--3tRr-\">Down</h3>";
 		

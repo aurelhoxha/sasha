@@ -6,7 +6,6 @@ import javax.swing.*;
 import javax.swing.text.Caret;
 
 public class CrosswordPanel extends JPanel{
-
 	private final Color SIDE_COLOUR = Color.CYAN;
 	private final Color ACTIVE_COLOUR = Color.yellow;
 

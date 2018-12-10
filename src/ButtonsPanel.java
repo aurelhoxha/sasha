@@ -13,8 +13,6 @@ public class ButtonsPanel extends JPanel {
 	//Components
 	JButton solveButton;
 	JButton clearButton;
-	
-	//JButton revealButton;
 	JButton showOtherButton;
 	JButton store;
 	File directory;
@@ -22,6 +20,7 @@ public class ButtonsPanel extends JPanel {
 	FileFilter directoryFileFilter;
 	ArrayList<String> foldersInDirectory;
 	String[] dates;
+	String[] datesUpdated;
 	JComboBox<String> others;
 	Dimension d;
 	
@@ -57,11 +56,30 @@ public class ButtonsPanel extends JPanel {
 		//Takes the Dates from the Folder
 		dates = new String[foldersInDirectory.size() + 1];
 		dates[0] = "Today";
-		for(int i = 1; i < foldersInDirectory.size() + 1; i++)
+		int index = -1;
+		
+		//System.out.println("Getting all possible puzzles from folder");
+		for(int i = 1; i < foldersInDirectory.size() + 1; i++) {
 			dates[i] = foldersInDirectory.get(i-1);
+			
+			if(dates[i].equals(Test.gameDate) && Test.selection.equals("Today"))
+				index = i;
+		}
 		
 		//Initialize the ComboBox
 		others = new JComboBox<>(dates);
+		
+		if(Test.selection.equals("Today")){
+			datesUpdated = new String[foldersInDirectory.size()];
+			for(int i = index; i < foldersInDirectory.size(); i++){
+				dates[i] = dates[i + 1];
+			}
+			for(int i = 0; i < foldersInDirectory.size(); i++)
+				datesUpdated[i] = dates[i];
+			
+			//Change options if selection is Today, so that we do not display the today's date too.
+			others = new JComboBox<>(datesUpdated);
+		}
 		
 		//Set the dimensions of d
 		d = others.getPreferredSize();
@@ -72,19 +90,13 @@ public class ButtonsPanel extends JPanel {
 		//Add Action Listener to listen for change in clear button
 		clearButton.addActionListener(new ActionListener() {
 	        public void actionPerformed(ActionEvent e) {
+	        	//System.out.println("Clearing all puzzle cells");
 	        	for(int i = 0; i < 25; i++){
 	        		if(myClueNumber[i] != -1)
 	        			CrosswordPanel.cellText[i].setText("");
 	        	}
 	        }
 	    });
-		
-		//Add Action Listener to listen for change in reveal button
-//		revealButton.addActionListener(new ActionListener() {
-//	        public void actionPerformed(ActionEvent e) {
-//	        	Test.reveal = true;
-//	        }
-//	    });
 		
 		//Add Action Listener to listen for change in store button
 	    store.addActionListener(new ActionListener() {
@@ -98,7 +110,9 @@ public class ButtonsPanel extends JPanel {
 	        public void actionPerformed(ActionEvent e) {
 	        	//Get the selected item
 	            String s = (String)others.getSelectedItem();
+	            //System.out.println("Selected Date has changed to " + s);
 	            Test.selection = s;
+	           
 	        }
 	    });
 	    

@@ -1,7 +1,10 @@
 import java.awt.*;
 import java.io.IOException;
 import java.util.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 
 import javax.swing.*;
@@ -9,7 +12,7 @@ import javax.swing.*;
 public class Test extends JFrame{
 	static String selection = "Today";
 	static String oldSelection = "";
-	//static boolean reveal = false;
+	static String gameDate = "";
 	static boolean store = false;
 	static boolean solve = false;
 	
@@ -18,8 +21,7 @@ public class Test extends JFrame{
 		Integer[] myClueNumber = new Integer[25];
 		ArrayList<String> myAcrossClues = new ArrayList<String>();
 		ArrayList<String> myDownClues = new ArrayList<String>();
-		String gameDay = "";
-		String gameDate = "";
+		String gameDay = "";	
 		GameInformation myGame = null;
 		String adr = "";
 		
@@ -38,20 +40,27 @@ public class Test extends JFrame{
 					adr = selection;
 				
 				myGame = new GameInformation(adr);
+				//System.out.println("Getting Clue Numbers");
 				myGame.scrapeClueNumbers();
+				//System.out.println("Getting Across Clues");
 				myGame.scrapeAcrossClues();
+				//System.out.println("Getting Down Clues");
 				myGame.scrapeDownClues();
 				
 				//Initialize the Variables according to the Game Information
 				myClueNumber = myGame.getClueNumbers();
 				myAcrossClues = myGame.getAcrossClues();
 				myDownClues = myGame.getDownClues();
+				//System.out.println("Getting Date");
 				gameDay = myGame.getGameDay();
 				gameDate = myGame.getGameDate();
 				
 				//Initialization of the Main Panels
+				//System.out.println("Initializing Top Panel");
 				TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
+				//System.out.println("Initializing Buttons Panel");
 				ButtonsPanel myButtonsPanel = new ButtonsPanel(myClueNumber);
+				//System.out.println("Initializing Center Panel");
 				CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myClueNumber);
 				myButtonsPanel.others.setSelectedItem((selection == "Today") ? "Today" : gameDate);
 				
@@ -65,40 +74,22 @@ public class Test extends JFrame{
 				myGameFrame.setLocationRelativeTo(null);
 				myGameFrame.setVisible(true);
 				myGameFrame.setResizable(false);
+				//System.out.println("Frame Generated");
 				
 				oldSelection = selection;
 			}
-//			if(reveal == true) {
-//				String path = "";
-//				ImageIcon solution;
-//				if(selection == "Today"){
-//	                JOptionPane.showMessageDialog(
-//	                        null,
-//	                        "No Solution saved for this puzzle",
-//	                        "Solution for the puzzle", JOptionPane.INFORMATION_MESSAGE
-//	                        );
-//				}
-//				else {
-//					path = "./oldPuzzles/" + selection + "/solution.png";
-//					solution = new ImageIcon(path);
-//	                JOptionPane.showMessageDialog(
-//	                        null,
-//	                        "",
-//	                        "Solution for the puzzle", JOptionPane.INFORMATION_MESSAGE,
-//	                        solution);								
-//				}
-//				reveal = false;
-//			}	
 			if(store == true) {
+				//System.out.println("Storing the puzzle");
 				String dir = "./oldPuzzles/" + gameDate;
 				File theDir = new File(dir);
+				store = false;
 
 				// if the directory does not exist, create it
 				if (!theDir.exists()) {
-				    System.out.println("creating directory: " + theDir.getName());
+				    //System.out.println("Creating directory: " + theDir.getName());
 				    boolean result = false;
 
-				    try{
+				    try {
 				        theDir.mkdir();
 				        result = true;
 				    } 
@@ -106,11 +97,11 @@ public class Test extends JFrame{
 				        //handle it
 				    }        
 				    if(result) {    
-				        System.out.println("DIR created");  
+				        //System.out.println("DIR created");  
 				    }
 				    
 					try {
-						File file = new File(dir +"/htmlCode.txt");
+						File file = new File(dir + "/htmlCode.txt");
 						FileWriter fileWriter = new FileWriter(file);
 						fileWriter.write(myGame.tempText);
 						fileWriter.flush();
@@ -119,18 +110,13 @@ public class Test extends JFrame{
 					catch (IOException e) {
 						e.printStackTrace();
 					}
-
-				}
-				store = false;
+				}				
 			}	
 			if(solve == true) {
-				System.out.println("Started Solving");
+				//System.out.println("Started Solving");
 				solve = false;
-				System.out.println("Determining Cells that should match with each other");
-				
-				
-				
-				
+				//System.out.println("Determining Cells that should match with each other");
+						
 				
 			}
 			System.out.print("");
