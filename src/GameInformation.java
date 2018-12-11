@@ -14,6 +14,7 @@ public class GameInformation {
 	private String dateText;
 	public String tempText;
 	public Integer[][] matrix = new Integer[5][5];
+	public int numOfClues = 0;
 	
 	//Constructor
 	public GameInformation(String thePath) throws Exception {
@@ -287,8 +288,6 @@ public class GameInformation {
 	public void printMatchingCells(){
 		int matchAcross = -1;
 		int matchDown = -1;
-		int indexAcross = -1;
-		int indexDown = -1;
 		int toGoLeft = -1;
 		int toGoUp = -1;
 		int amountLeft = 0;
@@ -306,7 +305,7 @@ public class GameInformation {
 				    matchDown = matrix[i][j];
 					
 				    while(toGoLeft >= 0){
-				    	if(matrix[i][toGoLeft] > 0)
+				    	if(matrix[i][toGoLeft] > 0) 
 				    		matchAcross = matrix[i][toGoLeft];
 				    	
 				    	if(matrix[i][toGoLeft] == -1)
@@ -314,7 +313,7 @@ public class GameInformation {
 				    	
 				    	toGoLeft--;
 				    }
-				    amountLeft = j - toGoLeft -1;
+				    amountLeft = j - toGoLeft -1;				    
 				    
 				    while(toGoUp >= 0){
 				    	if(matrix[toGoUp][j] > 0)
@@ -330,7 +329,42 @@ public class GameInformation {
 					System.out.println("Cell " + i + ", " + j + " is clue " + matchAcross + " across at index " + amountLeft + " and clue " + matchDown + " down at index " + amountUp );
 				}
 			}
+			
 		}
+	}
+
+	//Print Lengths of Clues
+	public void printLengths(){
+		int clue = -1;
+		int length = 0;		
+
+		for(int i = 0; i < 5; i ++){
+			for(int k = 4; k >= 0; k--){
+				if(matrix[i][k] > 0)
+					clue = matrix[i][k];
+			
+				if(matrix[i][k] != -1)
+					length++;
+			}	
+			System.out.println("Clue " + clue + " across has length of " + length);
+			length = 0;
+		}
+		
+		for(int i = 0; i < 5; i ++){
+			for(int k = 4; k >= 0; k--){
+				if(matrix[k][i] > 0)
+					clue = matrix[k][i];
+			
+				if(matrix[k][i] != -1)
+					length++;
+			}	
+			System.out.println("Clue " + clue + " down has length of " + length);
+			length = 0;
+		}
+			
+		
+		
+		
 		
 		
 	}
