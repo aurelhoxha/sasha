@@ -57,19 +57,22 @@ public class ButtonsPanel extends JPanel {
 		dates = new String[foldersInDirectory.size() + 1];
 		dates[0] = "Today";
 		int index = -1;
+		boolean flag = false;
 		
 		//System.out.println("Getting all possible puzzles from folder");
 		for(int i = 1; i < foldersInDirectory.size() + 1; i++) {
 			dates[i] = foldersInDirectory.get(i-1);
 			
-			if(dates[i].equals(Test.gameDate) && Test.selection.equals("Today"))
+			if(dates[i].equals(Test.gameDate) && Test.selection.equals("Today")) {
 				index = i;
+				flag = true;
+			}
 		}
 		
 		//Initialize the ComboBox
 		others = new JComboBox<>(dates);
 		
-		if(Test.selection.equals("Today")){
+		if(Test.selection.equals("Today") && flag == true){
 			datesUpdated = new String[foldersInDirectory.size()];
 			for(int i = index; i < foldersInDirectory.size(); i++){
 				dates[i] = dates[i + 1];
