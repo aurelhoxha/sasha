@@ -13,6 +13,7 @@ public class GameInformation {
 	private String dayText;
 	private String dateText;
 	public String tempText;
+	public Integer[][] matrix = new Integer[5][5];
 	
 	//Constructor
 	public GameInformation(String thePath) throws Exception {
@@ -72,11 +73,51 @@ public class GameInformation {
 		htmlCode= returnText;
 	}
 	
+	//Generate puzzle as it is in reality
+	public void generateMatrix(){
+		matrix[0][0] = clueNumbers[0];
+		matrix[0][1] = clueNumbers[1];
+		matrix[0][2] = clueNumbers[2];
+		matrix[0][3] = clueNumbers[3];
+		matrix[0][4] = clueNumbers[4];
+		matrix[1][0] = clueNumbers[5];
+		matrix[1][1] = clueNumbers[6];
+		matrix[1][2] = clueNumbers[7];
+		matrix[1][3] = clueNumbers[8];
+		matrix[1][4] = clueNumbers[9];
+		matrix[2][0] = clueNumbers[10];
+		matrix[2][1] = clueNumbers[11];
+		matrix[2][2] = clueNumbers[12];
+		matrix[2][3] = clueNumbers[13];
+		matrix[2][4] = clueNumbers[14];
+		matrix[3][0] = clueNumbers[15];
+		matrix[3][1] = clueNumbers[16];
+		matrix[3][2] = clueNumbers[17];
+		matrix[3][3] = clueNumbers[18];
+		matrix[3][4] = clueNumbers[19];
+		matrix[4][0] = clueNumbers[20];
+		matrix[4][1] = clueNumbers[21];
+		matrix[4][2] = clueNumbers[22];
+		matrix[4][3] = clueNumbers[23];
+		matrix[4][4] = clueNumbers[24];
+	}
+	
+	//Print puzzle as matrix
+	public void printPuzzle(){
+		for(int i = 0; i < 5; i++){
+			for(int j = 0; j < 5; j++){
+				if(matrix[i][j] >= 0)
+					System.out.print(" ");
+				System.out.print(matrix[i][j] + " ");
+			}
+			System.out.println();
+		}
+	}
+	
 	//Method that finds the cells that are blocked
-	public void scrapeClueNumbers() {
-		
+	public void scrapeClueNumbers() {	
 		int cellsCovered = 0;
-		System.out.println("Finding block cells");
+		//System.out.println("Finding block cells");
 		while(cellsCovered <= 24) {
 			//Save the keyword to find HTML Code for Cells
 			String keywordForCellStart = "id=\"cell-id-" + cellsCovered + "\"";
@@ -241,4 +282,58 @@ public class GameInformation {
 		for(int i = 0; i < clueNumbers.length;i++)
 			System.out.println("At position " + i + " value : " + clueNumbers[i]);
 	}
+
+	//Print Matching Cells(Constraints)
+	public void printMatchingCells(){
+		int matchAcross = -1;
+		int matchDown = -1;
+		int indexAcross = -1;
+		int indexDown = -1;
+		int toGoLeft = -1;
+		int toGoUp = -1;
+		int amountLeft = 0;
+		int amountUp = 0;
+		
+		for(int i = 0; i < 5; i++){
+			for(int j = 0; j < 5; j++){
+				if(matrix[i][j] == -1){
+					System.out.println("Cell " + i + ", " + j + " is a block cell");
+				}
+				else{
+				    toGoLeft = j;
+				    toGoUp = i;
+				    matchAcross = matrix[i][j];
+				    matchDown = matrix[i][j];
+					
+				    while(toGoLeft >= 0){
+				    	if(matrix[i][toGoLeft] > 0)
+				    		matchAcross = matrix[i][toGoLeft];
+				    	
+				    	if(matrix[i][toGoLeft] == -1)
+				    		break;
+				    	
+				    	toGoLeft--;
+				    }
+				    amountLeft = j - toGoLeft -1;
+				    
+				    while(toGoUp >= 0){
+				    	if(matrix[toGoUp][j] > 0)
+				    		matchDown = matrix[toGoUp][j];
+				    	
+				    	if(matrix[toGoUp][j] == -1)
+				    		break;
+				    	
+				    	toGoUp--;
+				    }
+				    amountUp = i - toGoUp -1;
+					
+					System.out.println("Cell " + i + ", " + j + " is clue " + matchAcross + " across at index " + amountLeft + " and clue " + matchDown + " down at index " + amountUp );
+				}
+			}
+		}
+		
+		
+	}
 }
+
+
