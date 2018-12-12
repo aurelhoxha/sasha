@@ -361,12 +361,6 @@ public class GameInformation {
 			System.out.println("Clue " + clue + " down has length of " + length);
 			length = 0;
 		}
-			
-		
-		
-		
-		
-		
 	}
 }
 
