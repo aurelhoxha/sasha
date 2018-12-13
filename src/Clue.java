@@ -10,7 +10,7 @@ public class Clue {
 	public int length;
 	public char[] solution; //Solution array for chars
 	public String direction;
-	public ArrayList<String> options; 
+	public ArrayList<String> alternatives;//Possible options for answer of the clue
 	
 	public Clue(String question, int nr, int leng, int x, int y, String dir){
 		clueQuestion = question;
@@ -18,7 +18,7 @@ public class Clue {
 		direction = dir;
 		length = leng;
 		solution = new char[length];
-		options = new ArrayList<String>();
+		alternatives = new ArrayList<String>();
 	}
 	
 	public void setQuestion(String q){
@@ -42,6 +42,10 @@ public class Clue {
 		direction = s;
 	}
 	
+	public void setAlternatives(ArrayList<String> alt){
+		alternatives = alt;
+	}
+	
 	public String getQuestion(){
 		return clueQuestion;
 	}
@@ -60,5 +64,9 @@ public class Clue {
 	
 	public String getDirection(){
 		return direction;
+	}
+	
+	public ArrayList<String> getAlternatives(){
+		return alternatives;
 	}
 }
