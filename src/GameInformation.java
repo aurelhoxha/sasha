@@ -19,8 +19,9 @@ public class GameInformation {
 	/////////////////////////
 	////SECOND DEMO CODE////
 	////////////////////////
-	private ArrayList<Clue> across;
-	private ArrayList<Clue> down;
+	private ArrayList<Clue> clues;
+	
+	
 	////////////////////////
 	
 	//Constructor
@@ -31,8 +32,7 @@ public class GameInformation {
 		dateText = "";
 		acrossClues = new ArrayList<String>();
 		downClues = new ArrayList<String>();
-		across = new ArrayList<Clue>();
-		down = new ArrayList<Clue>();
+		clues = new ArrayList<Clue>();
 		clueNumbers = new Integer[25];
 		tempText = "";
 		
@@ -200,7 +200,7 @@ public class GameInformation {
 			
 			///////////////////////////////////////////////////////////////////////////////////
 			Clue clue = new Clue(acrossClue, Integer.parseInt(acrossNumber), 0, -1, -1, "across");
-			across.add(clue);
+			clues.add(clue);
 			///////////////////////////////////////////////////////////////////////////////////
 			
 			
@@ -248,7 +248,7 @@ public class GameInformation {
 			
 			///////////////////////////////////////////////////////////////////////////////////
 			Clue clue = new Clue(acrossClue, Integer.parseInt(acrossNumber), 0, -1, -1, "down");
-			down.add(clue);
+			clues.add(clue);
 			///////////////////////////////////////////////////////////////////////////////////
 			
 			//Stop executing when the keyword that notifies the end of Question is found
@@ -264,19 +264,23 @@ public class GameInformation {
 	///////////////////////////////////////////////////////////////////////////////////
 	public void printCluesAndQuestionsAndLengths(){
 		System.out.println("\nAcross clues are:");
-		for(int i = 0; i < across.size(); i++){
-			System.out.print(across.get(i).clueNumber + " ");
-			System.out.print(across.get(i).clueQuestion + " ");
-			System.out.println(across.get(i).length);
+		for(int i = 0; i < clues.size(); i++){
+			if(clues.get(i).direction.equals("across")){	
+				System.out.print(clues.get(i).clueNumber + " ");
+				System.out.print(clues.get(i).clueQuestion + " ");
+				System.out.println(clues.get(i).length);
+			}
 		}
+		
 		System.out.println("\nDown clues are:");
-		for(int i = 0; i < down.size(); i++){
-			System.out.print(down.get(i).clueNumber + " ");
-			System.out.print(down.get(i).clueQuestion + " ");
-			System.out.println(down.get(i).length);
+		for(int i = 0; i < clues.size(); i++){
+			if(clues.get(i).direction.equals("down")){	
+				System.out.print(clues.get(i).clueNumber + " ");
+				System.out.print(clues.get(i).clueQuestion + " ");
+				System.out.println(clues.get(i).length);
+			}
 		}
 	}
-	
 	///////////////////////////////////////////////////////////////////////////////////
 	
 	//Print the Down Clues
@@ -366,10 +370,6 @@ public class GameInformation {
 					
 					System.out.println("Cell " + i + ", " + j + " is clue " + matchAcross + " across at index " + amountLeft + " and clue " + matchDown + " down at index " + amountUp );
 					
-					
-					
-					
-					
 				}
 			}
 			
@@ -391,9 +391,9 @@ public class GameInformation {
 			}	
 			//System.out.println("Clue " + clue + " across has length of " + length);
 			
-			for(int l = 0; l < across.size(); l++){
-				if(across.get(l).clueNumber == clue && across.get(l).direction.equals("across")){
-					across.get(l).setLength(length);
+			for(int l = 0; l < clues.size(); l++){
+				if(clues.get(l).clueNumber == clue && clues.get(l).direction.equals("across")){
+					clues.get(l).setLength(length);
 				}		
 			}
 			
@@ -410,15 +410,15 @@ public class GameInformation {
 			}	
 			//System.out.println("Clue " + clue + " down has length of " + length);
 			
-			for(int l = 0; l < down.size(); l++){
-				if(down.get(l).clueNumber == clue && down.get(l).direction.equals("down")){
-					down.get(l).setLength(length);
+			for(int l = 0; l < clues.size(); l++){
+				if(clues.get(l).clueNumber == clue && clues.get(l).direction.equals("down")){
+					clues.get(l).setLength(length);
 				}		
 			}			
 			length = 0;
 		}
+		System.out.println("\n");
 	}
-
 }
 
 
