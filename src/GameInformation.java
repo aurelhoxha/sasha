@@ -421,6 +421,11 @@ public class GameInformation {
 		}
 		System.out.println("\n");
 	}
+
+	//Search for the answers of the Clues
+	public void searchAnswers() {
+		
+	}
 }
 
 
