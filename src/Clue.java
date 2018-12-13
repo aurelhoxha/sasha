@@ -37,10 +37,15 @@ public class Clue {
 	
 	public void setLength(int l){
 		length = l;
+		solution = new char[length];
 	}
 	
 	public void setSolution(char[] sol){
 		solution = sol;
+	}
+	
+	public void setDirection(String s){
+		direction = s;
 	}
 	
 	public String getQuestion(){
@@ -63,8 +68,13 @@ public class Clue {
 		return length;
 	}
 	
-	public char[]  getSolution(){
+	public char[] getSolution(){
 		return solution;
 	}
+	
+	public String getDirection(){
+		return direction;
+	}
+	
 	
 }

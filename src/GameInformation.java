@@ -16,6 +16,13 @@ public class GameInformation {
 	public Integer[][] matrix = new Integer[5][5];
 	public int numOfClues = 0;
 	
+	/////////////////////////
+	////SECOND DEMO CODE////
+	////////////////////////
+	private ArrayList<Clue> across;
+	private ArrayList<Clue> down;
+	////////////////////////
+	
 	//Constructor
 	public GameInformation(String thePath) throws Exception {
 		//Initialization of the variables
@@ -24,6 +31,8 @@ public class GameInformation {
 		dateText = "";
 		acrossClues = new ArrayList<String>();
 		downClues = new ArrayList<String>();
+		across = new ArrayList<Clue>();
+		down = new ArrayList<Clue>();
 		clueNumbers = new Integer[25];
 		tempText = "";
 		
@@ -189,6 +198,12 @@ public class GameInformation {
 			//Add both number and Clue to the the AcrossClue Array
 			acrossClues.add(acrossNumber + " " + acrossClue);
 			
+			///////////////////////////////////////////////////////////////////////////////////
+			Clue clue = new Clue(acrossClue, Integer.parseInt(acrossNumber), 0, -1, -1, "across");
+			across.add(clue);
+			///////////////////////////////////////////////////////////////////////////////////
+			
+			
 			//Stop executing when the keyword that notifies the end of Question is found
 			String keywordForStop = "</span></li></ol></div>";
 			String processedCode = this.htmlCode.substring(readBeginning, clueReadingEnd + keywordForStop.length());
@@ -231,6 +246,11 @@ public class GameInformation {
 			//Add both number and Clue to the the DownClue Array
 			downClues.add(acrossNumber + " " + acrossClue);
 			
+			///////////////////////////////////////////////////////////////////////////////////
+			Clue clue = new Clue(acrossClue, Integer.parseInt(acrossNumber), 0, -1, -1, "down");
+			down.add(clue);
+			///////////////////////////////////////////////////////////////////////////////////
+			
 			//Stop executing when the keyword that notifies the end of Question is found
 			String keywordForStop = "</span></li></ol></div></article>";
 			String processedCode = this.htmlCode.substring(readBeginning, clueReadingEnd + keywordForStop.length());
@@ -240,6 +260,22 @@ public class GameInformation {
 				readBeginning = clueReadingEnd;	
 		}
 	}
+	
+	///////////////////////////////////////////////////////////////////////////////////
+	public void printCluesAndQuestions(){
+		System.out.println("\nAcross clues are:");
+		for(int i = 0; i < across.size(); i++){
+			System.out.print(across.get(i).clueNumber + " ");
+			System.out.println(across.get(i).clueQuestion);
+		}
+		System.out.println("\nDown clues are:");
+		for(int i = 0; i < down.size(); i++){
+			System.out.print(down.get(i).clueNumber + " ");
+			System.out.println(down.get(i).clueQuestion);
+		}
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////////
 	
 	//Print the Down Clues
 	public void printDownClues() {
@@ -347,6 +383,11 @@ public class GameInformation {
 					length++;
 			}	
 			System.out.println("Clue " + clue + " across has length of " + length);
+			
+			for(int l = 0; i < across.size(); i++){
+				
+			}
+			
 			length = 0;
 		}
 		
