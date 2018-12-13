@@ -57,11 +57,11 @@ public class Test extends JFrame{
 				myGame.generateMatrix();
 				myGame.printPuzzle();
 				
-				myGame.printCluesAndQuestions();
-				//myGame.printMatchingCells();
-				//myGame.printLengths();
+				myGame.generateLengths();
+				myGame.printCluesAndQuestionsAndLengths();
+				myGame.determineConstraints();
 				
-				
+
 				//Initialize the Variables according to the Game Information
 				myClueNumber = myGame.getClueNumbers();
 				myAcrossClues = myGame.getAcrossClues();

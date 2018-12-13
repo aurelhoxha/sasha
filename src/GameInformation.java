@@ -262,16 +262,18 @@ public class GameInformation {
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////
-	public void printCluesAndQuestions(){
+	public void printCluesAndQuestionsAndLengths(){
 		System.out.println("\nAcross clues are:");
 		for(int i = 0; i < across.size(); i++){
 			System.out.print(across.get(i).clueNumber + " ");
-			System.out.println(across.get(i).clueQuestion);
+			System.out.print(across.get(i).clueQuestion + " ");
+			System.out.println(across.get(i).length);
 		}
 		System.out.println("\nDown clues are:");
 		for(int i = 0; i < down.size(); i++){
 			System.out.print(down.get(i).clueNumber + " ");
-			System.out.println(down.get(i).clueQuestion);
+			System.out.print(down.get(i).clueQuestion + " ");
+			System.out.println(down.get(i).length);
 		}
 	}
 	
@@ -321,7 +323,7 @@ public class GameInformation {
 	}
 
 	//Print Matching Cells(Constraints)
-	public void printMatchingCells(){
+	public void determineConstraints(){
 		int matchAcross = -1;
 		int matchDown = -1;
 		int toGoLeft = -1;
@@ -334,7 +336,7 @@ public class GameInformation {
 				if(matrix[i][j] == -1){
 					System.out.println("Cell " + i + ", " + j + " is a block cell");
 				}
-				else{
+				else {
 				    toGoLeft = j;
 				    toGoUp = i;
 				    matchAcross = matrix[i][j];
@@ -363,6 +365,11 @@ public class GameInformation {
 				    amountUp = i - toGoUp -1;
 					
 					System.out.println("Cell " + i + ", " + j + " is clue " + matchAcross + " across at index " + amountLeft + " and clue " + matchDown + " down at index " + amountUp );
+					
+					
+					
+					
+					
 				}
 			}
 			
@@ -370,7 +377,7 @@ public class GameInformation {
 	}
 
 	//Print Lengths of Clues
-	public void printLengths(){
+	public void generateLengths(){
 		int clue = -1;
 		int length = 0;		
 
@@ -382,10 +389,12 @@ public class GameInformation {
 				if(matrix[i][k] != -1)
 					length++;
 			}	
-			System.out.println("Clue " + clue + " across has length of " + length);
+			//System.out.println("Clue " + clue + " across has length of " + length);
 			
-			for(int l = 0; i < across.size(); i++){
-				
+			for(int l = 0; l < across.size(); l++){
+				if(across.get(l).clueNumber == clue && across.get(l).direction.equals("across")){
+					across.get(l).setLength(length);
+				}		
 			}
 			
 			length = 0;
@@ -399,10 +408,17 @@ public class GameInformation {
 				if(matrix[k][i] != -1)
 					length++;
 			}	
-			System.out.println("Clue " + clue + " down has length of " + length);
+			//System.out.println("Clue " + clue + " down has length of " + length);
+			
+			for(int l = 0; l < down.size(); l++){
+				if(down.get(l).clueNumber == clue && down.get(l).direction.equals("down")){
+					down.get(l).setLength(length);
+				}		
+			}			
 			length = 0;
 		}
 	}
+
 }
 
 
