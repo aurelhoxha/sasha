@@ -10,11 +10,12 @@ public class Clue {
 	public int length;
 	public int xPosition, yPosition; //Coordinates of index 0 in matrix
 	public char[] solution; //Solution array for chars
-	public boolean isAcross, isDown;
+	public String direction;
 	
-	public Clue(String question, int nr, int leng, int x, int y){
+	public Clue(String question, int nr, int leng, int x, int y, String dir){
 		clueQuestion = question;
 		clueNumber = nr;
+		direction = dir;
 		xPosition = x;
 		yPosition = y;
 		length = leng;
