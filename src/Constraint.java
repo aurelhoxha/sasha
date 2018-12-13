@@ -1,4 +1,4 @@
-
+//Each constraint has to be satisfied in order to fill the puzzle
 
 public class Constraint {
 	public Clue acrossClue;
@@ -6,7 +6,10 @@ public class Constraint {
 	public int acrossIndex;
 	public int downIndex;
 	
-	public Constraint(Clue ){
-		
+	public Constraint(Clue acro, Clue dow, int acInd, int doInd){
+		acrossClue = acro;
+		downClue = dow;
+		acrossIndex = acInd;
+		downIndex = doInd;
 	}
 }

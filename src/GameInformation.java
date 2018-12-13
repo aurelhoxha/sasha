@@ -10,6 +10,8 @@ public class GameInformation {
 	private ArrayList<String> acrossClues;
 	private ArrayList<String> downClues;
 	private Integer[] clueNumbers;
+	public ArrayList<Constraint> constraints;
+	
 	private String dayText;
 	private String dateText;
 	public String tempText;
