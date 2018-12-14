@@ -45,28 +45,33 @@ public class Scrapper {
 		System.out.println("Starting to search for " + clue.getQuestion());
 		
 		//Go to Google 
-		driver.get("http://www.google.com");
+		driver.get("http://www.dictionary.com/fun/crosswordsolver");
+		
+		WebElement element = driver.findElement(By.name("query"));
+		
+		element.sendKeys("Groceries holder");
+		driver.findElement(By.className("submit")).click();
 		
 		//Click of the input text
-		WebElement element = driver.findElement(By.name("q"));
-		
-		//Prepare the search Clue
-		CharSequence searchQuery = clue.getQuestion() + " crossword clue\n";
-		
-		//Enter the Clue in the Text
-		element.sendKeys(searchQuery);
-		
-		// wait until the google page shows the result
-		(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
-	    
-		List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
-        
-		for(WebElement myElements : searchResults) {
-			if(!myElements.getAttribute("href").contains("translate.google.com")) {
-				googlePages.add(myElements.getAttribute("href"));
-				//System.out.println(myElements.getAttribute("href"));
-			}
-		}
+//		WebElement element = driver.findElement(By.name("q"));
+//		
+//		//Prepare the search Clue
+//		CharSequence searchQuery = clue.getQuestion() + " crossword clue\n";
+//		
+//		//Enter the Clue in the Text
+//		element.sendKeys(searchQuery);
+//		
+//		// wait until the google page shows the result
+//		(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
+//	    
+//		List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
+//        
+//		for(WebElement myElements : searchResults) {
+//			if(!myElements.getAttribute("href").contains("translate.google.com")) {
+//				googlePages.add(myElements.getAttribute("href"));
+//				//System.out.println(myElements.getAttribute("href"));
+//			}
+//		}
 		
 		System.out.print("The links for the result have been saved successfully");
 		
