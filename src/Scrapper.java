@@ -14,11 +14,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Scrapper {
 	File chrome;
+	File chrome1;
 	WebDriver driver;
 	
 	public Scrapper(){
-	    chrome = new File("src/chromedriver.exe");
-        System.setProperty("webdriver.chrome.driver", chrome.getAbsolutePath());
+	    chrome = new File("./src/chromedriver.exe");
+	    chrome1 = new File("./src/chromedriver");
+	    String os = System.getProperty("os.name").toLowerCase();
+	    if(os.contains("mac")) {
+	    	System.setProperty("webdriver.chrome.driver", chrome1.getAbsolutePath());
+	    }
+	    else {
+	    	System.setProperty("webdriver.chrome.driver", chrome.getAbsolutePath());
+	    }
+        
         driver = new ChromeDriver();  // Using Firefox
 	}
 	
