@@ -21,7 +21,7 @@ public class GameInformation {
 	/////////////////////////
 	////SECOND DEMO CODE////
 	////////////////////////
-	private ArrayList<Clue> clues;
+	public ArrayList<Clue> clues;
 	
 	
 	////////////////////////

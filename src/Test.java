@@ -61,6 +61,8 @@ public class Test extends JFrame{
 				myGame.printCluesAndQuestionsAndLengths();
 				myGame.determineConstraints();
 				
+				Scrapper scrapi = new Scrapper();
+				scrapi.search(myGame.clues.get(1));
 
 				//Initialize the Variables according to the Game Information
 				myClueNumber = myGame.getClueNumbers();
