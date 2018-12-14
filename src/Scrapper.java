@@ -28,7 +28,8 @@ public class Scrapper {
 	    	System.setProperty("webdriver.chrome.driver", chrome.getAbsolutePath());
 	    }
         
-        driver = new ChromeDriver();  // Using Firefox
+	    //Using Firefox
+        driver = new ChromeDriver();
 	}
 	
 	
