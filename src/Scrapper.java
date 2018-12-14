@@ -13,9 +13,14 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class Scrapper {
+	
+	//Files for Mac and Windows
 	File chrome;
 	File chrome1;
+	
+	//Two Chrome
 	WebDriver driver;
+	WebDriver driver1;
 	
 	public Scrapper(){
 	    chrome = new File("./src/chromedriver.exe");
