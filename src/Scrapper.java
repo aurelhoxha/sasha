@@ -45,12 +45,15 @@ public class Scrapper {
 		System.out.println("Starting to search for " + clue.getQuestion());
 		
 		//Go to Google 
+		
 		driver.get("http://www.dictionary.com/fun/crosswordsolver");
+		
+		WebDriverWait wait = new WebDriverWait(driver,10);
 		
 		WebElement element = driver.findElement(By.name("query"));
 		
 		element.sendKeys("Groceries holder");
-		driver.findElement(By.className("submit")).click();
+		element.submit();
 		
 		//Click of the input text
 //		WebElement element = driver.findElement(By.name("q"));
