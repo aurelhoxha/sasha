@@ -28,7 +28,7 @@ public class Scrapper {
 	    	System.setProperty("webdriver.chrome.driver", chrome.getAbsolutePath());
 	    }
         
-	    //Using Firefox
+	    //Using Google Chrome
         driver = new ChromeDriver();
 	}
 	
@@ -38,9 +38,17 @@ public class Scrapper {
 		ArrayList<String> alternatives = new ArrayList<String>();
 		String[] googleResult = new String[3];
 		System.out.println("Starting to search for " + clue.getQuestion());
+		
+		//Go to Google 
 		driver.get("http://www.google.com");
+		
+		//Click of the input text
 		WebElement element = driver.findElement(By.name("q"));
+		
+		//Prepare the search Clue
 		CharSequence searchQuery = clue.getQuestion() + " crossword clue\n";
+		
+		//Enter the Clue in the Text
 		element.sendKeys(searchQuery);
 		
 		(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
