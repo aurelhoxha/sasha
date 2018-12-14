@@ -38,8 +38,7 @@ public class Scrapper {
 	}
 	
 	
-	public void search(Clue clue){
-		
+	public void search(Clue clue) throws InterruptedException{
 		ArrayList<String> googlePages  = new ArrayList<String>();
 		String[] googleResult = new String[3];
 		System.out.println("Starting to search for " + clue.getQuestion());
@@ -51,8 +50,18 @@ public class Scrapper {
 		WebDriverWait wait = new WebDriverWait(driver,10);
 		
 		WebElement element = driver.findElement(By.name("query"));
+		WebElement element1 = driver.findElement(By.name("pattern"));
 		
-		element.sendKeys("Groceries holder");
+		String pattern = "";
+		for(int i = 0; i < clue.length; i++){
+			pattern = pattern + "?";
+		}
+		
+		element.sendKeys(clue.clueQuestion);
+		element1.sendKeys(pattern);
+		
+		Thread.sleep(5000);
+		
 		element.submit();
 		
 		//Click of the input text
@@ -76,7 +85,7 @@ public class Scrapper {
 //			}
 //		}
 		
-		System.out.print("The links for the result have been saved successfully");
+		//System.out.print("The links for the result have been saved successfully");
 		
 		//Visit the First Three Links and Save The Data
 		

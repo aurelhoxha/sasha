@@ -57,7 +57,7 @@ public class Test extends JFrame{
 				myGame.generateMatrix();
 				myGame.printPuzzle();
 				
-				//myGame.generateLengths();
+				myGame.generateLengths();
 				//myGame.printCluesAndQuestionsAndLengths();
 				//myGame.determineConstraints();
 				
