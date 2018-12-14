@@ -340,7 +340,7 @@ public class GameInformation {
 		for(int i = 0; i < 5; i++){
 			for(int j = 0; j < 5; j++){
 				if(matrix[i][j] == -1){
-					System.out.println("Cell " + i + ", " + j + " is a block cell");
+					//System.out.println("Cell " + i + ", " + j + " is a block cell");
 				}
 				else {
 				    toGoLeft = j;
@@ -370,7 +370,7 @@ public class GameInformation {
 				    }
 				    amountUp = i - toGoUp -1;
 					
-					System.out.println("Cell " + i + ", " + j + " is clue " + matchAcross + " across at index " + amountLeft + " and clue " + matchDown + " down at index " + amountUp );
+					//System.out.println("Cell " + i + ", " + j + " is clue " + matchAcross + " across at index " + amountLeft + " and clue " + matchDown + " down at index " + amountUp );
 					
 				}
 			}
@@ -419,7 +419,7 @@ public class GameInformation {
 			}			
 			length = 0;
 		}
-		System.out.println("\n");
+		//System.out.println("\n");
 	}
 
 	//Search for the answers of the Clues

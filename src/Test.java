@@ -57,12 +57,12 @@ public class Test extends JFrame{
 				myGame.generateMatrix();
 				myGame.printPuzzle();
 				
-				myGame.generateLengths();
-				myGame.printCluesAndQuestionsAndLengths();
-				myGame.determineConstraints();
+				//myGame.generateLengths();
+				//myGame.printCluesAndQuestionsAndLengths();
+				//myGame.determineConstraints();
 				
-				Scrapper scrapi = new Scrapper();
-				scrapi.search(myGame.clues.get(1));
+				//Scrapper scrapi = new Scrapper();
+				//scrapi.search(myGame.clues.get(1));
 
 				//Initialize the Variables according to the Game Information
 				myClueNumber = myGame.getClueNumbers();
@@ -72,26 +72,26 @@ public class Test extends JFrame{
 				gameDay = myGame.getGameDay();
 				gameDate = myGame.getGameDate();
 				
-				//Initialization of the Main Panels
-				//System.out.println("Initializing Top Panel");
-				TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
-				//System.out.println("Initializing Buttons Panel");
-				ButtonsPanel myButtonsPanel = new ButtonsPanel(myClueNumber);
-				//System.out.println("Initializing Center Panel");
-				CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myClueNumber);
-				myButtonsPanel.others.setSelectedItem((selection == "Today") ? "Today" : gameDate);
-				
-				//Setting Layout and Adding the Panels
-				myGameFrame.setLayout(new BorderLayout());
-				myGameFrame.add(myTopPanel,BorderLayout.NORTH);
-				myGameFrame.add(myButtonsPanel,BorderLayout.SOUTH);
-				myGameFrame.add(myCenterPanel,BorderLayout.CENTER);
-				myGameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-				myGameFrame.setSize(1250, 720);
-				myGameFrame.setLocationRelativeTo(null);
-				myGameFrame.setVisible(true);
-				myGameFrame.setResizable(false);
-				//System.out.println("Frame Generated");
+//				//Initialization of the Main Panels
+//				//System.out.println("Initializing Top Panel");
+//				TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
+//				//System.out.println("Initializing Buttons Panel");
+//				ButtonsPanel myButtonsPanel = new ButtonsPanel(myClueNumber);
+//				//System.out.println("Initializing Center Panel");
+//				CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myClueNumber);
+//				myButtonsPanel.others.setSelectedItem((selection == "Today") ? "Today" : gameDate);
+//				
+//				//Setting Layout and Adding the Panels
+//				myGameFrame.setLayout(new BorderLayout());
+//				myGameFrame.add(myTopPanel,BorderLayout.NORTH);
+//				myGameFrame.add(myButtonsPanel,BorderLayout.SOUTH);
+//				myGameFrame.add(myCenterPanel,BorderLayout.CENTER);
+//				myGameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+//				myGameFrame.setSize(1250, 720);
+//				myGameFrame.setLocationRelativeTo(null);
+//				myGameFrame.setVisible(true);
+//				myGameFrame.setResizable(false);
+//				//System.out.println("Frame Generated");
 				
 				oldSelection = selection;
 			}
