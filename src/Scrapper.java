@@ -34,8 +34,8 @@ public class Scrapper {
 	
 	
 	public void search(Clue clue){
+		
 		ArrayList<String> googlePages  = new ArrayList<String>();
-		ArrayList<String> alternatives = new ArrayList<String>();
 		String[] googleResult = new String[3];
 		System.out.println("Starting to search for " + clue.getQuestion());
 		
@@ -52,44 +52,19 @@ public class Scrapper {
 		element.sendKeys(searchQuery);
 		
 		// wait until the google page shows the result
-	    WebElement myDynamicElement = (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
 	    
-        List<WebElement> searchResults = driver.findElements(By.xpath("//*[@id='rso']//h3/a"));
+		List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
         
-        for (WebElement webElement : searchResults)
-        {
-        	System.out.println(webElement.getAttribute("href"));
-            //googlePages.add(webElement.getAttribute("href"));
-        }
-        
-//        for (int j = 0; j < googleResult.length; j++)
-//        {
-//            // Might not have sufficient hits or unusable hits
-//            try
-//            {
-//                driver.get(googlePages.get(j));
-//                (new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("body")));
-//                WebElement text = driver.findElement(By.tagName("body"));
-//                if( text.getText().equals("Please Sign in")) {
-//                    driver.findElement(By.xpath("/html/body/a")).click();
-//                    driver.navigate().back();
-//                    text = driver.findElement(By.tagName("body"));
-//                }
-//                googleResult[j] = text.getText();
-//                System.out.println("Data from " + " Google Hit number " + (j+1) + " Retrieved!");
-//               // main.setTextForTrace("Data from " + " Google Hit number " + (j+1) + " Retrieved!");
-//               //trace.add("Data from " + " Google Hit number " + (j+1) + " Retrieved!");
-//            }
-//            catch(RuntimeException ex)
-//            {
-//                System.out.println("Unable to retrieve data from Google Hit number " + (j+1));
-//                //trace.add("Unable to retrieve data from Google Hit number " + (j+1));
-//            }
-//        }
-//		
-//        for(int i = 0; i < googleResult.length; i++){
-//        	System.out.println(googleResult[1]);
-//        }
+		for(WebElement myElements : searchResults) {
+			if(!myElements.getAttribute("href").contains("translate.google.com")) {
+				googlePages.add(myElements.getAttribute("href"));
+			}
+		}
+		
+		System.out.print("The links for the result have been saved successfully");
+		
+		//Visit the First Three Links and Save The Data
 		
 	}
 }
