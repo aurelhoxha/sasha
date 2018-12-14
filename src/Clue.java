@@ -6,11 +6,14 @@ import java.util.*;
 
 public class Clue {
 	public String clueQuestion; 
+	public int xPosition;
+	public int yPosition;
 	public int clueNumber;
 	public int length;
 	public char[] solution; //Solution array for chars
 	public String direction;
 	public ArrayList<String> alternatives;//Possible options for answer of the clue
+	public boolean solved;
 	
 	public Clue(String question, int nr, int leng, int x, int y, String dir){
 		clueQuestion = question;
@@ -19,6 +22,30 @@ public class Clue {
 		length = leng;
 		solution = new char[length];
 		alternatives = new ArrayList<String>();
+		solved = false;
+		xPosition = 0;
+		yPosition = 0;
+	}
+	
+	public void setCoordinates(int x, int y){
+		xPosition = x;
+		yPosition = y;
+	}
+	
+	public int getX(){
+		return xPosition;
+	}
+	
+	public int yPosition(){
+		return yPosition;
+	}
+	
+	public void setSolved(boolean bool){
+		solved = bool;
+	}
+	
+	public boolean getSolved(){
+		return solved;
 	}
 	
 	public void setQuestion(String q){
