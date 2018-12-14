@@ -35,7 +35,7 @@ public class Test extends JFrame{
 		//Creation of the Game
 		JFrame myGameFrame = new JFrame("Sasha");;
 		
-		while(true) {
+//		while(true) {
 			if(!selection.equals(oldSelection)) {
 				myGameFrame.dispose();
 				myGameFrame = new JFrame("Sasha");
@@ -95,49 +95,49 @@ public class Test extends JFrame{
 				
 				oldSelection = selection;
 			}
-			if(store == true) {
-				//System.out.println("Storing the puzzle");
-				String dir = "./oldPuzzles/" + gameDate;
-				File theDir = new File(dir);
-				store = false;
-
-				// if the directory does not exist, create it
-				if (!theDir.exists()) {
-				    //System.out.println("Creating directory: " + theDir.getName());
-				    boolean result = false;
-
-				    try {
-				        theDir.mkdir();
-				        result = true;
-				    } 
-				    catch(SecurityException se){
-				        //handle it
-				    }        
-				    if(result) {    
-				        //System.out.println("DIR created");  
-				    }
-				    
-					try {
-						File file = new File(dir + "/htmlCode.txt");
-						FileWriter fileWriter = new FileWriter(file);
-						fileWriter.write(myGame.tempText);
-						fileWriter.flush();
-						fileWriter.close();
-					} 	
-					catch (IOException e) {
-						e.printStackTrace();
-					}
-				}				
-			}	
-			if(solve == true) {
-				//System.out.println("Started Solving");
-				solve = false;
-				//System.out.println("Determining Cells that should match with each other");
-						
-				
-			}
-			System.out.print("");
-		}
+//			if(store == true) {
+//				//System.out.println("Storing the puzzle");
+//				String dir = "./oldPuzzles/" + gameDate;
+//				File theDir = new File(dir);
+//				store = false;
+//
+//				// if the directory does not exist, create it
+//				if (!theDir.exists()) {
+//				    //System.out.println("Creating directory: " + theDir.getName());
+//				    boolean result = false;
+//
+//				    try {
+//				        theDir.mkdir();
+//				        result = true;
+//				    } 
+//				    catch(SecurityException se){
+//				        //handle it
+//				    }        
+//				    if(result) {    
+//				        //System.out.println("DIR created");  
+//				    }
+//				    
+//					try {
+//						File file = new File(dir + "/htmlCode.txt");
+//						FileWriter fileWriter = new FileWriter(file);
+//						fileWriter.write(myGame.tempText);
+//						fileWriter.flush();
+//						fileWriter.close();
+//					} 	
+//					catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//				}				
+//			}	
+//			if(solve == true) {
+//				//System.out.println("Started Solving");
+//				solve = false;
+//				//System.out.println("Determining Cells that should match with each other");
+//						
+//				
+//			}
+//			System.out.print("");
+//		}
 	}
 }
 
