@@ -12,4 +12,8 @@ public class Constraint {
 		acrossIndex = acInd;
 		downIndex = doInd;
 	}
+	
+	public boolean isSatisfied(){
+		return acrossClue.solution[acrossIndex] == downClue.solution[downIndex];
+	}
 }
