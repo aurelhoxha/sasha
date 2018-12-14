@@ -64,6 +64,7 @@ public class Scrapper {
 		for(WebElement myElements : searchResults) {
 			if(!myElements.getAttribute("href").contains("translate.google.com")) {
 				googlePages.add(myElements.getAttribute("href"));
+				System.out.println(myElements.getAttribute("href"));
 			}
 		}
 		
