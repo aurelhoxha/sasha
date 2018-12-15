@@ -158,6 +158,55 @@ public class Scrapper {
 		System.out.println("The alternatives for the clues have been added successfully");
 		
 		//Visit the First Three Links and Save The Data
+		//driver.close();
+		//driver.quit();
+		return 0;
+		
+	}
+	
+	
+	public int thirdSearch(ArrayList<Clue> clues) {
+		//driver = new ChromeDriver();
+		for(int i = 0; i < clues.size(); i++){
+			//ArrayList<String> googlePages  = new ArrayList<String>();
+			//String[] googleResult = new String[3];
+			driver.get("http://www.the-crossword-solver.com");
+			WebElement element = driver.findElement(By.name("q"));
+			
+			//driver.findElement(By.linkText("Crossword Solver")).click();
+			CharSequence searchQuery = clues.get(i).getQuestion();//
+			
+			String searchByLetters = "";
+			for(int h = 0; h < clues.get(i).getLength(); h++){
+				if(clues.get(i).solution[h] != '-'){
+					searchByLetters = searchByLetters + clues.get(i).solution[h];
+				}
+				else {
+					searchByLetters = searchByLetters + '?';
+				}
+			}
+			element.sendKeys(searchByLetters);
+			element.submit();
+			try {
+			// wait until the google page shows the result
+				(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("searchresults")));
+				
+				List<WebElement> searchResults = driver.findElements(By.cssSelector(".searchresult > a")); 
+		      
+				for(WebElement myElements : searchResults) {
+					if(myElements.getText().length() == clues.get(i).getLength() && !(myElements.getText().contains(" ")) && !(myElements.getText().contains("'"))){
+						clues.get(i).addAlternative(myElements.getText());
+					}
+				}
+				clues.get(i).updateClueAlternative();
+			}
+			catch(Exception e){
+				System.out.println("No hints for " + clues.get(i).getQuestion());
+			}
+		}	
+		System.out.println("The alternatives for the clues have been added successfully");
+		
+		//Visit the First Three Links and Save The Data
 		driver.close();
 		driver.quit();
 		return 0;

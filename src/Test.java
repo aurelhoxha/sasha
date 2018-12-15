@@ -93,10 +93,28 @@ public class Test extends JFrame{
 				
 				System.out.println("---------------------");
 				
-				for(int m = 0; m < myGame.constraints.size(); m++){
-					myGame.constraints.get(m).cleanAcrossAlternatives();
-					myGame.constraints.get(m).cleanDownAlternatives();
+				ArrayList<Clue> notSolved1 = new ArrayList<Clue>();
+				for(int f = 0; f < notSolved.size(); f++){
+					int counter = 0;
+					for(int r = 0; r < notSolved.get(f).getLength(); r++){
+						if(notSolved.get(f).solution[r] != '-'){
+							counter++;
+						}
+					}
+					if(notSolved.get(f).getLength() >= 4 && counter >= 2){
+						notSolved1.add(notSolved.get(f));
+					}
+					if(notSolved.get(f).getLength() <=3 && counter >= 2){
+						notSolved1.add(notSolved.get(f));
+					}
 				}
+				
+				scrapi.thirdSearch(notSolved1);
+				
+//				for(int m = 0; m < myGame.constraints.size(); m++){
+//					myGame.constraints.get(m).cleanAcrossAlternatives();
+//					myGame.constraints.get(m).cleanDownAlternatives();
+//				}
 				
 //				for(int i = 0; i < myGame.clues.size();i++) {
 //					if(!myGame.clues.get(i).isSolved()) {
@@ -118,10 +136,12 @@ public class Test extends JFrame{
 					myGame.clues.get(i).printAlternative();
 				}
 				
-				for(int i = 0; i < myGame.clues.size(); i++){
-					myGame.clues.get(i).printSolution();
-				}
+				System.out.println("------------------------------------");
 				
+//				for(int i = 0; i < myGame.clues.size(); i++){
+//					myGame.clues.get(i).printSolution();
+//				}
+//				
 				
 
 				//Initialize the Variables according to the Game Information

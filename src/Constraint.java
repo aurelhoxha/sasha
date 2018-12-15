@@ -28,7 +28,7 @@ public class Constraint {
 					toDelete = false;
 				}
 			}
-			if(toDelete == true){
+			if(toDelete == true && down.alternatives.size() > 0){
 				toBeDeleted.add(word);
 			}
 		}
@@ -48,7 +48,7 @@ public class Constraint {
 					toDelete = false;
 				}
 			}
-			if(toDelete == true){
+			if(toDelete == true && across.alternatives.size() > 0){
 				toBeDeleted.add(word);
 			}
 		}
