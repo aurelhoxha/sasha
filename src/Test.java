@@ -46,7 +46,7 @@ public class Test extends JFrame{
 				else
 					adr = selection;
 				
-				myGame = new GameInformation("December 2, 2018");
+				myGame = new GameInformation("December 3, 2018");
 				//System.out.println("Getting Clue Numbers");
 				myGame.scrapeClueNumbers();
 				//System.out.println("Getting Across Clues");
@@ -65,13 +65,18 @@ public class Test extends JFrame{
 				
 				Scrapper scrapi = new Scrapper();
 				scrapi.firstSearch(myGame.clues, myGame.constraints);
-				
 
 				for(int i = 0; i < myGame.clues.size(); i++) {
 					if(myGame.clues.get(i).isSolved()) {
 						myGame.clues.get(i).updateClueAlternative();
 					}
 				}
+				
+				for(int i = 0; i < myGame.clues.size(); i++){
+					myGame.clues.get(i).printAlternative();
+				}
+				
+				System.out.println("---------------------");
 				
 				ArrayList<Clue> notSolved = new ArrayList<Clue>();
 				for(int i = 0; i < myGame.clues.size(); i++){
@@ -82,8 +87,16 @@ public class Test extends JFrame{
 				
 				scrapi.secondSearch(notSolved);
 				
+				for(int i = 0; i < myGame.clues.size(); i++){
+					myGame.clues.get(i).printAlternative();
+				}
 				
-				//System.out.println("Puzzle Not Solved: " + myGame.puzzleNotSolved());
+				System.out.println("---------------------");
+				
+				for(int m = 0; m < myGame.constraints.size(); m++){
+					myGame.constraints.get(m).cleanAcrossAlternatives();
+					myGame.constraints.get(m).cleanDownAlternatives();
+				}
 				
 //				for(int i = 0; i < myGame.clues.size();i++) {
 //					if(!myGame.clues.get(i).isSolved()) {
@@ -101,16 +114,9 @@ public class Test extends JFrame{
 //						}
 //					}
 //				}
-//				
-				
-				
 				for(int i = 0; i < myGame.clues.size(); i++){
 					myGame.clues.get(i).printAlternative();
 				}
-				
-				System.out.println("---------------------");
-				
-
 				
 				for(int i = 0; i < myGame.clues.size(); i++){
 					myGame.clues.get(i).printSolution();

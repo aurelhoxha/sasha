@@ -353,7 +353,7 @@ public class GameInformation {
 		for(int i = 0; i < 5; i++){
 			for(int j = 0; j < 5; j++){
 				if(matrix[i][j] == -1){
-					System.out.println("Cell " + i + ", " + j + " is a block cell");
+					//System.out.println("Cell " + i + ", " + j + " is a block cell");
 				}
 				else {
 				    toGoLeft = j;
