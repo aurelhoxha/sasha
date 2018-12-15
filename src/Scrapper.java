@@ -150,11 +150,14 @@ public class Scrapper {
 					}
 				}
 				clues.get(i).updateClueAlternative();
+				
 			}
 			catch(Exception e){
 				System.out.println("No hints for " + clues.get(i).getQuestion());
 			}
-		}	
+		}
+		
+
 		//System.out.println("The alternatives for the clues have been added successfully");
 		
 		//Visit the First Three Links and Save The Data

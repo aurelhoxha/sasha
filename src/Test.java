@@ -46,7 +46,7 @@ public class Test extends JFrame{
 				else
 					adr = selection;
 				
-				myGame = new GameInformation("December 3, 2018");
+				myGame = new GameInformation("December 4, 2018");
 				//System.out.println("Getting Clue Numbers");
 				myGame.scrapeClueNumbers();
 				//System.out.println("Getting Across Clues");
@@ -71,12 +71,14 @@ public class Test extends JFrame{
 						myGame.clues.get(i).updateClueAlternative();
 					}
 				}
+				System.out.println("------------------------------------");
+				System.out.println("First Search Alternatives:");
+				System.out.println("------------------------------------");
+//				for(int i = 0; i < myGame.clues.size(); i++){
+//					myGame.clues.get(i).printAlternative();
+//				}
 				
-				for(int i = 0; i < myGame.clues.size(); i++){
-					myGame.clues.get(i).printAlternative();
-				}
-				
-				System.out.println("---------------------");
+				System.out.println("------------------------------------");
 				
 				ArrayList<Clue> notSolved = new ArrayList<Clue>();
 				for(int i = 0; i < myGame.clues.size(); i++){
@@ -87,32 +89,59 @@ public class Test extends JFrame{
 				
 				scrapi.secondSearch(notSolved);
 				
-				for(int i = 0; i < myGame.clues.size(); i++){
-					myGame.clues.get(i).printAlternative();
+				for(int j = 0; j < myGame.clues.size(); j++){
+					myGame.clues.get(j).printSolution();
 				}
+//				
+//				System.out.println("Second Search Alternatives:");
+//				System.out.println("------------------------------------");
+//				for(int i = 0; i < myGame.clues.size(); i++){
+//					myGame.clues.get(i).printAlternative();
+//				}
+//				
+//				System.out.println("------------------------------------");
+//				
+//				ArrayList<Clue> notSolved1 = new ArrayList<Clue>();
+//				for(int f = 0; f < notSolved.size(); f++){
+//					if(notSolved.get(f).alternatives.size() == 0){
+//						notSolved1.add(notSolved.get(f));
+//					}
+//				}
+//				
+//				for(int i = 0; i < myGame.clues.size(); i++){
+//					if(myGame.clues.get(i).alternatives.size() == 1){
+//						myGame.clues.get(i).setSolved(true);
+//						myGame.clues.get(i).setSolution(myGame.clues.get(i).alternatives.get(0));
+//						for(int j = 0; j < myGame.constraints.size();j++) {
+//							if(myGame.constraints.get(j).contains(myGame.clues.get(i))) {
+//								myGame.constraints.get(j).updateClue();
+//							}
+//						}
+//					}
+//				}
+//				
+//				scrapi.thirdSearch(notSolved1);
+//				
+//				for(int l = 0; l < myGame.clues.size(); l++){
+//					if(myGame.clues.get(l).isSolved()) {
+//						for(int j = 0; j < myGame.constraints.size();j++) {
+//							if(myGame.constraints.get(j).contains(myGame.clues.get(l))) {
+//								myGame.constraints.get(j).updateClue();
+//							}
+//						}
+//					}
+//				}
+//				
+//				System.out.println("Third Search Alternatives:");
+//				System.out.println("------------------------------------");
+//				for(int i = 0; i < myGame.clues.size(); i++){
+//					myGame.clues.get(i).printAlternative();
+//				}
+//				System.out.println("------------------------------------");
+//				
+//				System.out.println("Clue Solutions");
+//				System.out.println("------------------------------------");
 				
-				System.out.println("---------------------");
-				
-				ArrayList<Clue> notSolved1 = new ArrayList<Clue>();
-				for(int f = 0; f < notSolved.size(); f++){
-					if(notSolved.get(f).alternatives.size() == 0){
-						notSolved1.add(notSolved.get(f));
-					}
-				}
-				
-				for(int i = 0; i < myGame.clues.size(); i++){
-					if(myGame.clues.get(i).alternatives.size() == 1){
-						myGame.clues.get(i).setSolved(true);
-						myGame.clues.get(i).setSolution(myGame.clues.get(i).alternatives.get(0));
-						for(int j = 0; j < myGame.constraints.size();j++) {
-							if(myGame.constraints.get(j).contains(myGame.clues.get(i))) {
-								myGame.constraints.get(j).updateClue();
-							}
-						}
-					}
-				}
-				
-				scrapi.thirdSearch(notSolved1);
 				
 //				for(int m = 0; m < myGame.constraints.size(); m++){
 //					myGame.constraints.get(m).cleanAcrossAlternatives();
@@ -135,11 +164,6 @@ public class Test extends JFrame{
 //						}
 //					}
 //				}
-				for(int i = 0; i < myGame.clues.size(); i++){
-					myGame.clues.get(i).printAlternative();
-				}
-				
-				System.out.println("------------------------------------");
 				
 //				for(int i = 0; i < myGame.clues.size(); i++){
 //					myGame.clues.get(i).printSolution();
