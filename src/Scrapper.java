@@ -149,8 +149,9 @@ public class Scrapper {
 		for(int i = 0; i < clues.size(); i++){
 			//ArrayList<String> googlePages  = new ArrayList<String>();
 			//String[] googleResult = new String[3];
-			driver.get("http://www.the-crossword-solver.com");
-			WebElement element = driver.findElement(By.name("q"));
+			driver.get("http://www.crosswordnexus.com");
+			WebElement element = driver.findElement(By.name("clue"));
+			WebElement element1 = driver.findElement(By.name("pattern"));
 			
 			//driver.findElement(By.linkText("Crossword Solver")).click();
 			CharSequence searchQuery = clues.get(i).getQuestion();//
@@ -164,16 +165,18 @@ public class Scrapper {
 					searchByLetters = searchByLetters + '?';
 				}
 			}
-			element.sendKeys(searchByLetters);
+			element.sendKeys(searchQuery);
+			element1.sendKeys(searchByLetters);
 			element.submit();
+			
 			try {
 			// wait until the google page shows the result
-				(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("searchresults")));
+				(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
 				
-				List<WebElement> searchResults = driver.findElements(By.cssSelector(".searchresult > a")); 
-		      
+				List<WebElement> searchResults = driver.findElements(By.tagName("big")); 
+				
 				for(WebElement myElements : searchResults) {
-					if(myElements.getText().length() == clues.get(i).getLength() && !(myElements.getText().contains(" ")) && !(myElements.getText().contains("'"))){
+					if(myElements.getText().length() == clues.get(i).getLength()){
 						clues.get(i).addAlternative(myElements.getText());
 					}
 				}
@@ -183,7 +186,7 @@ public class Scrapper {
 				System.out.println("No hints for " + clues.get(i).getQuestion());
 			}
 		}	
-		System.out.println("The alternatives for the clues have been added successfully");
+		//System.out.println("The alternatives for the clues have been added successfully");
 		
 		//Visit the First Three Links and Save The Data
 		driver.close();
@@ -191,6 +194,9 @@ public class Scrapper {
 		return 0;
 		
 	}
+	
+	
+	
 }
 
 
