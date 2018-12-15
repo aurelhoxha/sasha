@@ -155,7 +155,7 @@ public class Scrapper {
 				System.out.println("No hints for " + clues.get(i).getQuestion());
 			}
 		}	
-		System.out.println("The alternatives for the clues have been added successfully");
+		//System.out.println("The alternatives for the clues have been added successfully");
 		
 		//Visit the First Three Links and Save The Data
 		//driver.close();

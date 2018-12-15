@@ -95,17 +95,20 @@ public class Test extends JFrame{
 				
 				ArrayList<Clue> notSolved1 = new ArrayList<Clue>();
 				for(int f = 0; f < notSolved.size(); f++){
-					int counter = 0;
-					for(int r = 0; r < notSolved.get(f).getLength(); r++){
-						if(notSolved.get(f).solution[r] != '-'){
-							counter++;
+					if(notSolved.get(f).alternatives.size() == 0){
+						notSolved1.add(notSolved.get(f));
+					}
+				}
+				
+				for(int i = 0; i < myGame.clues.size(); i++){
+					if(myGame.clues.get(i).alternatives.size() == 1){
+						myGame.clues.get(i).setSolved(true);
+						myGame.clues.get(i).setSolution(myGame.clues.get(i).alternatives.get(0));
+						for(int j = 0; j < myGame.constraints.size();j++) {
+							if(myGame.constraints.get(j).contains(myGame.clues.get(i))) {
+								myGame.constraints.get(j).updateClue();
+							}
 						}
-					}
-					if(notSolved.get(f).getLength() >= 4 && counter >= 2){
-						notSolved1.add(notSolved.get(f));
-					}
-					if(notSolved.get(f).getLength() <=3 && counter >= 2){
-						notSolved1.add(notSolved.get(f));
 					}
 				}
 				
