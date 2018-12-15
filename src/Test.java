@@ -46,7 +46,7 @@ public class Test extends JFrame{
 				else
 					adr = selection;
 				
-				myGame = new GameInformation("December 13, 2018");
+				myGame = new GameInformation("December 2, 2018");
 				//System.out.println("Getting Clue Numbers");
 				myGame.scrapeClueNumbers();
 				//System.out.println("Getting Across Clues");
@@ -64,45 +64,45 @@ public class Test extends JFrame{
 				myGame.determineConstraints();
 				
 				Scrapper scrapi = new Scrapper();
+				scrapi.firstSearch(myGame.clues, myGame.constraints);
 				
-				for(int i = 0; i < myGame.clues.size(); i++){
-					scrapi.firstSearch(myGame.clues.get(i));
-					for(int l = 0; l < myGame.clues.size(); l++){
-						if(myGame.clues.get(l).getSolved()) {
-							for(int j = 0; j < myGame.constraints.size();j++) {
-								if(myGame.constraints.get(j).contains(myGame.clues.get(l))) {
-									myGame.constraints.get(j).updateClue();
-								}
-							}
-						}
-					}
-				}
-				
+
 				for(int i = 0; i < myGame.clues.size(); i++) {
-					if(myGame.clues.get(i).getSolved()) {
+					if(myGame.clues.get(i).isSolved()) {
 						myGame.clues.get(i).updateClueAlternative();
 					}
 				}
+				
+				ArrayList<Clue> notSolved = new ArrayList<Clue>();
+				for(int i = 0; i < myGame.clues.size(); i++){
+					if(!myGame.clues.get(i).isSolved()){
+						notSolved.add(myGame.clues.get(i));
+					}
+				}
+				
+				scrapi.secondSearch(notSolved);
 				
 				
 				//System.out.println("Puzzle Not Solved: " + myGame.puzzleNotSolved());
 				
-				for(int i = 0; i < myGame.clues.size();i++) {
-					if(!myGame.clues.get(i).getSolved()) {
-						scrapi.secondSearch(myGame.clues.get(i));
-						myGame.clues.get(i).updateClueAlternative();
-						
-						for(int l = 0; l < myGame.clues.size(); l++){
-							if(myGame.clues.get(l).getSolved()) {
-								for(int j = 0; j < myGame.constraints.size();j++) {
-									if(myGame.constraints.get(j).contains(myGame.clues.get(l))) {
-										myGame.constraints.get(j).updateClue();
-									}
-								}
-							}
-						}
-					}
-				}
+//				for(int i = 0; i < myGame.clues.size();i++) {
+//					if(!myGame.clues.get(i).isSolved()) {
+//						scrapi.secondSearch(myGame.clues.get(i));
+//						myGame.clues.get(i).updateClueAlternative();
+//						
+//						for(int l = 0; l < myGame.clues.size(); l++){
+//							if(myGame.clues.get(l).isSolved()) {
+//								for(int j = 0; j < myGame.constraints.size();j++) {
+//									if(myGame.constraints.get(j).contains(myGame.clues.get(l))) {
+//										myGame.constraints.get(j).updateClue();
+//									}
+//								}
+//							}
+//						}
+//					}
+//				}
+//				
+				
 				
 				for(int i = 0; i < myGame.clues.size(); i++){
 					myGame.clues.get(i).printAlternative();

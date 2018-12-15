@@ -36,156 +36,126 @@ public class Scrapper {
 	    else {
 	    	System.setProperty("webdriver.chrome.driver", chrome.getAbsolutePath());
 	    }
+	    
+	    //Initialize Driver for all clues to be used
+	    driver = new ChromeDriver();   
 	}
 	
 	
-	public int firstSearch(Clue clue) throws InterruptedException, IOException{
-		//Using Google Chrome
-        driver = new ChromeDriver();
-		System.out.println("Starting to search for " + clue.getQuestion());
-		
-		//Go to Google 
-		
-		driver.get("http://www.dictionary.com/fun/crosswordsolver");
-		
-		WebDriverWait wait = new WebDriverWait(driver,10);
-		
-		WebElement element = driver.findElement(By.name("query"));
-		WebElement element1 = driver.findElement(By.name("pattern"));
-		
-		String pattern = "";
-		for(int i = 0; i < clue.length; i++){
-			if(clue.solution[i] == '-'){
-				pattern = pattern + "?";
-			}
-			else{
-				pattern = pattern + clue.solution[i];
-			}
+	public int firstSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) throws InterruptedException, IOException{
+        for(int i = 0; i < clues.size(); i++){
+			System.out.println("Starting to search for " + clues.get(i).getQuestion());
 			
-		}
-		
-		element.sendKeys(clue.clueQuestion);
-		element1.sendKeys(pattern);
-		
-		element.submit();
-		
-		// wait until the google page shows the result
-		try {
-			(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.className("solver-cell")));
-			List<WebElement> searchResults = driver.findElements(By.cssSelector(".solver-cell"));
-			ArrayList<String> options = new ArrayList<String>();
+			//Go to Google 
 			
-			for(WebElement myElements : searchResults) {
-				options.add(myElements.getText());
-			}
+			driver.get("http://www.dictionary.com/fun/crosswordsolver");
 			
-			for(int g = 2; g < options.size();g++)
-			{
-				if(g%2==0 && options.get(g).length() == clue.getLength())
-					clue.addAlternative(options.get(g));
-			}
+			WebDriverWait wait = new WebDriverWait(driver,10);
 			
-			if(options.size() < 5) {
-				if(options.get(3).equals("95%")){
-					clue.setSolution(options.get(2));
-					clue.setSolved(true);
-					clue.printSolution();
-					driver.close();
-					driver.quit();
-					return 1;
-				}
-				driver.close();
-				driver.quit();
-				return 0;
-				
-			}
-			else {
-				int n1 = Integer.parseInt(options.get(3).substring(0, 2));
-				int n2 = Integer.parseInt(options.get(5).substring(0, 2));
-				if(n1 > 90 && n1 - n2 <= 15){
-					driver.close();
-					driver.quit();
-					return 0;
+			WebElement element = driver.findElement(By.name("query"));
+			WebElement element1 = driver.findElement(By.name("pattern"));
+			
+			String pattern = "";
+			for(int m = 0; m < clues.get(i).length; m++){
+				if(clues.get(i).solution[m] == '-'){
+					pattern = pattern + "?";
 				}
 				else {
-					if(n1 > 90) {
-						clue.setSolution(options.get(2));
-						clue.setSolved(true);
-						clue.printSolution();
-						driver.close();
-						driver.quit();
-						return 1;
+					pattern = pattern + clues.get(i).solution[m];
+				}
+				
+			}
+			
+			element.sendKeys(clues.get(i).clueQuestion);
+			element1.sendKeys(pattern);
+			
+			element.submit();
+			
+			// wait until the google page shows the result
+			try {
+				(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.className("solver-cell")));
+				List<WebElement> searchResults = driver.findElements(By.cssSelector(".solver-cell"));
+				ArrayList<String> options = new ArrayList<String>();
+				
+				for(WebElement myElements : searchResults) {
+					options.add(myElements.getText());
+				}
+				
+				for(int g = 2; g < options.size();g++)
+				{
+					if(g%2==0 && options.get(g).length() == clues.get(i).getLength())
+						clues.get(i).addAlternative(options.get(g));
+				}
+				
+				if(options.size() < 5) {
+					if(options.get(3).equals("95%")){
+						clues.get(i).setSolution(options.get(2));
+						clues.get(i).setSolved(true);
+						clues.get(i).printSolution();
+					}				
+				}
+				else {
+					int n1 = Integer.parseInt(options.get(3).substring(0, 2));
+					int n2 = Integer.parseInt(options.get(5).substring(0, 2));
+					if(n1 > 90 && n1 - n2 <= 15){
 					}
-					else{
-						driver.close();
-						driver.quit();
-						return 0;
+					else {
+						if(n1 > 90) {
+							clues.get(i).setSolution(options.get(2));
+							clues.get(i).setSolved(true);
+							clues.get(i).printSolution();
+						}
+					}
+				}
+				for(int l = 0; l < clues.size(); l++){
+					if(clues.get(l).isSolved()) {
+						for(int j = 0; j < constraints.size();j++) {
+							if(constraints.get(j).contains(clues.get(l))) {
+								constraints.get(j).updateClue();
+							}
+						}
 					}
 				}
 			}
-		}
-		catch (Exception e){
-			System.out.println("No available solution");
-			driver.close();
-			driver.quit();
-			return -1;
-		}
-
-		
-		
+			catch (Exception e){
+				System.out.println("No available solution");
+			}
+        }
+        //driver.close();
+        //driver.quit();
+        return 0;
 	}
 
-	public int secondSearch(Clue clue) {
-		driver = new ChromeDriver();
-		ArrayList<String> googlePages  = new ArrayList<String>();
-		String[] googleResult = new String[3];
-		driver.get("http://www.the-crossword-solver.com");
-		WebElement element = driver.findElement(By.name("q"));
-		
-		//driver.findElement(By.linkText("Crossword Solver")).click();
-		CharSequence searchQuery = clue.getQuestion();
-		element.sendKeys(searchQuery);
-		element.submit();
-		try {
-		// wait until the google page shows the result
-			(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("searchresults")));
+	public int secondSearch(ArrayList<Clue> clues) {
+		//driver = new ChromeDriver();
+		for(int i = 0; i < clues.size(); i++){
+			//ArrayList<String> googlePages  = new ArrayList<String>();
+			//String[] googleResult = new String[3];
+			driver.get("http://www.the-crossword-solver.com");
+			WebElement element = driver.findElement(By.name("q"));
 			
-			List<WebElement> searchResults = driver.findElements(By.cssSelector(".searchresult > a")); 
-	      
-			for(WebElement myElements : searchResults) {
+			//driver.findElement(By.linkText("Crossword Solver")).click();
+			CharSequence searchQuery = clues.get(i).getQuestion();
+			element.sendKeys(searchQuery);
+			element.submit();
+			try {
+			// wait until the google page shows the result
+				(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("searchresults")));
 				
-				if(myElements.getText().length() == clue.getLength()){
-					clue.addAlternative(myElements.getText());
+				List<WebElement> searchResults = driver.findElements(By.cssSelector(".searchresult > a")); 
+		      
+				for(WebElement myElements : searchResults) {
+					if(myElements.getText().length() == clues.get(i).getLength()){
+						clues.get(i).addAlternative(myElements.getText());
+					}
 				}
+				clues.get(i).updateClueAlternative();
 			}
-		}
-		catch(Exception e){
-			System.out.println("Sorrrrrrryyyy t qifsha robt");
-		}
-		
-		//Click of the input text
-//		WebElement element = driver.findElement(By.name("q"));
-////		
-////		//Prepare the search Clue
-//		CharSequence searchQuery = clue.getQuestion() + " crossword clue\n";
-////		
-////		//Enter the Clue in the Text
-//		element.sendKeys(searchQuery);
-//		
-//		// wait until the google page shows the result
-//		(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
-//		
-//	    
-//		List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
-//        
-//		for(WebElement myElements : searchResults) {
-//			if(!myElements.getAttribute("href").contains("translate.google.com")) {
-//				googlePages.add(myElements.getAttribute("href"));
-//				//System.out.println(myElements.getAttribute("href"));
-//			}
-//		}
-		
-		System.out.println("The links for the result have been saved successfully");
+			catch(Exception e){
+				System.out.println("No hints for " + clues.get(i).getQuestion());
+			}
+		}	
+		System.out.println("The alternatives for the clues have been added successfully");
 		
 		//Visit the First Three Links and Save The Data
 		driver.close();
@@ -194,3 +164,26 @@ public class Scrapper {
 		
 	}
 }
+
+
+//Click of the input text
+//WebElement element = driver.findElement(By.name("q"));
+////
+//////Prepare the search Clue
+//CharSequence searchQuery = clue.getQuestion() + " crossword clue\n";
+////
+//////Enter the Clue in the Text
+//element.sendKeys(searchQuery);
+//
+//// wait until the google page shows the result
+//(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
+//
+//
+//List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
+//
+//for(WebElement myElements : searchResults) {
+//	if(!myElements.getAttribute("href").contains("translate.google.com")) {
+//		googlePages.add(myElements.getAttribute("href"));
+//		//System.out.println(myElements.getAttribute("href"));
+//	}
+//}

@@ -22,11 +22,11 @@ public class Constraint {
 	}
 	
 	public void updateClue() {
-		if(across.getSolved()) {
+		if(across.isSolved()) {
 			down.solution[downIndex] = across.solution[acrossIndex];
 		}
 		
-		if(down.getSolved()) {
+		if(down.isSolved()) {
 			across.solution[acrossIndex] = down.solution[downIndex];
 		}
 	}
