@@ -131,36 +131,60 @@ public class Scrapper {
 
 	public int secondSearch(Clue clue) {
 		driver = new ChromeDriver();
+		driver1 = new ChromeDriver();
 		ArrayList<String> googlePages  = new ArrayList<String>();
 		String[] googleResult = new String[3];
-		driver.get("http://www.google.com");
-		
-		//Click of the input text
+		driver.get("http://www.the-crossword-solver.com");
 		WebElement element = driver.findElement(By.name("q"));
-//		
-//		//Prepare the search Clue
-		CharSequence searchQuery = clue.getQuestion() + " crossword clue\n";
-//		
-//		//Enter the Clue in the Text
+		
+		//driver.findElement(By.linkText("Crossword Solver")).click();
+		CharSequence searchQuery = clue.getQuestion();
 		element.sendKeys(searchQuery);
-		
+		element.submit();
+		try {
 		// wait until the google page shows the result
-		(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
-		
-	    
-		List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
-        
-		for(WebElement myElements : searchResults) {
-			if(!myElements.getAttribute("href").contains("translate.google.com")) {
-				googlePages.add(myElements.getAttribute("href"));
-				//System.out.println(myElements.getAttribute("href"));
+			(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("searchresults")));
+			
+			List<WebElement> searchResults = driver.findElements(By.cssSelector(".searchresult > a")); 
+	      
+			for(WebElement myElements : searchResults) {
+				
+				if(myElements.getText().length() == clue.getLength()){
+					clue.addAlternative(myElements.getText());
+				}
 			}
 		}
+		catch(Exception e){
+			System.out.println("Sorrrrrrryyyy t qifsha robt");
+		}
 		
-		//System.out.print("The links for the result have been saved successfully");
+		//Click of the input text
+//		WebElement element = driver.findElement(By.name("q"));
+////		
+////		//Prepare the search Clue
+//		CharSequence searchQuery = clue.getQuestion() + " crossword clue\n";
+////		
+////		//Enter the Clue in the Text
+//		element.sendKeys(searchQuery);
+//		
+//		// wait until the google page shows the result
+//		(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
+//		
+//	    
+//		List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
+//        
+//		for(WebElement myElements : searchResults) {
+//			if(!myElements.getAttribute("href").contains("translate.google.com")) {
+//				googlePages.add(myElements.getAttribute("href"));
+//				//System.out.println(myElements.getAttribute("href"));
+//			}
+//		}
+		
+		System.out.print("The links for the result have been saved successfully");
 		
 		//Visit the First Three Links and Save The Data
-		
+		driver.close();
+		driver.quit();
 		return 0;
 		
 	}

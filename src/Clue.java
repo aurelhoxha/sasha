@@ -111,4 +111,39 @@ public class Clue {
 	public ArrayList<String> getAlternatives(){
 		return alternatives;
 	}
+	
+	public void addAlternative(String alternative){
+		alternatives.add(alternative);
+	}
+	
+	public void printAlternative() {
+		System.out.print("{");
+		for(int i = 0; i < alternatives.size();i++)
+			System.out.print(alternatives.get(i) + ",");
+		System.out.println("}");
+			
+	}
+	
+	public void updateClueAlternative() {
+		ArrayList<String> toBeDeleted = new ArrayList<String>();
+		for(String str : alternatives){
+			for(int i = 0; i < length; i++){
+				if(!(solution[i] == '-')){
+					if(solution[i] != str.charAt(i)){
+						toBeDeleted.add(str);
+					}
+				}
+			}
+		}
+		
+		for(int i = 0; i < toBeDeleted.size(); i++){
+			alternatives.remove(toBeDeleted.get(i));
+		}
+		
+		if(alternatives.size() == 1){
+			solved = true;
+			setSolution(alternatives.get(0));
+		}
+		
+	}
 }
