@@ -14,6 +14,7 @@ public class Clue {
 	public String direction;
 	public ArrayList<String> alternatives;//Possible options for answer of the clue
 	public boolean solved;
+	public ArrayList<Constraint> constraints;
 	
 	public Clue(String question, int nr, int leng, int x, int y, String dir){
 		clueQuestion = question;
@@ -36,7 +37,7 @@ public class Clue {
 		return xPosition;
 	}
 	
-	public int yPosition(){
+	public int getY(){
 		return yPosition;
 	}
 	
@@ -59,10 +60,17 @@ public class Clue {
 	public void setLength(int l){
 		length = l;
 		solution = new char[length];
+		for(int i = 0; i < length; i++) {
+			solution[i] = '-';
+		}
 	}
 	
-	public void setSolution(char[] sol){
-		solution = sol;
+	public void setSolution(String sol){
+		if(solution.length == sol.length()){
+			for(int i = 0; i < solution.length; i++){
+				solution[i] = sol.charAt(i);
+			}
+		}
 	}
 	
 	public void setDirection(String s){
@@ -87,6 +95,13 @@ public class Clue {
 	
 	public char[] getSolution(){
 		return solution;
+	}
+	
+	public void printSolution(){
+		for(int i = 0; i < length; i++){
+			System.out.print(solution[i]);
+		}
+		System.out.println();
 	}
 	
 	public String getDirection(){

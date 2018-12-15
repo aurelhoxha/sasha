@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 public class Scrapper {	
 	//Files for Mac and Windows
@@ -31,13 +36,12 @@ public class Scrapper {
 	    else {
 	    	System.setProperty("webdriver.chrome.driver", chrome.getAbsolutePath());
 	    }
-        
-	    //Using Google Chrome
-        driver = new ChromeDriver();
 	}
 	
 	
-	public void search(Clue clue) throws InterruptedException{
+	public int firstSearch(Clue clue) throws InterruptedException, IOException{
+		//Using Google Chrome
+        driver = new ChromeDriver();
 		ArrayList<String> googlePages  = new ArrayList<String>();
 		String[] googleResult = new String[3];
 		System.out.println("Starting to search for " + clue.getQuestion());
@@ -53,15 +57,78 @@ public class Scrapper {
 		
 		String pattern = "";
 		for(int i = 0; i < clue.length; i++){
-			pattern = pattern + "?";
+			if(clue.solution[i] == '-'){
+				pattern = pattern + "?";
+			}
+			else{
+				pattern = pattern + clue.solution[i];
+			}
+			
 		}
 		
 		element.sendKeys(clue.clueQuestion);
 		element1.sendKeys(pattern);
 		
-		Thread.sleep(5000);
-		
 		element.submit();
+		
+		// wait until the google page shows the result
+		try {
+			(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.className("solver-cell")));
+			List<WebElement> searchResults = driver.findElements(By.cssSelector(".solver-cell"));
+			ArrayList<String> options = new ArrayList<String>();
+			
+			for(WebElement myElements : searchResults) {
+				options.add(myElements.getText());
+			}
+			
+			if(options.size() < 5) {
+				if(options.get(3).equals("95%")){
+					clue.setSolution(options.get(2));
+					clue.setSolved(true);
+					clue.printSolution();
+					driver.close();
+					driver.quit();
+					return 1;
+				}
+				driver.close();
+				driver.quit();
+				return 0;
+				
+			}
+			else {
+				int n1 = Integer.parseInt(options.get(3).substring(0, 2));
+				int n2 = Integer.parseInt(options.get(5).substring(0, 2));
+				if(n1 > 90 && n1 - n2 <= 15){
+					driver.close();
+					driver.quit();
+					return 0;
+				}
+				else {
+					if(n1 > 90) {
+						clue.setSolution(options.get(2));
+						clue.setSolved(true);
+						clue.printSolution();
+						driver.close();
+						driver.quit();
+						return 1;
+					}
+					else{
+						driver.close();
+						driver.quit();
+						return 0;
+					}
+				}
+			}
+		}
+		catch (Exception e){
+			System.out.println("No available solution");
+			driver.close();
+			driver.quit();
+			return -1;
+		}
+		//String url = driver.getCurrentUrl();
+		//System.out.println(url);
+		
 		
 		//Click of the input text
 //		WebElement element = driver.findElement(By.name("q"));

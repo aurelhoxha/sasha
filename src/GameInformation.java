@@ -34,6 +34,7 @@ public class GameInformation {
 		dateText = "";
 		acrossClues = new ArrayList<String>();
 		downClues = new ArrayList<String>();
+		constraints = new ArrayList<Constraint>();
 		clues = new ArrayList<Clue>();
 		clueNumbers = new Integer[25];
 		tempText = "";
@@ -270,7 +271,8 @@ public class GameInformation {
 			if(clues.get(i).direction.equals("across")){	
 				System.out.print(clues.get(i).clueNumber + " ");
 				System.out.print(clues.get(i).clueQuestion + " ");
-				System.out.println(clues.get(i).length);
+				System.out.print(clues.get(i).length + " (");
+				System.out.println(clues.get(i).getX() + ", " + clues.get(i).getY() + ")");
 			}
 		}
 		
@@ -279,7 +281,8 @@ public class GameInformation {
 			if(clues.get(i).direction.equals("down")){	
 				System.out.print(clues.get(i).clueNumber + " ");
 				System.out.print(clues.get(i).clueQuestion + " ");
-				System.out.println(clues.get(i).length);
+				System.out.print(clues.get(i).length + " (");
+				System.out.println(clues.get(i).getX() + ", " + clues.get(i).getY() + ")");
 			}
 		}
 	}
@@ -323,9 +326,19 @@ public class GameInformation {
 	}
 	
 	//Print the Block Cells
-	public void printArrayCells() {
-		for(int i = 0; i < clueNumbers.length;i++)
-			System.out.println("At position " + i + " value : " + clueNumbers[i]);
+	public void calculateCoordinates() {
+		for(int i = 0; i < 5; i++){ 
+			for(int j = 0; j < 5; j++){
+				if(matrix[i][j] > 0) {
+					for(int k = 0; k < clues.size();k++){
+						if(clues.get(k).clueNumber == matrix[i][j]){
+							clues.get(k).setCoordinates(i, j);
+						}
+					}
+				}
+				
+			}
+		}
 	}
 
 	//Print Matching Cells(Constraints)
@@ -340,7 +353,7 @@ public class GameInformation {
 		for(int i = 0; i < 5; i++){
 			for(int j = 0; j < 5; j++){
 				if(matrix[i][j] == -1){
-					//System.out.println("Cell " + i + ", " + j + " is a block cell");
+					System.out.println("Cell " + i + ", " + j + " is a block cell");
 				}
 				else {
 				    toGoLeft = j;
@@ -370,8 +383,25 @@ public class GameInformation {
 				    }
 				    amountUp = i - toGoUp -1;
 					
+				    int index1 = -1;
+				    int index2 = -1;
 					//System.out.println("Cell " + i + ", " + j + " is clue " + matchAcross + " across at index " + amountLeft + " and clue " + matchDown + " down at index " + amountUp );
+					for(int z= 0; z<clues.size();z++) {
+						if(clues.get(z).clueNumber == matchAcross && clues.get(z).direction.equals("across")) {
+							index1 = z;
+							break;
+						}
+					}
 					
+					for(int z= 0; z<clues.size();z++) {
+						if(clues.get(z).clueNumber == matchDown && clues.get(z).direction.equals("down")) {
+							index2 = z;
+							break;
+						}
+					}
+					
+					Constraint c = new Constraint(clues.get(index1), clues.get(index2), amountLeft, amountUp);
+					constraints.add(c);
 				}
 			}
 			

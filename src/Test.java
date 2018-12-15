@@ -46,7 +46,7 @@ public class Test extends JFrame{
 				else
 					adr = selection;
 				
-				myGame = new GameInformation(adr);
+				myGame = new GameInformation("December 3, 2018");
 				//System.out.println("Getting Clue Numbers");
 				myGame.scrapeClueNumbers();
 				//System.out.println("Getting Across Clues");
@@ -58,11 +58,37 @@ public class Test extends JFrame{
 				myGame.printPuzzle();
 				
 				myGame.generateLengths();
-				//myGame.printCluesAndQuestionsAndLengths();
-				//myGame.determineConstraints();
+				myGame.calculateCoordinates();
+				
+				myGame.printCluesAndQuestionsAndLengths();
+				myGame.determineConstraints();
 				
 				Scrapper scrapi = new Scrapper();
-				scrapi.search(myGame.clues.get(1));
+				
+				for(int i = 0; i < myGame.clues.size(); i++){
+					scrapi.firstSearch(myGame.clues.get(i));
+					for(int l = 0; l < myGame.clues.size(); l++){
+						if(myGame.clues.get(l).getSolved()) {
+							for(int j = 0; j < myGame.constraints.size();j++) {
+								if(myGame.constraints.get(j).contains(myGame.clues.get(l))) {
+									myGame.constraints.get(j).updateClue();
+								}
+							}
+						}
+					}
+				}
+				
+				for(int i = 0; i < myGame.clues.size(); i++){
+					myGame.clues.get(i).printSolution();
+				}
+				
+				System.out.println("---------------------");
+				
+
+				
+				for(int i = 0; i < myGame.clues.size(); i++){
+					myGame.clues.get(i).printSolution();
+				}
 
 				//Initialize the Variables according to the Game Information
 				myClueNumber = myGame.getClueNumbers();
