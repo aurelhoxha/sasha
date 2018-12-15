@@ -125,6 +125,23 @@ public class Clue {
 	}
 	
 	public void updateClueAlternative() {
+		
+	  
+	        // Create a new ArrayList 
+	        ArrayList<String> newList = new ArrayList<String>(); 
+	  
+	        // Traverse through the first list 
+	        for (String element : alternatives) { 
+	  
+	            // If this element is not present in newList 
+	            // then add it 
+	            if (!newList.contains(element)) { 
+	  
+	                newList.add(element); 
+	            } 
+	        } 
+	  
+	        alternatives = newList;
 		ArrayList<String> toBeDeleted = new ArrayList<String>();
 		for(String str : alternatives){
 			for(int i = 0; i < length; i++){
