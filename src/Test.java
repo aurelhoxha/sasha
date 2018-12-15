@@ -78,6 +78,12 @@ public class Test extends JFrame{
 					}
 				}
 				
+				for(int i = 0; i < myGame.clues.size(); i++) {
+					if(myGame.clues.get(i).getSolved()) {
+						myGame.clues.get(i).updateClueAlternative();
+					}
+				}
+				
 				//System.out.println("Puzzle Not Solved: " + myGame.puzzleNotSolved());
 				
 				for(int i = 0; i < myGame.clues.size();i++) {

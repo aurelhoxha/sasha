@@ -81,7 +81,7 @@ public class Scrapper {
 			
 			for(int g = 2; g < options.size();g++)
 			{
-				if(g%2==0)
+				if(g%2==0 && options.get(g).length() == clue.getLength())
 					clue.addAlternative(options.get(g));
 			}
 			
