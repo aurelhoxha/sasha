@@ -85,6 +85,18 @@ public class Clue {
 		return clueQuestion;
 	}
 	
+	public void checkIfCompleted(){
+		boolean flag = true;
+		for(int i = 0; i < length; i++){
+			if(solution[i] == '-'){
+				flag = false;
+			}
+		}
+		if(flag == true){
+			setSolved(true);
+		}
+	}
+	
 	public int getClueNumber(){
 		return clueNumber;
 	}
@@ -116,7 +128,7 @@ public class Clue {
 		alternatives.add(alternative);
 	}
 	
-	public void printAlternative() {
+	public void printAlternatives() {
 		System.out.print("{");
 		for(int i = 0; i < alternatives.size();i++)
 			System.out.print(alternatives.get(i) + ",");
@@ -130,21 +142,16 @@ public class Clue {
   
         // Traverse through the first list 
         for (String element : alternatives) { 
-  
-            // If this element is not present in newList 
-            // then add it 
             if (!newList.contains(element)) { 
-  
                 newList.add(element); 
             } 
         } 
-  
         alternatives = newList;
         
 		ArrayList<String> toBeDeleted = new ArrayList<String>();
 		for(String str : alternatives){
 			for(int i = 0; i < length; i++){
-				if(!(solution[i] == '-')){
+				if(solution[i] != '-'){
 					if(solution[i] != str.charAt(i)){
 						toBeDeleted.add(str);
 					}
@@ -154,7 +161,6 @@ public class Clue {
 		
 		for(int i = 0; i < toBeDeleted.size(); i++){
 			alternatives.remove(toBeDeleted.get(i));
-		}
-		
+		}		
 	}
 }

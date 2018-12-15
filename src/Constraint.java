@@ -6,6 +6,8 @@ public class Constraint {
 	public Clue down;
 	public int acrossIndex;
 	public int downIndex;
+	//public ArrayList<String> toBeDelAcross;
+	//public ArrayList<String> toBeDelDown;
 	
 	public Constraint(Clue across, Clue down, int acrossIndex, int downIndex){
 		this.across = across;
@@ -21,15 +23,18 @@ public class Constraint {
 	public void cleanAcrossAlternatives(){
 		ArrayList<String> toBeDeleted = new ArrayList<String>();
 		for(int i = 0; i < across.alternatives.size(); i++){
-			boolean toDelete = true;
+			boolean dontDelete = false;
 			String word = across.alternatives.get(i);
 			for(int j = 0; j < down.alternatives.size(); j++){
 				if(word.charAt(acrossIndex) == down.alternatives.get(j).charAt(downIndex)){
-					toDelete = false;
+					dontDelete = true;
+					break;
 				}
 			}
-			if(toDelete == true && down.alternatives.size() > 0){
+
+			if(dontDelete == false && down.alternatives.size() > 0){
 				toBeDeleted.add(word);
+				System.out.println("Sent word to delete: " + word);
 			}
 		}
 		
@@ -41,15 +46,18 @@ public class Constraint {
 	public void cleanDownAlternatives(){
 		ArrayList<String> toBeDeleted = new ArrayList<String>();
 		for(int i = 0; i < down.alternatives.size(); i++){
-			boolean toDelete = true;
+			boolean dontDelete = false;
 			String word = down.alternatives.get(i);
 			for(int j = 0; j < across.alternatives.size(); j++){
 				if(word.charAt(downIndex) == across.alternatives.get(j).charAt(acrossIndex)){
-					toDelete = false;
+					dontDelete = true;
+					break;
 				}
 			}
-			if(toDelete == true && across.alternatives.size() > 0){
+
+			if(dontDelete == false && across.alternatives.size() > 0 ){
 				toBeDeleted.add(word);
+				System.out.println("Sent word to delete: " + word);
 			}
 		}
 		
@@ -65,10 +73,12 @@ public class Constraint {
 	public void updateClue() {
 		if(across.isSolved()) {
 			down.solution[downIndex] = across.solution[acrossIndex];
+			down.checkIfCompleted();
 		}
 		
 		if(down.isSolved()) {
 			across.solution[acrossIndex] = down.solution[downIndex];
+			across.checkIfCompleted();
 		}
 	}
 }
