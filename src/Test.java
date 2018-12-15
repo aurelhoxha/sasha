@@ -46,7 +46,7 @@ public class Test extends JFrame{
 				else
 					adr = selection;
 				
-				myGame = new GameInformation("December 3, 2018");
+				myGame = new GameInformation("November 1, 2018");
 				//System.out.println("Getting Clue Numbers");
 				myGame.scrapeClueNumbers();
 				//System.out.println("Getting Across Clues");

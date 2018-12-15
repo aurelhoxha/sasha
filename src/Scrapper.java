@@ -42,8 +42,6 @@ public class Scrapper {
 	public int firstSearch(Clue clue) throws InterruptedException, IOException{
 		//Using Google Chrome
         driver = new ChromeDriver();
-		ArrayList<String> googlePages  = new ArrayList<String>();
-		String[] googleResult = new String[3];
 		System.out.println("Starting to search for " + clue.getQuestion());
 		
 		//Go to Google 
@@ -126,34 +124,44 @@ public class Scrapper {
 			driver.quit();
 			return -1;
 		}
-		//String url = driver.getCurrentUrl();
-		//System.out.println(url);
+
 		
+		
+	}
+
+	public int secondSearch(Clue clue) {
+		driver = new ChromeDriver();
+		ArrayList<String> googlePages  = new ArrayList<String>();
+		String[] googleResult = new String[3];
+		driver.get("http://www.google.com");
 		
 		//Click of the input text
-//		WebElement element = driver.findElement(By.name("q"));
+		WebElement element = driver.findElement(By.name("q"));
 //		
 //		//Prepare the search Clue
-//		CharSequence searchQuery = clue.getQuestion() + " crossword clue\n";
+		CharSequence searchQuery = clue.getQuestion() + " crossword clue\n";
 //		
 //		//Enter the Clue in the Text
-//		element.sendKeys(searchQuery);
-//		
-//		// wait until the google page shows the result
-//		(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
-//	    
-//		List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
-//        
-//		for(WebElement myElements : searchResults) {
-//			if(!myElements.getAttribute("href").contains("translate.google.com")) {
-//				googlePages.add(myElements.getAttribute("href"));
-//				//System.out.println(myElements.getAttribute("href"));
-//			}
-//		}
+		element.sendKeys(searchQuery);
+		
+		// wait until the google page shows the result
+		(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
+		
+	    
+		List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
+        
+		for(WebElement myElements : searchResults) {
+			if(!myElements.getAttribute("href").contains("translate.google.com")) {
+				googlePages.add(myElements.getAttribute("href"));
+				//System.out.println(myElements.getAttribute("href"));
+			}
+		}
 		
 		//System.out.print("The links for the result have been saved successfully");
 		
 		//Visit the First Three Links and Save The Data
+		
+		return 0;
 		
 	}
 }
