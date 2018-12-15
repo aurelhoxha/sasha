@@ -140,10 +140,5 @@ public class Clue {
 			alternatives.remove(toBeDeleted.get(i));
 		}
 		
-		if(alternatives.size() == 1){
-			solved = true;
-			setSolution(alternatives.get(0));
-		}
-		
 	}
 }

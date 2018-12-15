@@ -78,13 +78,7 @@ public class Test extends JFrame{
 					}
 				}
 				
-				System.out.println("---------------------");
-				
-
-				
-				for(int i = 0; i < myGame.clues.size(); i++){
-					myGame.clues.get(i).printSolution();
-				}
+				//System.out.println("Puzzle Not Solved: " + myGame.puzzleNotSolved());
 				
 				for(int i = 0; i < myGame.clues.size();i++) {
 					if(!myGame.clues.get(i).getSolved()) {

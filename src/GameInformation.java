@@ -451,6 +451,16 @@ public class GameInformation {
 		}
 		//System.out.println("\n");
 	}
+	
+	public boolean puzzleNotSolved() {
+		for(int i = 0; i < clues.size(); i++) {
+			for(int j = 0; j < clues.get(i).getSolution().length; j++) {
+				if(clues.get(i).getSolution()[j] == '-')
+					return true;
+			}
+		}
+		return false;
+	}
 
 }
 

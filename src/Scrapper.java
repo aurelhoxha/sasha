@@ -79,6 +79,12 @@ public class Scrapper {
 				options.add(myElements.getText());
 			}
 			
+			for(int g = 2; g < options.size();g++)
+			{
+				if(g%2==0)
+					clue.addAlternative(options.get(g));
+			}
+			
 			if(options.size() < 5) {
 				if(options.get(3).equals("95%")){
 					clue.setSolution(options.get(2));
@@ -131,7 +137,6 @@ public class Scrapper {
 
 	public int secondSearch(Clue clue) {
 		driver = new ChromeDriver();
-		driver1 = new ChromeDriver();
 		ArrayList<String> googlePages  = new ArrayList<String>();
 		String[] googleResult = new String[3];
 		driver.get("http://www.the-crossword-solver.com");
@@ -180,7 +185,7 @@ public class Scrapper {
 //			}
 //		}
 		
-		System.out.print("The links for the result have been saved successfully");
+		System.out.println("The links for the result have been saved successfully");
 		
 		//Visit the First Three Links and Save The Data
 		driver.close();
