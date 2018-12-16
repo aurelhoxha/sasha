@@ -1,6 +1,9 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +44,86 @@ public class Scrapper {
 	    driver = new ChromeDriver();   
 	}
 	
+	public void googleSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) throws InterruptedException, IOException, Exception {
+		for(int i = 0; i < clues.size(); i++) {
+			ArrayList<String> googlePages  = new ArrayList<String>();
+			System.out.println("Googling for word: " + clues.get(i).getQuestion());
+			driver.get("https://www.google.com/");
+			WebElement element = driver.findElement(By.name("q"));
+			
+			//Prepare the search Clue
+			CharSequence searchQuery = clues.get(i).getQuestion() + " crossword clue\n";
+			//Enter the Clue in the Text
+			element.sendKeys(searchQuery);
+			// wait until the google page shows the result
+			(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
+			List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
+			for(WebElement myElements : searchResults) {
+				if(!myElements.getAttribute("href").contains("translate.google.com")) {
+					googlePages.add(myElements.getAttribute("href"));
+				}
+			}
+			System.out.println("Result for Clue: " + clues.get(i).getQuestion());
+			System.out.println("-------------------------------------");
+			ArrayList<String> googlePagesDeleted  = new ArrayList<String>();
+			boolean firstCheck = false;
+			boolean secondCheck = false;
+			for(int j = 0; j < googlePages.size(); j++)
+			{
+				if(googlePages.get(j).contains("wordplays")) {
+					googlePagesDeleted.add(googlePages.get(j));
+				}
+				if(googlePages.get(j).contains("the-crossword-solver.com")) {
+					firstCheck = true;
+					
+				}
+				if(googlePages.get(j).contains("crosswordnexus.com")) {
+					secondCheck = true;
+				}
+			}
+			
+			for(int j = 0; j < googlePagesDeleted.size(); j++) {
+				googlePages.remove(googlePagesDeleted.get(j));
+			}
+			for(int j = 0; j < googlePages.size(); j++)
+			{
+				System.out.println(googlePages.get(j));
+				try {
+					String tempText = "";
+					//Making the Connection with the WEBSITE
+					//Taking the HTML Code
+					//System.out.println("Connecting to the NY MiniPuzzle");
+					URL oracle = new URL(googlePages.get(j));
+					BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
+					String lineText;
+					while ((lineText = in.readLine()) != null) {
+						tempText = tempText + lineText + "\n";
+					}
+					in.close();
+					
+					Document doc = Jsoup.parse(tempText);
+					String bodyText = doc.body().text();
+					System.out.println("-----------------------------------------");
+					String[] bodyWords = bodyText.split(" ");
+					for(int z = 0; z < bodyWords.length; z++) {
+						bodyWords[z] = bodyWords[z].replaceAll("[\\.$|,|;|'|!|?|@|#|%|^|&|*|(|)|_|-|+|=|{|}|:|<|>|\"|‘|’|-|/|×|…|«]", "");
+					}
+					for(int z = 0; z < bodyWords.length; z++) {
+						if(bodyWords[z].length() == clues.get(i).getLength())
+							clues.get(i).addAlternative(bodyWords[z].toUpperCase());
+					}
+					System.out.println("-----------------------------------------");
+				}
+				catch(Exception e) {
+					System.out.println("Robot Check Detected");
+					System.out.println("-----------------------------------------");
+				}
+				
+				
+			}
+			
+		}
+	}
 	
 	public int firstSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) throws InterruptedException, IOException{
         for(int i = 0; i < clues.size(); i++){
