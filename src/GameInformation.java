@@ -404,8 +404,8 @@ public class GameInformation {
 					constraints.add(c);
 				}
 			}
-			
 		}
+		System.out.println("Determining Constraints for each cell");
 	}
 
 	//Print Lengths of Clues
@@ -449,7 +449,7 @@ public class GameInformation {
 			}			
 			length = 0;
 		}
-		//System.out.println("\n");
+		System.out.println("Calculating lengths");
 	}
 	
 	public boolean puzzleNotSolved() {

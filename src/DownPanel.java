@@ -33,10 +33,10 @@ public class DownPanel extends JPanel{
 			JLabel theQuestion = new JLabel(myDownClues.get(i));
 			
 			//If question is to Long divide it
-			if(myDownClues.get(i).length() >= 80){
+			if(myDownClues.get(i).length() >= 60){
 				String first = "";
 				String second = "";
-				for(int j = 70; j < myDownClues.get(i).length()-1; j++) {
+				for(int j = 55; j < myDownClues.get(i).length()-1; j++) {
 					if(myDownClues.get(i).charAt(j) == ' ' ){
 						first = myDownClues.get(i).substring(0, j);
 						second = "   " + myDownClues.get(i).substring(j+1, myDownClues.get(i).length());

@@ -29,7 +29,7 @@ public class Scrapper {
 	//Two Chrome Drivers
 	WebDriver driver;
 	WebDriver driverDisabled;
-	boolean googleDriverClosed = false;
+	boolean googleDriverClosed = true;
 	
 	public Scrapper(){
 	    chrome = new File("./src/chromedriver.exe");
@@ -149,7 +149,7 @@ public class Scrapper {
 	
 	public int firstSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) throws InterruptedException, IOException{
         for(int i = 0; i < clues.size(); i++){
-			System.out.println("Starting to search for " + clues.get(i).getQuestion());
+			System.out.println("Starting to search certain answer for: " + clues.get(i).getQuestion());
 			
 			//Go to Google 
 			driver.get("http://www.dictionary.com/fun/crosswordsolver");
@@ -199,7 +199,6 @@ public class Scrapper {
 						if(options.get(3).equals("95%")){
 							clues.get(i).setSolution(options.get(2));
 							clues.get(i).setSolved(true);
-							clues.get(i).printSolution();
 						}				
 					}
 					else {
@@ -208,7 +207,6 @@ public class Scrapper {
 						if(n1 > 90 && n1 - n2 > 15){
 							clues.get(i).setSolution(options.get(2));
 							clues.get(i).setSolved(true);
-							clues.get(i).printSolution();
 						}
 					}
 					for(int l = 0; l < clues.size(); l++){
@@ -223,7 +221,7 @@ public class Scrapper {
 					}
 				}
 				catch (Exception e){
-					System.out.println("No available solution");
+					System.out.println("No solutions found for " + clues.get(i).getQuestion());
 				}
         	}
         }
@@ -235,6 +233,8 @@ public class Scrapper {
 			if(!clues.get(i).isSolved()) {
 				driver.get("https://www.google.com/");
 				WebElement elementGoogle = driver.findElement(By.name("q"));
+				
+				System.out.println("Googling possible solutions for: " + clues.get(i).getQuestion());
 				
 				//Prepare the search Clue
 				CharSequence searchQueryGoogle = clues.get(i).getQuestion() + "\n";
@@ -277,10 +277,11 @@ public class Scrapper {
 						List<WebElement> rows = driverDisabled.findElements(By.tagName("tr")); 
 						ArrayList<Integer> stars = new ArrayList<Integer>();
 						
+						int t = 1;
 						for(WebElement myElements : rows) {
 							List<WebElement> starsCounter = myElements.findElements(By.tagName("img"));
 							stars.add(starsCounter.size());
-							//System.out.println("This one has STARS =  " + starsCounter.size() );
+							System.out.println("Visiting link number " + t++);
 						}
 						
 						int counter = 0;

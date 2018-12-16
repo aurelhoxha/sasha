@@ -51,7 +51,6 @@ public class ButtonsPanel extends JPanel {
 	    
 		solveButton = new JButton("Solve");
 		clearButton = new JButton("Clear");
-		//revealButton = new JButton("Reveal");
 		
 		//Takes the Dates from the Folder
 		dates = new String[foldersInDirectory.size() + 1];
@@ -113,7 +112,7 @@ public class ButtonsPanel extends JPanel {
 	        public void actionPerformed(ActionEvent e) {
 	        	//Get the selected item
 	            String s = (String)others.getSelectedItem();
-	            //System.out.println("Selected Date has changed to " + s);
+	            System.out.println("Selected Date has changed to " + s);
 	            Test.selection = s;
 	           
 	        }
@@ -136,8 +135,6 @@ public class ButtonsPanel extends JPanel {
 		add(Box.createRigidArea(new Dimension(10, 0)));
 		add(clearButton);
 		add(Box.createRigidArea(new Dimension(10, 0)));
-		//add(revealButton);
-		//add(Box.createRigidArea(new Dimension(10, 0)));
 		add(others);
 		add(Box.createRigidArea(new Dimension(300, 0)));		
 	}

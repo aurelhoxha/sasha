@@ -21,16 +21,6 @@ public class Test extends JFrame{
 		GameInformation myGame = null;
 		String adr = "";
 		
-//		myGame = new GameInformation("https://www.nytimes.com/crosswords/game/mini"); //November 16, 2018
-//		myGame.scrapeClueNumbers();
-//		myGame.scrapeAcrossClues();
-//		myGame.scrapeDownClues();
-//		//myGame.printArrayCells();
-//		myGame.generateMatrix();
-//		myGame.printPuzzle();
-//		myGame.printMatchingCells();
-//		myGame.printLengths();
-		
 		//Creation of the Game
 		JFrame myGameFrame = new JFrame("Sasha");;
 		
@@ -45,48 +35,114 @@ public class Test extends JFrame{
 				else
 					adr = selection;
 				
-				myGame = new GameInformation("December 13, 2018");
-				//System.out.println("Getting Clue Numbers");
+				myGame = new GameInformation(adr);
+				System.out.println("Taking Clue Numbers");
 				myGame.scrapeClueNumbers();
-				//System.out.println("Getting Across Clues");
+				System.out.println("Taking Across Clues");
 				myGame.scrapeAcrossClues();
-				//System.out.println("Getting Down Clues");
+				System.out.println("Taking Down Clues");
 				myGame.scrapeDownClues();
 				
 				myGame.generateMatrix();
-				myGame.printPuzzle();
-				
 				myGame.generateLengths();
 				myGame.calculateCoordinates();
-				
-				myGame.printCluesAndQuestionsAndLengths();
 				myGame.determineConstraints();
+
+				//Initialize the Variables according to the Game Information
+				myClueNumber = myGame.getClueNumbers();
+				myAcrossClues = myGame.getAcrossClues();
+				myDownClues = myGame.getDownClues();
+				//System.out.println("Getting Date");
+				gameDay = myGame.getGameDay();
+				gameDate = myGame.getGameDate();
 				
+				//Initialization of the Main Panels
+				System.out.println("Initializing Top Panel");
+				TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
+				System.out.println("Initializing Buttons Panel");
+				ButtonsPanel myButtonsPanel = new ButtonsPanel(myClueNumber);
+				System.out.println("Initializing Center Panel");
+				CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myClueNumber);
+				myButtonsPanel.others.setSelectedItem((selection == "Today") ? "Today" : gameDate);
+				
+				//Setting Layout and Adding the Panels
+				myGameFrame.setLayout(new BorderLayout());
+				myGameFrame.add(myTopPanel,BorderLayout.NORTH);
+				myGameFrame.add(myButtonsPanel,BorderLayout.SOUTH);
+				myGameFrame.add(myCenterPanel,BorderLayout.CENTER);
+				myGameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+				myGameFrame.setSize(1250, 720);
+				myGameFrame.setLocationRelativeTo(null);
+				myGameFrame.setVisible(true);
+				myGameFrame.setResizable(false);
+				//System.out.println("Frame Generated");
+				
+				oldSelection = selection;
+			}
+			if(store == true) {
+				System.out.println("Storing the puzzle");
+				String dir = "./oldPuzzles/" + gameDate;
+				File theDir = new File(dir);
+				store = false;
+
+				// if the directory does not exist, create it
+				if (!theDir.exists()) {
+				    //System.out.println("Creating directory: " + theDir.getName());
+				    boolean result = false;
+
+				    try {
+				        theDir.mkdir();
+				        result = true;
+				    } 
+				    catch(SecurityException se){
+				        //handle it
+				    }        
+				    if(result) {    
+				        //System.out.println("DIR created");  
+				    }
+				    
+					try {
+						File file = new File(dir + "/htmlCode.txt");
+						FileWriter fileWriter = new FileWriter(file);
+						fileWriter.write(myGame.tempText);
+						fileWriter.flush();
+						fileWriter.close();
+					} 	
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}				
+			}	
+			if(solve == true) {
+				System.out.println("Started Solving for date: " + selection);
+				solve = false;
+				//System.out.println("Determining Cells that should match with each other");
 				Scrapper scrapi = new Scrapper();
 				scrapi.firstSearch(myGame.clues, myGame.constraints);
 
 				System.out.println("------------------------------------------");
-				System.out.println("First Search Alternatives and Solutions:");
+				System.out.println("First Search Certain Solutions:");
 				System.out.println("------------------------------------------");
-				printAlternatives(myGame);				
+				printFirstSearchSolutions(myGame);
 				System.out.println("------------------------------------------");
-				printSolutions(myGame);
 				
 				scrapi.thirdSearch(myGame.clues, myGame.constraints);
 				System.out.println("------------------------------------------");
-				System.out.println("Second Search Alternatives and Solutions:");
+				System.out.println("Second Search Alternatives:");
 				System.out.println("------------------------------------------");
 				printAlternatives(myGame);			
+				System.out.println("Second Search Solutions:");
 				System.out.println("------------------------------------------");
 				printSolutions(myGame);
 				System.out.println("------------------------------------------");
 							
 				scrapi.fourthSearch(myGame.clues,myGame.constraints);
 				System.out.println("-----------------------------------------");
-				System.out.println("Fourth Search Alternatives and Solutions:");
+				System.out.println("Third Search Alternatives:");
 				System.out.println("-----------------------------------------");
 				printAlternatives(myGame);
-				System.out.println("-----------------------------------------");
+				System.out.println("Third Search Solutions:");
+				System.out.println("------------------------------------------");
 				printSolutions(myGame);
 				System.out.println("-----------------------------------------");
 				
@@ -126,86 +182,27 @@ public class Test extends JFrame{
 				updateCluesBySize(myGame);
 				
 				System.out.println("--------------------------------------------");
-				System.out.println("Final Version of Alternatives and Solutions:");
+				System.out.println("Final Version of Alternatives");
 				System.out.println("--------------------------------------------");
 				printAlternatives(myGame);
+				System.out.println("Final Version of Solutions");
 				System.out.println("--------------------------------------------");
 				printSolutions(myGame);
-				System.out.println("--------------------------------------------");
-
-//				//Initialize the Variables according to the Game Information
-//				myClueNumber = myGame.getClueNumbers();
-//				myAcrossClues = myGame.getAcrossClues();
-//				myDownClues = myGame.getDownClues();
-//				//System.out.println("Getting Date");
-//				gameDay = myGame.getGameDay();
-//				gameDate = myGame.getGameDate();
-//				
-//				//Initialization of the Main Panels
-//				//System.out.println("Initializing Top Panel");
-//				TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
-//				//System.out.println("Initializing Buttons Panel");
-//				ButtonsPanel myButtonsPanel = new ButtonsPanel(myClueNumber);
-//				//System.out.println("Initializing Center Panel");
-//				CenterPanel myCenterPanel = new CenterPanel(myAcrossClues, myDownClues, myClueNumber);
-//				myButtonsPanel.others.setSelectedItem((selection == "Today") ? "Today" : gameDate);
-//				
-//				//Setting Layout and Adding the Panels
-//				myGameFrame.setLayout(new BorderLayout());
-//				myGameFrame.add(myTopPanel,BorderLayout.NORTH);
-//				myGameFrame.add(myButtonsPanel,BorderLayout.SOUTH);
-//				myGameFrame.add(myCenterPanel,BorderLayout.CENTER);
-//				myGameFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-//				myGameFrame.setSize(1250, 720);
-//				myGameFrame.setLocationRelativeTo(null);
-//				myGameFrame.setVisible(true);
-//				myGameFrame.setResizable(false);
-//				//System.out.println("Frame Generated");
-				
-				oldSelection = selection;
-			}
-			if(store == true) {
-				//System.out.println("Storing the puzzle");
-				String dir = "./oldPuzzles/" + gameDate;
-				File theDir = new File(dir);
-				store = false;
-
-				// if the directory does not exist, create it
-				if (!theDir.exists()) {
-				    //System.out.println("Creating directory: " + theDir.getName());
-				    boolean result = false;
-
-				    try {
-				        theDir.mkdir();
-				        result = true;
-				    } 
-				    catch(SecurityException se){
-				        //handle it
-				    }        
-				    if(result) {    
-				        //System.out.println("DIR created");  
-				    }
-				    
-					try {
-						File file = new File(dir + "/htmlCode.txt");
-						FileWriter fileWriter = new FileWriter(file);
-						fileWriter.write(myGame.tempText);
-						fileWriter.flush();
-						fileWriter.close();
-					} 	
-					catch (IOException e) {
-						e.printStackTrace();
-					}
-				}				
-			}	
-			if(solve == true) {
-				//System.out.println("Started Solving");
-				solve = false;
-				//System.out.println("Determining Cells that should match with each other");
-						
-				
+				System.out.println("--------------------------------------------");		
 			}
 			System.out.print("");
+		}
+	}
+	
+	public static void printFirstSearchSolutions(GameInformation myGame){
+		int counter = 0;
+		for(int i = 0; i < myGame.clues.size(); i++) {
+			if(myGame.clues.get(i).isSolved()){
+				counter++;
+				myGame.clues.get(i).printSolution();
+			}
+			if(counter == 2)
+				break;
 		}
 	}
 	

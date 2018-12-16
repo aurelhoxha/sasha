@@ -34,10 +34,10 @@ public class AcrossPanel extends JPanel{
 			JLabel theQuestion = new JLabel(myAcrossClues.get(i));
 			
 			//If question is to Long divide it
-			if(myAcrossClues.get(i).length() >= 80){
+			if(myAcrossClues.get(i).length() >= 60){
 				String first = "";
 				String second = "";
-				for(int j = 70; j < myAcrossClues.get(i).length()-1; j++) {
+				for(int j = 55; j < myAcrossClues.get(i).length()-1; j++) {
 					if(myAcrossClues.get(i).charAt(j) == ' ' ){
 						first = myAcrossClues.get(i).substring(0, j);
 						second = "   " + myAcrossClues.get(i).substring(j+1, myAcrossClues.get(i).length());
