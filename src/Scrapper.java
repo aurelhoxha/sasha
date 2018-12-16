@@ -237,8 +237,8 @@ public class Scrapper {
 				elementGoogle.sendKeys(searchQueryGoogle);
 				
 				driverDisabled.get("http://www.crosswordnexus.com");
-				WebElement element = driver.findElement(By.name("clue"));
-				WebElement element1 = driver.findElement(By.name("pattern"));
+				WebElement element = driverDisabled.findElement(By.name("clue"));
+				WebElement element1 = driverDisabled.findElement(By.name("pattern"));
 				
 				//driver.findElement(By.linkText("Crossword Solver")).click();
 				CharSequence searchQuery = clues.get(i).getQuestion();//
@@ -328,7 +328,7 @@ public class Scrapper {
 				
 				
 				driverDisabled.get("http://www.crosswordnexus.com");
-				WebElement element = driver.findElement(By.name("pattern"));
+				WebElement element = driverDisabled.findElement(By.name("pattern"));
 				
 				int counter1 = 0;
 				String searchByLetters = "";
