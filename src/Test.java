@@ -119,6 +119,8 @@ public class Test extends JFrame{
 				
 				
 				scrapi.fourthSearch(myGame.clues,myGame.constraints);
+				scrapi.driverDisabled.close();
+				scrapi.driverDisabled.quit();
 				
 				updateAlternativesByConstraints(myGame);
 				updateCluesBySize(myGame);

@@ -28,7 +28,7 @@ public class Scrapper {
 	
 	//Two Chrome Drivers
 	WebDriver driver;
-	WebDriver driver1;
+	WebDriver driverDisabled;
 	
 	public Scrapper(){
 	    chrome = new File("./src/chromedriver.exe");
@@ -45,10 +45,13 @@ public class Scrapper {
 		ChromeOptions chromeOptions = new ChromeOptions();  
 	    chromeOptions.addArguments("--headless");  
 	    chromeOptions.addArguments("--disable-gpu");  
-	    driver = new ChromeDriver(chromeOptions);    
+	    driverDisabled = new ChromeDriver(chromeOptions);   
+	    driver = new ChromeDriver();
+	    
 	}
 	
 	public void googleSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) throws InterruptedException, IOException, Exception {
+		
 		for(int i = 0; i < clues.size(); i++) {
 			if(!clues.get(i).isSolved()) {
 				ArrayList<String> googlePages  = new ArrayList<String>();
@@ -135,6 +138,8 @@ public class Scrapper {
 			}
 			
 		}
+		driver.close();
+		driver.quit();
 	}
 	
 	public int firstSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) throws InterruptedException, IOException{
@@ -223,7 +228,15 @@ public class Scrapper {
 	public int thirdSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) {
 		for(int i = 0; i < clues.size(); i++){
 			if(!clues.get(i).isSolved()) {
-				driver.get("http://www.crosswordnexus.com");
+				driver.get("https://www.google.com/");
+				WebElement elementGoogle = driver.findElement(By.name("q"));
+				
+				//Prepare the search Clue
+				CharSequence searchQueryGoogle = clues.get(i).getQuestion() + "\n";
+				//Enter the Clue in the Text
+				elementGoogle.sendKeys(searchQueryGoogle);
+				
+				driverDisabled.get("http://www.crosswordnexus.com");
 				WebElement element = driver.findElement(By.name("clue"));
 				WebElement element1 = driver.findElement(By.name("pattern"));
 				
@@ -305,7 +318,16 @@ public class Scrapper {
 	public int fourthSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) {
 		for(int i = 0; i < clues.size(); i++){
 			if(!clues.get(i).isSolved()) {
-				driver.get("http://www.crosswordnexus.com");
+				driver.get("https://www.google.com/");
+				WebElement elementGoogle = driver.findElement(By.name("q"));
+				
+				//Prepare the search Clue
+				CharSequence searchQueryGoogle = clues.get(i).getQuestion() + "\n";
+				//Enter the Clue in the Text
+				elementGoogle.sendKeys(searchQueryGoogle);
+				
+				
+				driverDisabled.get("http://www.crosswordnexus.com");
 				WebElement element = driver.findElement(By.name("pattern"));
 				
 				int counter1 = 0;
