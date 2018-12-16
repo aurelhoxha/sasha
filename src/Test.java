@@ -122,8 +122,10 @@ public class Test extends JFrame{
 				
 
 				for(int m = 0; m < myGame.constraints.size(); m++){
-					myGame.constraints.get(m).cleanAcrossAlternatives();
-					myGame.constraints.get(m).cleanDownAlternatives();
+					if(!myGame.constraints.get(m).contains(myGame.clues.get(0))){
+						myGame.constraints.get(m).cleanAcrossAlternatives();
+						myGame.constraints.get(m).cleanDownAlternatives();
+					}
 				}
 				System.out.println("------------------------------------");
 				System.out.println("After Cleaning Constraints:");
