@@ -271,10 +271,10 @@ public class Scrapper {
 					
 					try {
 					// wait until the google page shows the result
-						(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
+						(new WebDriverWait(driverDisabled, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
 						
-						List<WebElement> searchResults = driver.findElements(By.tagName("big")); 
-						List<WebElement> rows = driver.findElements(By.tagName("tr")); 
+						List<WebElement> searchResults = driverDisabled.findElements(By.tagName("big")); 
+						List<WebElement> rows = driverDisabled.findElements(By.tagName("tr")); 
 						ArrayList<Integer> stars = new ArrayList<Integer>();
 						
 						for(WebElement myElements : rows) {
@@ -353,10 +353,10 @@ public class Scrapper {
 					
 					try {
 					// wait until the google page shows the result
-						(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
+						(new WebDriverWait(driverDisabled, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
 						
-						List<WebElement> searchResults = driver.findElements(By.tagName("big")); 
-						List<WebElement> rows = driver.findElements(By.tagName("tr")); 
+						List<WebElement> searchResults = driverDisabled.findElements(By.tagName("big")); 
+						List<WebElement> rows = driverDisabled.findElements(By.tagName("tr")); 
 						ArrayList<Integer> stars = new ArrayList<Integer>();
 						
 						for(WebElement myElements : rows) {
