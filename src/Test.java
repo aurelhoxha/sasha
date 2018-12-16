@@ -45,7 +45,7 @@ public class Test extends JFrame{
 				else
 					adr = selection;
 				
-				myGame = new GameInformation("December 14, 2018");
+				myGame = new GameInformation("December 16, 2018");
 				//System.out.println("Getting Clue Numbers");
 				myGame.scrapeClueNumbers();
 				//System.out.println("Getting Across Clues");
@@ -76,15 +76,8 @@ public class Test extends JFrame{
 				for(int j = 0; j < myGame.clues.size(); j++){
 					myGame.clues.get(j).printSolution();
 				}
-
-				ArrayList<Clue> notSolved = new ArrayList<Clue>();
-				for(int i = 0; i < myGame.clues.size(); i++){
-					if(!myGame.clues.get(i).isSolved()){
-						notSolved.add(myGame.clues.get(i));
-					}
-				}
 				
-				scrapi.thirdSearch(notSolved, myGame.constraints);
+				scrapi.thirdSearch(myGame.clues, myGame.constraints);
 				System.out.println("------------------------------------");
 				System.out.println("Second Search Alternatives and Solutions:");
 				System.out.println("------------------------------------");
@@ -97,14 +90,7 @@ public class Test extends JFrame{
 				}
 				System.out.println("------------------------------------");
 				
-				ArrayList<Clue> notSolved1 = new ArrayList<Clue>();
-				for(int i = 0; i < myGame.clues.size(); i++){
-					if(!myGame.clues.get(i).isSolved()){
-						notSolved1.add(myGame.clues.get(i));
-					}
-				}
-				
-//				scrapi.secondSearch(notSolved1);
+//				scrapi.secondSearch(myGame.clues);
 //				for(int i = 0; i < myGame.clues.size(); i++){
 //					myGame.clues.get(i).updateClueAlternative();
 //				}
@@ -119,8 +105,8 @@ public class Test extends JFrame{
 //					myGame.clues.get(j).printSolution();
 //				}
 //				System.out.println("------------------------------------");
-				
-				scrapi.fourthSearch(notSolved1,myGame.constraints);
+//				
+				scrapi.fourthSearch(myGame.clues,myGame.constraints);
 				System.out.println("------------------------------------");
 				System.out.println("Fourth Search Alternatives and Solutions:");
 				System.out.println("------------------------------------");
@@ -202,6 +188,9 @@ public class Test extends JFrame{
 				}
 				for(int i = 0; i < myGame.clues.size(); i++) {
 					myGame.clues.get(i).printAlternatives();
+				}
+				for(int i = 0; i < myGame.clues.size(); i++) {
+					myGame.clues.get(i).printSolution();
 				}
 
 //				//Initialize the Variables according to the Game Information
