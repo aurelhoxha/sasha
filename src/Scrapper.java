@@ -359,15 +359,15 @@ public class Scrapper {
 					int counter = 0;
 					for(WebElement myElements : searchResults) {
 						if(myElements.getText().length() == clues.get(i).getLength()){
-							if(counter == 0 && ((stars.get(0) >= 3 && stars.get(1) < 2 ) || (stars.get(0) == 4 && stars.get(1) < 3))) {
-								clues.get(i).setSolved(true);
-								clues.get(i).setSolution(myElements.getText());
-								clues.get(i).updateClueAlternative();
-							}
-							else {
+//							if(counter == 0 && ((stars.get(0) >= 3 && stars.get(1) < 2 ) || (stars.get(0) == 4 && stars.get(1) < 3))) {
+//								clues.get(i).setSolved(true);
+//								clues.get(i).setSolution(myElements.getText());
+//								clues.get(i).updateClueAlternative();
+//							}
+//							else {
 								clues.get(i).addAlternative(myElements.getText());
-							}
-							counter++;
+//							}
+//							counter++;
 						}
 					}
 					clues.get(i).updateClueAlternative();

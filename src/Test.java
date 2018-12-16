@@ -45,7 +45,7 @@ public class Test extends JFrame{
 				else
 					adr = selection;
 				
-				myGame = new GameInformation(adr);
+				myGame = new GameInformation("December 9, 2018");
 				//System.out.println("Getting Clue Numbers");
 				myGame.scrapeClueNumbers();
 				//System.out.println("Getting Across Clues");
@@ -151,43 +151,58 @@ public class Test extends JFrame{
 				}
 				System.out.println("------------------------------------");
 				
-//				System.out.println("------------------------------------");
-//				System.out.println("After Completing Cells:");
-//				System.out.println("------------------------------------");
-//				for(int i = 0; i < myGame.clues.size(); i++){
-//					myGame.clues.get(i).printAlternatives();
-//				}			
-//				
-//				for(int j = 0; j < myGame.clues.size(); j++){
-//					myGame.clues.get(j).printSolution();
-//				}
-//				System.out.println("------------------------------------");
-//				
-//				scrapi.googleSearch(myGame.clues, myGame.constraints);
-//				
-//				for(int i = 0; i < myGame.clues.size(); i++){
-//					myGame.clues.get(i).updateClueAlternative();
-//				}
-//				
-//				for(int m = 0; m < myGame.constraints.size(); m++){
-//					myGame.constraints.get(m).cleanAcrossAlternatives();
-//					myGame.constraints.get(m).cleanDownAlternatives();
-//				}
-//				for(int i = 0; i < myGame.clues.size(); i++){
-//					if(myGame.clues.get(i).alternatives.size() == 1){
-//						myGame.clues.get(i).setSolved(true);
-//						myGame.clues.get(i).setSolution(myGame.clues.get(i).alternatives.get(0));
-//						for(int j = 0; j < myGame.constraints.size();j++) {
-//							if(myGame.constraints.get(j).contains(myGame.clues.get(i))) {
-//								myGame.constraints.get(j).updateClue();
-//							}
-//						}
-//					}
-//				}
-//				
-//				for(int i = 0; i < myGame.clues.size(); i++) {
-//					myGame.clues.get(i).printAlternatives();
-//				}
+				System.out.println("------------------------------------");
+				System.out.println("After Completing Cells:");
+				System.out.println("------------------------------------");
+				for(int i = 0; i < myGame.clues.size(); i++){
+					myGame.clues.get(i).printAlternatives();
+				}			
+				
+				for(int j = 0; j < myGame.clues.size(); j++){
+					myGame.clues.get(j).printSolution();
+				}
+				System.out.println("------------------------------------");
+				
+				scrapi.googleSearch(myGame.clues, myGame.constraints);
+				
+				for(int i = 0; i < myGame.clues.size(); i++){
+					myGame.clues.get(i).updateClueAlternative();
+				}
+				
+				for(int m = 0; m < myGame.constraints.size(); m++){
+					myGame.constraints.get(m).cleanAcrossAlternatives();
+					myGame.constraints.get(m).cleanDownAlternatives();
+				}
+				
+				for(int i = 0; i < myGame.clues.size(); i++){
+					if(myGame.clues.get(i).alternatives.size() == 1){
+						myGame.clues.get(i).setSolved(true);
+						myGame.clues.get(i).setSolution(myGame.clues.get(i).alternatives.get(0));
+						for(int j = 0; j < myGame.constraints.size();j++) {
+							if(myGame.constraints.get(j).contains(myGame.clues.get(i))) {
+								myGame.constraints.get(j).updateClue();
+							}
+						}
+					}
+				}
+				for(int m = 0; m < myGame.constraints.size(); m++){
+					myGame.constraints.get(m).cleanAcrossAlternatives();
+					myGame.constraints.get(m).cleanDownAlternatives();
+				}
+				for(int i = 0; i < myGame.clues.size(); i++){
+					if(myGame.clues.get(i).alternatives.size() == 1){
+						myGame.clues.get(i).setSolved(true);
+						myGame.clues.get(i).setSolution(myGame.clues.get(i).alternatives.get(0));
+						for(int j = 0; j < myGame.constraints.size();j++) {
+							if(myGame.constraints.get(j).contains(myGame.clues.get(i))) {
+								myGame.constraints.get(j).updateClue();
+							}
+						}
+					}
+				}
+				for(int i = 0; i < myGame.clues.size(); i++) {
+					myGame.clues.get(i).printAlternatives();
+				}
 
 //				//Initialize the Variables according to the Game Information
 //				myClueNumber = myGame.getClueNumbers();
