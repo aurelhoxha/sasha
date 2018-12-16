@@ -35,7 +35,7 @@ public class Test extends JFrame{
 		//Creation of the Game
 		JFrame myGameFrame = new JFrame("Sasha");;
 		
-//		while(true) {
+		while(true) {
 			if(!selection.equals(oldSelection)) {
 				myGameFrame.dispose();
 				myGameFrame = new JFrame("Sasha");
@@ -46,7 +46,7 @@ public class Test extends JFrame{
 				else
 					adr = selection;
 				
-				myGame = new GameInformation("October 30, 2018");
+				myGame = new GameInformation(adr);
 				//System.out.println("Getting Clue Numbers");
 				myGame.scrapeClueNumbers();
 				//System.out.println("Getting Across Clues");
@@ -164,6 +164,16 @@ public class Test extends JFrame{
 				System.out.println("------------------------------------");
 				
 				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 ////				int oldChanges = 0;
 //				int newChanges = -1;
 //				do {
@@ -246,14 +256,14 @@ public class Test extends JFrame{
 //				
 				
 
-				//Initialize the Variables according to the Game Information
-				myClueNumber = myGame.getClueNumbers();
-				myAcrossClues = myGame.getAcrossClues();
-				myDownClues = myGame.getDownClues();
-				//System.out.println("Getting Date");
-				gameDay = myGame.getGameDay();
-				gameDate = myGame.getGameDate();
-				
+//				//Initialize the Variables according to the Game Information
+//				myClueNumber = myGame.getClueNumbers();
+//				myAcrossClues = myGame.getAcrossClues();
+//				myDownClues = myGame.getDownClues();
+//				//System.out.println("Getting Date");
+//				gameDay = myGame.getGameDay();
+//				gameDate = myGame.getGameDate();
+//				
 //				//Initialization of the Main Panels
 //				//System.out.println("Initializing Top Panel");
 //				TopPanel myTopPanel = new TopPanel(gameDay, gameDate);
@@ -277,49 +287,49 @@ public class Test extends JFrame{
 				
 				oldSelection = selection;
 			}
-//			if(store == true) {
-//				//System.out.println("Storing the puzzle");
-//				String dir = "./oldPuzzles/" + gameDate;
-//				File theDir = new File(dir);
-//				store = false;
-//
-//				// if the directory does not exist, create it
-//				if (!theDir.exists()) {
-//				    //System.out.println("Creating directory: " + theDir.getName());
-//				    boolean result = false;
-//
-//				    try {
-//				        theDir.mkdir();
-//				        result = true;
-//				    } 
-//				    catch(SecurityException se){
-//				        //handle it
-//				    }        
-//				    if(result) {    
-//				        //System.out.println("DIR created");  
-//				    }
-//				    
-//					try {
-//						File file = new File(dir + "/htmlCode.txt");
-//						FileWriter fileWriter = new FileWriter(file);
-//						fileWriter.write(myGame.tempText);
-//						fileWriter.flush();
-//						fileWriter.close();
-//					} 	
-//					catch (IOException e) {
-//						e.printStackTrace();
-//					}
-//				}				
-//			}	
-//			if(solve == true) {
-//				//System.out.println("Started Solving");
-//				solve = false;
-//				//System.out.println("Determining Cells that should match with each other");
-//						
-//				
-//			}
-//			System.out.print("");
-//		}
+			if(store == true) {
+				//System.out.println("Storing the puzzle");
+				String dir = "./oldPuzzles/" + gameDate;
+				File theDir = new File(dir);
+				store = false;
+
+				// if the directory does not exist, create it
+				if (!theDir.exists()) {
+				    //System.out.println("Creating directory: " + theDir.getName());
+				    boolean result = false;
+
+				    try {
+				        theDir.mkdir();
+				        result = true;
+				    } 
+				    catch(SecurityException se){
+				        //handle it
+				    }        
+				    if(result) {    
+				        //System.out.println("DIR created");  
+				    }
+				    
+					try {
+						File file = new File(dir + "/htmlCode.txt");
+						FileWriter fileWriter = new FileWriter(file);
+						fileWriter.write(myGame.tempText);
+						fileWriter.flush();
+						fileWriter.close();
+					} 	
+					catch (IOException e) {
+						e.printStackTrace();
+					}
+				}				
+			}	
+			if(solve == true) {
+				//System.out.println("Started Solving");
+				solve = false;
+				//System.out.println("Determining Cells that should match with each other");
+						
+				
+			}
+			System.out.print("");
+		}
 	}
 }
 
