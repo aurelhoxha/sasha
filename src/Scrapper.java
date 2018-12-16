@@ -118,10 +118,7 @@ public class Scrapper {
 					System.out.println("Robot Check Detected");
 					System.out.println("-----------------------------------------");
 				}
-				
-				
 			}
-			
 		}
 	}
 	
@@ -243,7 +240,6 @@ public class Scrapper {
 		return 1;
 	}
 	
-	
 	public int thirdSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) {
 		for(int i = 0; i < clues.size(); i++){
 			driver.get("http://www.crosswordnexus.com");
@@ -291,7 +287,7 @@ public class Scrapper {
 					int counter = 0;
 					for(WebElement myElements : searchResults) {
 						if(myElements.getText().length() == clues.get(i).getLength()){
-							if(counter == 0 && stars.get(0) > 3 && stars.get(1) < 3) {
+							if(counter == 0 && ((stars.get(0) >= 3 && stars.get(1) < 2 ) || (stars.get(0) == 4 && stars.get(1) < 3))) {
 								clues.get(i).setSolved(true);
 								clues.get(i).setSolution(myElements.getText());
 								clues.get(i).updateClueAlternative();
@@ -325,53 +321,73 @@ public class Scrapper {
 	}
 
 
-	public int fourthSearch(ArrayList<Clue> clues) {
-		//driver = new ChromeDriver();
+	public int fourthSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) {
 		for(int i = 0; i < clues.size(); i++){
-			//ArrayList<String> googlePages  = new ArrayList<String>();
-			//String[] googleResult = new String[3];
-			driver.get("http://www.the-crossword-solver.com");
-			//WebElement element = driver.findElement(By.name("clue"));
-			WebElement element = driver.findElement(By.name("q"));
+			driver.get("http://www.crosswordnexus.com");
+			WebElement element = driver.findElement(By.name("pattern"));
 			
-			//driver.findElement(By.linkText("Crossword Solver")).click();
-			//CharSequence searchQuery = clues.get(i).getQuestion();//
-			
+			int counter1 = 0;
 			String searchByLetters = "";
 			for(int h = 0; h < clues.get(i).getLength(); h++){
 				if(clues.get(i).solution[h] != '-'){
 					searchByLetters = searchByLetters + clues.get(i).solution[h];
+					counter1++;
 				}
 				else {
 					searchByLetters = searchByLetters + '?';
 				}
 			}
 			
-			//element.sendKeys(searchQuery);
-			element.sendKeys(searchByLetters);
-			element.submit();
-			
-			try {
-				(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("searchresults")));
-				List<WebElement> searchResults = driver.findElements(By.cssSelector(".searchresult > a")); 
-		      
-				for(WebElement myElements : searchResults) {
-					if(myElements.getText().length() == clues.get(i).getLength()){
-						clues.get(i).addAlternative(myElements.getText());
+			if((clues.get(i).length > 3 && counter1 > 2) || (clues.get(i).length == 3 && counter1 >= 2) ){
+				element.sendKeys(searchByLetters);
+				element.submit();
+				
+				try {
+				// wait until the google page shows the result
+					(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
+					
+					List<WebElement> searchResults = driver.findElements(By.tagName("big")); 
+					List<WebElement> rows = driver.findElements(By.tagName("tr")); 
+					ArrayList<Integer> stars = new ArrayList<Integer>();
+					
+					for(WebElement myElements : rows) {
+						List<WebElement> starsCounter = myElements.findElements(By.tagName("img"));
+						stars.add(starsCounter.size());
+						//System.out.println("This one has STARS =  " + starsCounter.size() );
+					}
+					
+					int counter = 0;
+					for(WebElement myElements : searchResults) {
+						if(myElements.getText().length() == clues.get(i).getLength()){
+							if(counter == 0 && ((stars.get(0) >= 3 && stars.get(1) < 2 ) || (stars.get(0) == 4 && stars.get(1) < 3))) {
+								clues.get(i).setSolved(true);
+								clues.get(i).setSolution(myElements.getText());
+								clues.get(i).updateClueAlternative();
+							}
+							else {
+								clues.get(i).addAlternative(myElements.getText());
+							}
+							counter++;
+						}
+					}
+					clues.get(i).updateClueAlternative();
+					for(int l = 0; l < clues.size(); l++){
+						if(clues.get(l).isSolved()) {
+							clues.get(l).updateClueAlternative();
+							for(int j = 0; j < constraints.size();j++) {
+								if(constraints.get(j).contains(clues.get(l))) {
+									constraints.get(j).updateClue();
+								}
+							}
+						}
 					}
 				}
-				clues.get(i).updateClueAlternative();			
-			}
-			catch(Exception e){
-				System.out.println("No hints for " + clues.get(i).getQuestion());
+				catch(Exception e){
+					System.out.println("No hints for " + clues.get(i).getQuestion());
+				}
 			}
 		}	
-		//System.out.println("The alternatives for the clues have been added successfully");
-		
-		//Visit the First Three Links and Save The Data
-		driver.close();
-		driver.quit();
 		return 0;
-		
 	}
+		
 }
