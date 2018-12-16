@@ -45,7 +45,7 @@ public class Test extends JFrame{
 				else
 					adr = selection;
 				
-				myGame = new GameInformation("October 31, 2018");
+				myGame = new GameInformation("December 16, 2018");
 				//System.out.println("Getting Clue Numbers");
 				myGame.scrapeClueNumbers();
 				//System.out.println("Getting Across Clues");
@@ -124,6 +124,18 @@ public class Test extends JFrame{
 						myGame.constraints.get(m).cleanAcrossAlternatives();
 						myGame.constraints.get(m).cleanDownAlternatives();
 					//}
+				}
+				
+				for(int i = 0; i < myGame.clues.size(); i++){
+					if(myGame.clues.get(i).alternatives.size() == 1){
+						myGame.clues.get(i).setSolved(true);
+						myGame.clues.get(i).setSolution(myGame.clues.get(i).alternatives.get(0));
+						for(int j = 0; j < myGame.constraints.size();j++) {
+							if(myGame.constraints.get(j).contains(myGame.clues.get(i))) {
+								myGame.constraints.get(j).updateClue();
+							}
+						}
+					}
 				}
 				System.out.println("------------------------------------");
 				System.out.println("After Cleaning Constraints:");
