@@ -186,7 +186,7 @@ public class Test extends JFrame{
 						}
 					}
 				}
-				scrapi.thirdSearch(myGame.clues,myGame.constraints);
+				scrapi.fourthSearch(myGame.clues,myGame.constraints);
 				
 				for(int m = 0; m < myGame.constraints.size(); m++){
 					//if(!myGame.constraints.get(m).contains(myGame.clues.get(0))){
