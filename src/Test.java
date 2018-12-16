@@ -186,6 +186,27 @@ public class Test extends JFrame{
 						}
 					}
 				}
+				scrapi.thirdSearch(myGame.clues,myGame.constraints);
+				
+				for(int m = 0; m < myGame.constraints.size(); m++){
+					//if(!myGame.constraints.get(m).contains(myGame.clues.get(0))){
+						myGame.constraints.get(m).cleanAcrossAlternatives();
+						myGame.constraints.get(m).cleanDownAlternatives();
+					//}
+				}
+				
+				for(int i = 0; i < myGame.clues.size(); i++){
+					if(myGame.clues.get(i).alternatives.size() == 1){
+						myGame.clues.get(i).setSolved(true);
+						myGame.clues.get(i).setSolution(myGame.clues.get(i).alternatives.get(0));
+						for(int j = 0; j < myGame.constraints.size();j++) {
+							if(myGame.constraints.get(j).contains(myGame.clues.get(i))) {
+								myGame.constraints.get(j).updateClue();
+							}
+						}
+					}
+				}
+				
 				for(int i = 0; i < myGame.clues.size(); i++) {
 					myGame.clues.get(i).printAlternatives();
 				}
