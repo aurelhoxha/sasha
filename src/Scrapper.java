@@ -11,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -41,7 +42,10 @@ public class Scrapper {
 	    }
 	    
 	    //Initialize Driver for all clues to be used
-	    driver = new ChromeDriver();   
+		ChromeOptions chromeOptions = new ChromeOptions();  
+	    chromeOptions.addArguments("--headless");  
+	    chromeOptions.addArguments("--disable-gpu");  
+	    driver = new ChromeDriver(chromeOptions);    
 	}
 	
 	public void googleSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) throws InterruptedException, IOException, Exception {
@@ -215,44 +219,6 @@ public class Scrapper {
         }
         return 1;
 	}
-
-	public int secondSearch(ArrayList<Clue> clues) {
-		for(int i = 0; i < clues.size(); i++){
-			if(!clues.get(i).isSolved()) {
-				driver.get("http://www.the-crossword-solver.com");
-				WebElement element = driver.findElement(By.name("q"));
-				CharSequence searchQuery = clues.get(i).getQuestion();
-				
-				if(clues.get(i).clueQuestion.contains("See 1-Across") || clues.get(i).clueQuestion.contains("See 2-Across") || clues.get(i).clueQuestion.contains("See 3-Across") || clues.get(i).clueQuestion.contains("See 3-Across")
-						|| clues.get(i).clueQuestion.contains("See 4-Across") || clues.get(i).clueQuestion.contains("See 5-Across") || clues.get(i).clueQuestion.contains("See 6-Across") || clues.get(i).clueQuestion.contains("See 7-Across")
-						|| clues.get(i).clueQuestion.contains("See 8-Across") || clues.get(i).clueQuestion.contains("See 9-Across")
-						|| clues.get(i).clueQuestion.contains("See 1-Down") || clues.get(i).clueQuestion.contains("See 2-Down") || clues.get(i).clueQuestion.contains("See 3-Down") || clues.get(i).clueQuestion.contains("See 3-Down")
-						|| clues.get(i).clueQuestion.contains("See 4-Down") || clues.get(i).clueQuestion.contains("See 5-Down") || clues.get(i).clueQuestion.contains("See 6-Down") || clues.get(i).clueQuestion.contains("See 7-Down")
-						|| clues.get(i).clueQuestion.contains("See 8-Down") || clues.get(i).clueQuestion.contains("See 9-Down")){}
-				else {
-					element.sendKeys(searchQuery);
-					element.submit();
-					try {
-					// wait until the google page shows the result
-						(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("searchresults")));
-						List<WebElement> searchResults = driver.findElements(By.cssSelector(".searchresult > a")); 
-				      
-						for(WebElement myElements : searchResults) {
-							if(myElements.getText().length() == clues.get(i).getLength()){
-								clues.get(i).addAlternative(myElements.getText());
-							}
-						}
-						clues.get(i).updateClueAlternative();			
-					}
-					catch(Exception e){
-						System.out.println("No hints for " + clues.get(i).getQuestion());
-					}
-				}
-			}
-			
-		}
-		return 1;
-	}
 	
 	public int thirdSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) {
 		for(int i = 0; i < clues.size(); i++){
@@ -331,10 +297,8 @@ public class Scrapper {
 				}
 				
 			}
-			}
-				
+		}		
 		return 0;
-		
 	}
 
 
@@ -374,18 +338,9 @@ public class Scrapper {
 							//System.out.println("This one has STARS =  " + starsCounter.size() );
 						}
 						
-						int counter = 0;
 						for(WebElement myElements : searchResults) {
 							if(myElements.getText().length() == clues.get(i).getLength()){
-//								if(counter == 0 && ((stars.get(0) >= 3 && stars.get(1) < 2 ) || (stars.get(0) == 4 && stars.get(1) < 3))) {
-//									clues.get(i).setSolved(true);
-//									clues.get(i).setSolution(myElements.getText());
-//									clues.get(i).updateClueAlternative();
-//								}
-//								else {
-									clues.get(i).addAlternative(myElements.getText());
-//								}
-//								counter++;
+								clues.get(i).addAlternative(myElements.getText());
 							}
 						}
 						clues.get(i).updateClueAlternative();
