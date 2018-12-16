@@ -73,6 +73,9 @@ public class Scrapper {
 				if(googlePages.get(j).contains("wordplays")) {
 					googlePagesDeleted.add(googlePages.get(j));
 				}
+				if(googlePages.get(j).contains(".pdf")) {
+					googlePagesDeleted.add(googlePages.get(j));
+				}
 				if(googlePages.get(j).contains("the-crossword-solver.com")) {
 					firstCheck = true;
 					
