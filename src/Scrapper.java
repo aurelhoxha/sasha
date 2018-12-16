@@ -70,7 +70,6 @@ public class Scrapper {
 					|| clues.get(i).clueQuestion.contains("See 4-Down") || clues.get(i).clueQuestion.contains("See 5-Down") || clues.get(i).clueQuestion.contains("See 6-Down") || clues.get(i).clueQuestion.contains("See 7-Down")
 					|| clues.get(i).clueQuestion.contains("See 8-Down") || clues.get(i).clueQuestion.contains("See 9-Down")){}
 			else {
-			
 				element.sendKeys(clues.get(i).clueQuestion);
 				element1.sendKeys(pattern);		
 				element.submit();
@@ -162,11 +161,8 @@ public class Scrapper {
 	}
 	
 	
-	public int thirdSearch(ArrayList<Clue> clues) {
-		//driver = new ChromeDriver();
+	public int thirdSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) {
 		for(int i = 0; i < clues.size(); i++){
-			//ArrayList<String> googlePages  = new ArrayList<String>();
-			//String[] googleResult = new String[3];
 			driver.get("http://www.crosswordnexus.com");
 			WebElement element = driver.findElement(By.name("clue"));
 			WebElement element1 = driver.findElement(By.name("pattern"));
@@ -200,17 +196,91 @@ public class Scrapper {
 					(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
 					
 					List<WebElement> searchResults = driver.findElements(By.tagName("big")); 
+					List<WebElement> rows = driver.findElements(By.tagName("tr")); 
+					ArrayList<Integer> stars = new ArrayList<Integer>();
 					
+					for(WebElement myElements : rows) {
+						List<WebElement> starsCounter = myElements.findElements(By.tagName("img"));
+						stars.add(starsCounter.size());
+						//System.out.println("This one has STARS =  " + starsCounter.size() );
+					}
+					
+					int counter = 0;
 					for(WebElement myElements : searchResults) {
 						if(myElements.getText().length() == clues.get(i).getLength()){
-							clues.get(i).addAlternative(myElements.getText());
+							if(counter == 0 && stars.get(0) > 3 && stars.get(1) < 3) {
+								clues.get(i).setSolved(true);
+								clues.get(i).setSolution(myElements.getText());
+								clues.get(i).updateClueAlternative();
+							}
+							else {
+								clues.get(i).addAlternative(myElements.getText());
+							}
+							counter++;
 						}
 					}
 					clues.get(i).updateClueAlternative();
+					for(int l = 0; l < clues.size(); l++){
+						if(clues.get(l).isSolved()) {
+							clues.get(l).updateClueAlternative();
+							for(int j = 0; j < constraints.size();j++) {
+								if(constraints.get(j).contains(clues.get(l))) {
+									constraints.get(j).updateClue();
+								}
+							}
+						}
+					}
 				}
 				catch(Exception e){
 					System.out.println("No hints for " + clues.get(i).getQuestion());
 				}
+			}
+			
+		}	
+		return 0;
+		
+	}
+
+
+	public int fourthSearch(ArrayList<Clue> clues) {
+		//driver = new ChromeDriver();
+		for(int i = 0; i < clues.size(); i++){
+			//ArrayList<String> googlePages  = new ArrayList<String>();
+			//String[] googleResult = new String[3];
+			driver.get("http://www.the-crossword-solver.com");
+			//WebElement element = driver.findElement(By.name("clue"));
+			WebElement element = driver.findElement(By.name("q"));
+			
+			//driver.findElement(By.linkText("Crossword Solver")).click();
+			//CharSequence searchQuery = clues.get(i).getQuestion();//
+			
+			String searchByLetters = "";
+			for(int h = 0; h < clues.get(i).getLength(); h++){
+				if(clues.get(i).solution[h] != '-'){
+					searchByLetters = searchByLetters + clues.get(i).solution[h];
+				}
+				else {
+					searchByLetters = searchByLetters + '?';
+				}
+			}
+			
+			//element.sendKeys(searchQuery);
+			element.sendKeys(searchByLetters);
+			element.submit();
+			
+			try {
+				(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("searchresults")));
+				List<WebElement> searchResults = driver.findElements(By.cssSelector(".searchresult > a")); 
+		      
+				for(WebElement myElements : searchResults) {
+					if(myElements.getText().length() == clues.get(i).getLength()){
+						clues.get(i).addAlternative(myElements.getText());
+					}
+				}
+				clues.get(i).updateClueAlternative();			
+			}
+			catch(Exception e){
+				System.out.println("No hints for " + clues.get(i).getQuestion());
 			}
 		}	
 		//System.out.println("The alternatives for the clues have been added successfully");
@@ -221,30 +291,4 @@ public class Scrapper {
 		return 0;
 		
 	}
-	
-	
-	
 }
-
-
-//Click of the input text
-//WebElement element = driver.findElement(By.name("q"));
-////
-//////Prepare the search Clue
-//CharSequence searchQuery = clue.getQuestion() + " crossword clue\n";
-////
-//////Enter the Clue in the Text
-//element.sendKeys(searchQuery);
-//
-//// wait until the google page shows the result
-//(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.id("resultStats")));
-//
-//
-//List<WebElement> searchResults = driver.findElements(By.cssSelector(".r > a")); 
-//
-//for(WebElement myElements : searchResults) {
-//	if(!myElements.getAttribute("href").contains("translate.google.com")) {
-//		googlePages.add(myElements.getAttribute("href"));
-//		//System.out.println(myElements.getAttribute("href"));
-//	}
-//}
