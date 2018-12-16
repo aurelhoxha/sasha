@@ -29,6 +29,7 @@ public class Scrapper {
 	//Two Chrome Drivers
 	WebDriver driver;
 	WebDriver driverDisabled;
+	boolean googleDriverClosed = false;
 	
 	public Scrapper(){
 	    chrome = new File("./src/chromedriver.exe");
@@ -83,6 +84,9 @@ public class Scrapper {
 							googlePagesDeleted.add(googlePages.get(j));
 						}
 						if(googlePages.get(j).contains(".pdf")) {
+							googlePagesDeleted.add(googlePages.get(j));
+						}
+						if(googlePages.get(j).contains(".txt")) {
 							googlePagesDeleted.add(googlePages.get(j));
 						}
 						if(googlePages.get(j).contains("the-crossword-solver.com")) {
@@ -140,6 +144,7 @@ public class Scrapper {
 		}
 		driver.close();
 		driver.quit();
+		googleDriverClosed = true;
 	}
 	
 	public int firstSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) throws InterruptedException, IOException{
@@ -318,15 +323,15 @@ public class Scrapper {
 	public int fourthSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) {
 		for(int i = 0; i < clues.size(); i++){
 			if(!clues.get(i).isSolved()) {
-				driver.get("https://www.google.com/");
-				WebElement elementGoogle = driver.findElement(By.name("q"));
-				
-				//Prepare the search Clue
-				CharSequence searchQueryGoogle = clues.get(i).getQuestion() + "\n";
-				//Enter the Clue in the Text
-				elementGoogle.sendKeys(searchQueryGoogle);
-				
-				
+				if(googleDriverClosed == false) {
+					driver.get("https://www.google.com/");
+					WebElement elementGoogle = driver.findElement(By.name("q"));
+					
+					//Prepare the search Clue
+					CharSequence searchQueryGoogle = clues.get(i).getQuestion() + "\n";
+					//Enter the Clue in the Text
+					elementGoogle.sendKeys(searchQueryGoogle);
+				}
 				driverDisabled.get("http://www.crosswordnexus.com");
 				WebElement element = driverDisabled.findElement(By.name("pattern"));
 				
