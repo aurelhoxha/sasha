@@ -326,6 +326,14 @@ public class Test extends JFrame{
 	public static void updateCluesBySize(GameInformation myGame){
 		for(int i = 0; i < myGame.clues.size(); i++){
 			if(myGame.clues.get(i).alternatives.size() == 1){
+				try{
+					String gongFile = "./src/foundClue1.wav";
+				    InputStream in = new FileInputStream(gongFile);
+				    AudioStream audioStream = new AudioStream(in);
+				    AudioPlayer.player.start(audioStream);
+				}
+				catch(Exception e){
+				}
 				myGame.clues.get(i).setSolved(true);
 				myGame.clues.get(i).setSolution(myGame.clues.get(i).alternatives.get(0));
 				for(int j = 0; j < myGame.constraints.size();j++) {
