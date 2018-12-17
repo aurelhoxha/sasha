@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.io.File;
 import java.io.FileWriter;
 import javax.swing.*;
@@ -119,8 +120,7 @@ public class Test extends JFrame{
 				solve = false;
 				//System.out.println("Determining Cells that should match with each other");
 				Scrapper scrapi = new Scrapper();
-				scrapi.firstSearch(myGame.clues, myGame.constraints);
-
+				scrapi.firstSearch(myGame.clues, myGame.constraints);				
 				System.out.println("------------------------------------------");
 				System.out.println("First Search Certain Solutions:");
 				System.out.println("------------------------------------------");
@@ -199,7 +199,26 @@ public class Test extends JFrame{
 						for(int k = 0; k < myGame.clues.get(l).getLength(); k++) {
 							String characterToBeUpdated = "" + myGame.clues.get(l).getSolution()[k];
 							int pos = (clueXPosition * 5) + clueYPosition;
-							//System.out.println(clueXPosition + " " + clueYPosition);
+							//System.out.println(clueXPosition + " " + clueYPosition);					
+							CrosswordPanel.cellText[pos].setText("A");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("B");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("C");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("D");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("E");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("F");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("G");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("H");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("I");
+							TimeUnit.MILLISECONDS.sleep(20);
+							
 							CrosswordPanel.cellText[pos].setText(characterToBeUpdated);
 							//System.out.println(pos);
 							clueYPosition = clueYPosition + 1;
@@ -212,6 +231,24 @@ public class Test extends JFrame{
 							String characterToBeUpdated = "" + myGame.clues.get(l).getSolution()[k];
 							int pos = (clueXPosition*5) + clueYPosition;
 							//System.out.println(clueXPosition + " " + clueYPosition);
+							CrosswordPanel.cellText[pos].setText("A");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("B");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("C");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("D");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("E");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("F");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("G");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("H");
+							TimeUnit.MILLISECONDS.sleep(20);
+							CrosswordPanel.cellText[pos].setText("I");
+							TimeUnit.MILLISECONDS.sleep(20);
 							CrosswordPanel.cellText[pos].setText(characterToBeUpdated);
 							//System.out.println(pos);
 							clueXPosition = clueXPosition + 1;
