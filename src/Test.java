@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.FileWriter;
 import javax.swing.*;
 
+import java.io.*;
+import sun.audio.*;
+
 public class Test extends JFrame{
 	static String selection = "Today";
 	static String oldSelection = "";
@@ -118,6 +121,16 @@ public class Test extends JFrame{
 			if(solve == true) {
 				System.out.println("Started Solving for date: " + selection);
 				solve = false;
+				try{
+					String gongFile = "./src/startSound.wav";
+				    InputStream in = new FileInputStream(gongFile);
+				    AudioStream audioStream = new AudioStream(in);
+				    AudioPlayer.player.start(audioStream);
+				}
+				catch(Exception e){
+					
+				}
+				
 				//System.out.println("Determining Cells that should match with each other");
 				Scrapper scrapi = new Scrapper();
 				scrapi.firstSearch(myGame.clues, myGame.constraints);				
@@ -190,6 +203,16 @@ public class Test extends JFrame{
 				printSolutions(myGame);
 				System.out.println("--------------------------------------------");
 				
+				try{
+					String gongFile = "./src/finalSound.wav";
+				    InputStream in = new FileInputStream(gongFile);
+				    AudioStream audioStream = new AudioStream(in);
+				    AudioPlayer.player.start(audioStream);
+				}
+				catch(Exception e){
+					
+				}
+				
 				
 				for(int l = 0; l < myGame.clues.size(); l++) {
 					String clueDirection = myGame.clues.get(l).getDirection();
@@ -260,12 +283,21 @@ public class Test extends JFrame{
 		}
 	}
 	
-	public static void printFirstSearchSolutions(GameInformation myGame){
+	public static void printFirstSearchSolutions(GameInformation myGame) throws InterruptedException{
 		int counter = 0;
 		for(int i = 0; i < myGame.clues.size(); i++) {
 			if(myGame.clues.get(i).isSolved()){
 				counter++;
+				try{
+					String gongFile = "./src/foundClue1.wav";
+				    InputStream in = new FileInputStream(gongFile);
+				    AudioStream audioStream = new AudioStream(in);
+				    AudioPlayer.player.start(audioStream);
+				}
+				catch(Exception e){	
+				}
 				myGame.clues.get(i).printSolution();
+				TimeUnit.SECONDS.sleep(3);
 			}
 			if(counter == 2)
 				break;
