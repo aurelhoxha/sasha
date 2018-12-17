@@ -28,7 +28,7 @@ public class Scrapper {
 	
 	//Two Chrome Drivers
 	WebDriver driver;
-	WebDriver driverDisabled;
+	WebDriver driver1;
 	boolean googleDriverClosed = true;
 	
 	public Scrapper(){
@@ -46,7 +46,7 @@ public class Scrapper {
 		ChromeOptions chromeOptions = new ChromeOptions();  
 	    chromeOptions.addArguments("--headless");  
 	    chromeOptions.addArguments("--disable-gpu");  
-	    driverDisabled = new ChromeDriver(chromeOptions);   
+	    driver1 = new ChromeDriver(chromeOptions);   
 	    driver = new ChromeDriver();
 	    
 	}
@@ -56,7 +56,7 @@ public class Scrapper {
 		for(int i = 0; i < clues.size(); i++) {
 			if(!clues.get(i).isSolved()) {
 				ArrayList<String> googlePages  = new ArrayList<String>();
-				System.out.println("Googling for word: " + clues.get(i).getQuestion());
+				System.out.println("\nGoogling possible solutions for: " + clues.get(i).getQuestion());
 				driver.get("https://www.google.com/");
 				WebElement element = driver.findElement(By.name("q"));
 				
@@ -73,7 +73,7 @@ public class Scrapper {
 							googlePages.add(myElements.getAttribute("href"));
 						}
 					}
-					System.out.println("Result for Clue: " + clues.get(i).getQuestion());
+					System.out.println("Results for Clue: " + clues.get(i).getQuestion());
 					System.out.println("-------------------------------------");
 					ArrayList<String> googlePagesDeleted  = new ArrayList<String>();
 					boolean firstCheck = false;
@@ -119,7 +119,7 @@ public class Scrapper {
 							
 							Document doc = Jsoup.parse(tempText);
 							String bodyText = doc.body().text();
-							System.out.println("-----------------------------------------");
+							System.out.println("--------------------------------------------------------------------");
 							String[] bodyWords = bodyText.split(" ");
 							for(int z = 0; z < bodyWords.length; z++) {
 								bodyWords[z] = bodyWords[z].replaceAll("[\\.$|,|;|'|!|?|@|#|%|^|&|*|(|)|_|-|+|=|{|}|:|<|>|\"|‘|’|-|/|×|…|«]", "");
@@ -128,16 +128,17 @@ public class Scrapper {
 								if(bodyWords[z].length() == clues.get(i).getLength())
 									clues.get(i).addAlternative(bodyWords[z].toUpperCase());
 							}
-							System.out.println("-----------------------------------------");
+							System.out.println("---------------------------------------------------------------------");
 						}
 						catch(Exception e) {
 							System.out.println("Robot Check Detected");
-							System.out.println("-----------------------------------------");
+							System.out.println("---------------------------------------------------------------------");
 						}
 					}
 				}
 				catch(Exception e){
 					System.out.println("No Google results found");
+					System.out.println("---------------------------------------------------------------------");
 				}
 			}
 			
@@ -234,16 +235,16 @@ public class Scrapper {
 				driver.get("https://www.google.com/");
 				WebElement elementGoogle = driver.findElement(By.name("q"));
 				
-				System.out.println("Googling possible solutions for: " + clues.get(i).getQuestion());
+				System.out.println("\nGoogling possible solutions for: " + clues.get(i).getQuestion());
 				
 				//Prepare the search Clue
 				CharSequence searchQueryGoogle = clues.get(i).getQuestion() + "\n";
 				//Enter the Clue in the Text
 				elementGoogle.sendKeys(searchQueryGoogle);
 				
-				driverDisabled.get("http://www.crosswordnexus.com");
-				WebElement element = driverDisabled.findElement(By.name("clue"));
-				WebElement element1 = driverDisabled.findElement(By.name("pattern"));
+				driver1.get("http://www.crosswordnexus.com");
+				WebElement element = driver1.findElement(By.name("clue"));
+				WebElement element1 = driver1.findElement(By.name("pattern"));
 				
 				//driver.findElement(By.linkText("Crossword Solver")).click();
 				CharSequence searchQuery = clues.get(i).getQuestion();//
@@ -271,17 +272,17 @@ public class Scrapper {
 					
 					try {
 					// wait until the google page shows the result
-						(new WebDriverWait(driverDisabled, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
+						(new WebDriverWait(driver1, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
 						
-						List<WebElement> searchResults = driverDisabled.findElements(By.tagName("big")); 
-						List<WebElement> rows = driverDisabled.findElements(By.tagName("tr")); 
+						List<WebElement> searchResults = driver1.findElements(By.tagName("big")); 
+						List<WebElement> rows = driver1.findElements(By.tagName("tr")); 
 						ArrayList<Integer> stars = new ArrayList<Integer>();
 						
 						int t = 1;
 						for(WebElement myElements : rows) {
 							List<WebElement> starsCounter = myElements.findElements(By.tagName("img"));
 							stars.add(starsCounter.size());
-							System.out.println("Visiting link number " + t++);
+							//System.out.println("Visiting link number " + t++);
 						}
 						
 						int counter = 0;
@@ -309,9 +310,10 @@ public class Scrapper {
 								}
 							}
 						}
+						System.out.println("All links were visited and data is collected");
 					}
 					catch(Exception e){
-						System.out.println("No hints for " + clues.get(i).getQuestion());
+						System.out.println("All links were visited and data is collected");
 					}
 				}
 				
@@ -333,8 +335,8 @@ public class Scrapper {
 					//Enter the Clue in the Text
 					elementGoogle.sendKeys(searchQueryGoogle);
 				}
-				driverDisabled.get("http://www.crosswordnexus.com");
-				WebElement element = driverDisabled.findElement(By.name("pattern"));
+				driver1.get("http://www.crosswordnexus.com");
+				WebElement element = driver1.findElement(By.name("pattern"));
 				
 				int counter1 = 0;
 				String searchByLetters = "";
@@ -354,10 +356,10 @@ public class Scrapper {
 					
 					try {
 					// wait until the google page shows the result
-						(new WebDriverWait(driverDisabled, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
+						(new WebDriverWait(driver1, 10)).until(ExpectedConditions.presenceOfElementLocated(By.tagName("table")));
 						
-						List<WebElement> searchResults = driverDisabled.findElements(By.tagName("big")); 
-						List<WebElement> rows = driverDisabled.findElements(By.tagName("tr")); 
+						List<WebElement> searchResults = driver1.findElements(By.tagName("big")); 
+						List<WebElement> rows = driver1.findElements(By.tagName("tr")); 
 						ArrayList<Integer> stars = new ArrayList<Integer>();
 						
 						for(WebElement myElements : rows) {
@@ -384,7 +386,7 @@ public class Scrapper {
 						}
 					}
 					catch(Exception e){
-						System.out.println("No hints for " + clues.get(i).getQuestion());
+						//System.out.println("No hints for " + clues.get(i).getQuestion());
 					}
 				}
 			}

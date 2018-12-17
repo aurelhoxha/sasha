@@ -73,7 +73,11 @@ public class CrosswordPanel extends JPanel{
 						int pos = cellText[count].getCaretPosition();
 						cellText[count].setText(cellText[count].getText().toUpperCase());
 						cellText[count].setCaretPosition(pos);
-						char ch = cellText[count].getText().charAt(0); //for detecting key,i get char 0 which is the only char can box have.
+						
+						//char ch = ' ';
+						//if(cellText[count].getText().length()>=0){
+							char ch  = cellText[count].getText().charAt(0); 
+						//}//for detecting key,i get char 0 which is the only char can box have.
 
 						if (ch == 'A' || ch == 'B' || ch == 'C'|| ch == 'Q'|| ch == 'W'|| ch == 'E'|| ch == 'R'|| ch == 'T'
 								|| ch == 'Y'|| ch == 'U'|| ch == 'I'|| ch == 'O'|| ch == 'P'|| ch == 'Z'|| ch == 'S'|| ch == 'D'

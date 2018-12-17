@@ -47,6 +47,7 @@ public class Test extends JFrame{
 				myGame.generateLengths();
 				myGame.calculateCoordinates();
 				myGame.determineConstraints();
+				//myGame.printCluesAndQuestionsAndLengths();
 
 				//Initialize the Variables according to the Game Information
 				myClueNumber = myGame.getClueNumbers();
@@ -131,6 +132,7 @@ public class Test extends JFrame{
 				System.out.println("Second Search Alternatives:");
 				System.out.println("------------------------------------------");
 				printAlternatives(myGame);			
+				System.out.println("------------------------------------------");
 				System.out.println("Second Search Solutions:");
 				System.out.println("------------------------------------------");
 				printSolutions(myGame);
@@ -141,6 +143,7 @@ public class Test extends JFrame{
 				System.out.println("Third Search Alternatives:");
 				System.out.println("-----------------------------------------");
 				printAlternatives(myGame);
+				System.out.println("------------------------------------------");
 				System.out.println("Third Search Solutions:");
 				System.out.println("------------------------------------------");
 				printSolutions(myGame);
@@ -174,21 +177,47 @@ public class Test extends JFrame{
 				updateCluesBySize(myGame);
 				
 				
-				scrapi.fourthSearch(myGame.clues,myGame.constraints);
-				scrapi.driverDisabled.close();
-				scrapi.driverDisabled.quit();
+				//scrapi.fourthSearch(myGame.clues,myGame.constraints);
+				scrapi.driver1.close();
+				scrapi.driver1.quit();
 				
 				updateAlternativesByConstraints(myGame);
 				updateCluesBySize(myGame);
 				
-				System.out.println("--------------------------------------------");
-				System.out.println("Final Version of Alternatives");
-				System.out.println("--------------------------------------------");
-				printAlternatives(myGame);
+				System.out.println("------------------------------------------");
 				System.out.println("Final Version of Solutions");
 				System.out.println("--------------------------------------------");
 				printSolutions(myGame);
-				System.out.println("--------------------------------------------");		
+				System.out.println("--------------------------------------------");
+				
+				
+				for(int l = 0; l < myGame.clues.size(); l++) {
+					String clueDirection = myGame.clues.get(l).getDirection();
+					if(clueDirection.equals("across")) {
+						int clueXPosition = myGame.clues.get(l).getX();
+						int clueYPosition = myGame.clues.get(l).getY();
+						for(int k = 0; k < myGame.clues.get(l).getLength(); k++) {
+							String characterToBeUpdated = "" + myGame.clues.get(l).getSolution()[k];
+							int pos = (clueXPosition * 5) + clueYPosition;
+							//System.out.println(clueXPosition + " " + clueYPosition);
+							CrosswordPanel.cellText[pos].setText(characterToBeUpdated);
+							//System.out.println(pos);
+							clueYPosition = clueYPosition + 1;
+						}
+					}
+					if(clueDirection.equals("down")) {
+						int clueXPosition = myGame.clues.get(l).getX();
+						int clueYPosition = myGame.clues.get(l).getY();
+						for(int k = 0; k < myGame.clues.get(l).getLength(); k++) {
+							String characterToBeUpdated = "" + myGame.clues.get(l).getSolution()[k];
+							int pos = (clueXPosition*5) + clueYPosition;
+							//System.out.println(clueXPosition + " " + clueYPosition);
+							CrosswordPanel.cellText[pos].setText(characterToBeUpdated);
+							//System.out.println(pos);
+							clueXPosition = clueXPosition + 1;
+						}
+					}
+				}
 			}
 			System.out.print("");
 		}
