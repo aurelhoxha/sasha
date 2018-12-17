@@ -30,6 +30,8 @@ public class Scrapper {
 	WebDriver driver;
 	WebDriver driver1;
 	boolean googleDriverClosed = true;
+	String theUrlWeCheck = "";
+	String theUrlWeCheck1 = "";
 	
 	public Scrapper(){
 	    chrome = new File("./src/chromedriver.exe");
@@ -75,6 +77,7 @@ public class Scrapper {
 					}
 					System.out.println("Results for Clue: " + clues.get(i).getQuestion());
 					System.out.println("-------------------------------------");
+					theUrlWeCheck = "http://www.dictionary.com/fun/crosswordsolver";
 					ArrayList<String> googlePagesDeleted  = new ArrayList<String>();
 					boolean firstCheck = false;
 					boolean secondCheck = false;
@@ -143,91 +146,144 @@ public class Scrapper {
 			}
 			
 		}
-		driver.close();
-		driver.quit();
+//		driver.close();
+//		driver.quit();
 		googleDriverClosed = true;
 	}
 	
 	public int firstSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) throws InterruptedException, IOException{
         for(int i = 0; i < clues.size(); i++){
-			System.out.println("Starting to search certain answer for: " + clues.get(i).getQuestion());
-			
-			//Go to Google 
-			driver.get("http://www.dictionary.com/fun/crosswordsolver");
-			
-			WebDriverWait wait = new WebDriverWait(driver,10);
-			WebElement element = driver.findElement(By.name("query"));
-			WebElement element1 = driver.findElement(By.name("pattern"));
-			
-			String pattern = "";
-			for(int m = 0; m < clues.get(i).length; m++){
-				if(clues.get(i).solution[m] == '-'){
-					pattern = pattern + "?";
-				}
-				else {
-					pattern = pattern + clues.get(i).solution[m];
-				}
-			}
-			
-			if(clues.get(i).clueQuestion.contains("See 1-Across") || clues.get(i).clueQuestion.contains("See 2-Across") || clues.get(i).clueQuestion.contains("See 3-Across") || clues.get(i).clueQuestion.contains("See 3-Across")
-					|| clues.get(i).clueQuestion.contains("See 4-Across") || clues.get(i).clueQuestion.contains("See 5-Across") || clues.get(i).clueQuestion.contains("See 6-Across") || clues.get(i).clueQuestion.contains("See 7-Across")
-					|| clues.get(i).clueQuestion.contains("See 8-Across") || clues.get(i).clueQuestion.contains("See 9-Across")
-					|| clues.get(i).clueQuestion.contains("See 1-Down") || clues.get(i).clueQuestion.contains("See 2-Down") || clues.get(i).clueQuestion.contains("See 3-Down") || clues.get(i).clueQuestion.contains("See 3-Down")
-					|| clues.get(i).clueQuestion.contains("See 4-Down") || clues.get(i).clueQuestion.contains("See 5-Down") || clues.get(i).clueQuestion.contains("See 6-Down") || clues.get(i).clueQuestion.contains("See 7-Down")
-					|| clues.get(i).clueQuestion.contains("See 8-Down") || clues.get(i).clueQuestion.contains("See 9-Down")){}
-			else {
-				element.sendKeys(clues.get(i).clueQuestion);
-				element1.sendKeys(pattern);		
-				element.submit();
-				
-				// wait until the google page shows the result
-				try {
-					(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.className("solver-cell")));
-					List<WebElement> searchResults = driver.findElements(By.cssSelector(".solver-cell"));
-					ArrayList<String> options = new ArrayList<String>();
-					
-					for(WebElement myElements : searchResults) {
-						options.add(myElements.getText());
-					}
-					
-					for(int g = 2; g < options.size();g++)
-					{
-						if(g%2==0 && options.get(g).length() == clues.get(i).getLength())
-							clues.get(i).addAlternative(options.get(g));
-					}
-					
-					if(options.size() < 5) {
-						if(options.get(3).equals("95%")){
-							clues.get(i).setSolution(options.get(2));
-							clues.get(i).setSolved(true);
-						}				
-					}
-					else {
-						int n1 = Integer.parseInt(options.get(3).substring(0, 2));
-						int n2 = Integer.parseInt(options.get(5).substring(0, 2));
-						if(n1 > 90 && n1 - n2 > 15){
-							clues.get(i).setSolution(options.get(2));
-							clues.get(i).setSolved(true);
-						}
-					}
-					for(int l = 0; l < clues.size(); l++){
-						if(clues.get(l).isSolved()) {
-							clues.get(l).updateClueAlternative();
-							for(int j = 0; j < constraints.size();j++) {
-								if(constraints.get(j).contains(clues.get(l))) {
-									constraints.get(j).updateClue();
-								}
-							}
-						}
-					}
-				}
-				catch (Exception e){
-					System.out.println("No solutions found for " + clues.get(i).getQuestion());
-				}
+        	if(!clues.get(i).isSolved()) {
+        		System.out.println("Starting to search certain answer for: " + clues.get(i).getQuestion());
+    			
+    			//Go to Google 
+    			driver.get(theUrlWeCheck);
+    			
+    			WebDriverWait wait = new WebDriverWait(driver,10);
+    			WebElement element = driver.findElement(By.name("query"));
+    			WebElement element1 = driver.findElement(By.name("pattern"));
+    			
+    			String pattern = "";
+    			for(int m = 0; m < clues.get(i).length; m++){
+    				if(clues.get(i).solution[m] == '-'){
+    					pattern = pattern + "?";
+    				}
+    				else {
+    					pattern = pattern + clues.get(i).solution[m];
+    				}
+    			}
+    			
+    			if(clues.get(i).clueQuestion.contains("See 1-Across") || clues.get(i).clueQuestion.contains("See 2-Across") || clues.get(i).clueQuestion.contains("See 3-Across") || clues.get(i).clueQuestion.contains("See 3-Across")
+    					|| clues.get(i).clueQuestion.contains("See 4-Across") || clues.get(i).clueQuestion.contains("See 5-Across") || clues.get(i).clueQuestion.contains("See 6-Across") || clues.get(i).clueQuestion.contains("See 7-Across")
+    					|| clues.get(i).clueQuestion.contains("See 8-Across") || clues.get(i).clueQuestion.contains("See 9-Across")
+    					|| clues.get(i).clueQuestion.contains("See 1-Down") || clues.get(i).clueQuestion.contains("See 2-Down") || clues.get(i).clueQuestion.contains("See 3-Down") || clues.get(i).clueQuestion.contains("See 3-Down")
+    					|| clues.get(i).clueQuestion.contains("See 4-Down") || clues.get(i).clueQuestion.contains("See 5-Down") || clues.get(i).clueQuestion.contains("See 6-Down") || clues.get(i).clueQuestion.contains("See 7-Down")
+    					|| clues.get(i).clueQuestion.contains("See 8-Down") || clues.get(i).clueQuestion.contains("See 9-Down")){}
+    			else {
+    				element.sendKeys(clues.get(i).clueQuestion);
+    				element1.sendKeys(pattern);		
+    				element.submit();
+    				
+    				// wait until the google page shows the result
+    				try {
+    					(new WebDriverWait(driver, 10)).until(ExpectedConditions.presenceOfElementLocated(By.className("solver-cell")));
+    					List<WebElement> searchResults = driver.findElements(By.cssSelector(".solver-cell"));
+    					ArrayList<String> options = new ArrayList<String>();
+    					
+    					for(WebElement myElements : searchResults) {
+    						options.add(myElements.getText());
+    					}
+    					
+    					for(int g = 2; g < options.size();g++)
+    					{
+    						if(g%2==0 && options.get(g).length() == clues.get(i).getLength())
+    							clues.get(i).addAlternative(options.get(g));
+    					}
+    					
+    					if(options.size() < 5) {
+    						if(options.get(3).equals("95%")){
+    							clues.get(i).setSolution(options.get(2));
+    							clues.get(i).setSolved(true);
+    						}				
+    					}
+    					else {
+    						int n1 = Integer.parseInt(options.get(3).substring(0, 2));
+    						int n2 = Integer.parseInt(options.get(5).substring(0, 2));
+    						if(n1 > 90 && n1 - n2 > 15){
+    							clues.get(i).setSolution(options.get(2));
+    							clues.get(i).setSolved(true);
+    						}
+    					}
+    					for(int l = 0; l < clues.size(); l++){
+    						if(clues.get(l).isSolved()) {
+    							clues.get(l).updateClueAlternative();
+    							for(int j = 0; j < constraints.size();j++) {
+    								if(constraints.get(j).contains(clues.get(l))) {
+    									constraints.get(j).updateClue();
+    								}
+    							}
+    						}
+    					}
+    				}
+    				catch (Exception e){
+    					System.out.println("No solutions found for " + clues.get(i).getQuestion());
+    				}
+            	}
+            }
         	}
-        }
+			
         return 1;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public int thirdSearch(ArrayList<Clue> clues, ArrayList<Constraint> constraints) {
 		for(int i = 0; i < clues.size(); i++){
@@ -242,7 +298,7 @@ public class Scrapper {
 				//Enter the Clue in the Text
 				elementGoogle.sendKeys(searchQueryGoogle);
 				
-				driver1.get("http://www.crosswordnexus.com");
+				driver1.get(theUrlWeCheck1);
 				WebElement element = driver1.findElement(By.name("clue"));
 				WebElement element1 = driver1.findElement(By.name("pattern"));
 				
@@ -335,7 +391,7 @@ public class Scrapper {
 					//Enter the Clue in the Text
 					elementGoogle.sendKeys(searchQueryGoogle);
 				}
-				driver1.get("http://www.crosswordnexus.com");
+				driver1.get(theUrlWeCheck1);
 				WebElement element = driver1.findElement(By.name("pattern"));
 				
 				int counter1 = 0;

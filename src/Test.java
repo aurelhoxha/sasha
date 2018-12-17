@@ -133,13 +133,7 @@ public class Test extends JFrame{
 				
 				//System.out.println("Determining Cells that should match with each other");
 				Scrapper scrapi = new Scrapper();
-				scrapi.firstSearch(myGame.clues, myGame.constraints);				
-				System.out.println("------------------------------------------");
-				System.out.println("First Search Certain Solutions:");
-				System.out.println("------------------------------------------");
-				printFirstSearchSolutions(myGame);
-				System.out.println("------------------------------------------");
-				
+				scrapi.theUrlWeCheck1 = "http://www.crosswordnexus.com";
 				scrapi.thirdSearch(myGame.clues, myGame.constraints);
 				System.out.println("------------------------------------------");
 				System.out.println("Second Search Alternatives:");
@@ -196,7 +190,20 @@ public class Test extends JFrame{
 				
 				updateAlternativesByConstraints(myGame);
 				updateCluesBySize(myGame);
+				scrapi.firstSearch(myGame.clues, myGame.constraints);				
+				System.out.println("------------------------------------------");
+				System.out.println("First Search Certain Solutions:");
+				System.out.println("------------------------------------------");
+				printFirstSearchSolutions(myGame);
 				
+				////////////////////////////////////////////////////
+				updateAlternativesByConstraints(myGame);
+				updateCluesBySize(myGame);
+				/////////////////////////////////////////////////////
+				
+				updateAlternativesByConstraints(myGame);
+				updateCluesBySize(myGame);
+				System.out.println("------------------------------------------");
 				System.out.println("------------------------------------------");
 				System.out.println("Final Version of Solutions");
 				System.out.println("--------------------------------------------");
